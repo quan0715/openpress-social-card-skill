@@ -1,5 +1,5 @@
-// social-card starter — root marker for a nested React/MDX open-press workspace.
+// social-card starter — root marker for a nested OpenPress workspace.
 export default {
-  documentDir: "document",
-  config: "document/openpress.config.mjs",
+  documentDir: "press",
+  config: "press/openpress.config.mjs",
 };

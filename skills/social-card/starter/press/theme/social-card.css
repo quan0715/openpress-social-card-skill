@@ -178,9 +178,8 @@
   align-self: center;
 }
 
-.swiss-statement__display em {
-  font-style: normal;
-  color: var(--openpress-accent);
+.swiss-statement__line {
+  display: block;
 }
 
 .swiss-statement__cta {

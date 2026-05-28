@@ -1,17 +1,17 @@
 # QA checklist
 
-Run this checklist before delivering the carousel. The validator
-(`scripts/validate-social-card.mjs`) covers the mechanical checks; the rest
-is visual review.
+Run this checklist before delivering the carousel. The mechanical checks
+will hook into `openpress validate` once that command ships — until then,
+they are agent-driven against the rendered workspace.
 
-## Mechanical (validator covers)
+## Mechanical (will hook into `openpress validate`)
 
-- [ ] No overflow on any card (`rule: overflow`).
-- [ ] No text below caption floor 22 px (`rule: small-type`).
-- [ ] Density between 0.45 and 0.70 (`rule: density-low` flags below floor;
-      above 0.70 needs visual review).
+- [ ] No overflow on any card.
+- [ ] No text below caption floor 22 px.
+- [ ] Density between 0.45 and 0.70 (below 0.45 looks empty; above 0.70
+      crowds).
 - [ ] Every `<img>` pointing to `/openpress/media/` is listed in
-      `document/media/SOURCES.md` (`rule: source-missing`).
+      `press/media/SOURCES.md`.
 
 ## Visual (human review)
 
@@ -48,8 +48,11 @@ is visual review.
 ## Before delivery
 
 - [ ] Run `npm run build` — no warnings.
-- [ ] Run `node scripts/render-png.mjs` (or `openpress png` once it ships)
-      and visually inspect every output PNG.
-- [ ] Run `node scripts/validate-social-card.mjs` — exit code 0.
-- [ ] Skim the rendered PNGs at thumbnail size (200 px wide) — every
-      card's primary message must still read.
+- [ ] Run `openpress export png --out output/png` (when it ships) and
+      visually inspect every output PNG. If the command is not yet
+      available, the agent should stop and report it as a missing
+      substrate capability — not ship a skill-local renderer.
+- [ ] Run `openpress validate` (when it ships) — exit code 0. Same
+      principle if it's missing: report, don't shadow-implement.
+- [ ] Skim the rendered PNGs (or PDF pages, as a stopgap) at thumbnail
+      size (≈ 200 px wide) — every card's primary message must still read.

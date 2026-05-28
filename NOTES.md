@@ -10,69 +10,70 @@ deleted.
 
 ## GAP-1 · PNG export
 
-**Status:** active. Codex is implementing on the OpenPress side.
+**Status:** waiting for OpenPress first-class PNG export command.
 
 **Observed:** OpenPress currently centers on reader / PDF / static output.
-There is no `openpress png` command, so PNG-per-card export had to live in
-this skill.
+There is no `openpress export png` command.
 
-**Workaround in this skill:**
+**Workaround in this skill: none.** A previous version of this skill
+shipped `scripts/render-png.mjs`, a Playwright-based stopgap. It was
+**removed** because shadow-implementing substrate from a skill blurs the
+two-layer split and creates false confidence — the skill appeared to "do"
+PNG export when it was really sidestepping the framework.
 
-- `skills/social-card/scripts/render-png.mjs` — Playwright-based, spins up
-  a static server, walks `.reader-page`, screenshots each at real pixel
-  dimensions, writes deterministic filenames.
-- `skills/social-card/scripts/README.md` lists `playwright` and
-  `serve-handler` as workspace dependencies.
-- `SKILL.md` § OpenPress commands lists this script and marks it as
-  "until OpenPress ships `openpress png`".
+The skill now instructs the agent to use OpenPress's expected `openpress
+export png` command. If that command isn't present in the installed
+OpenPress version, the agent stops and reports the missing capability
+rather than building a skill-local replacement.
 
 **Framework side closes this gap by:**
 
-1. Adding an `openpress png` command (or `node engine/cli.mjs png …`) that
-   accepts at minimum: workspace path, output dir, frame selector / frameKey,
-   optional deterministic filename pattern.
+1. Adding an `openpress export png` command (or `openpress png`) that
+   accepts at minimum: workspace path, output dir, frame selector /
+   `frameKey`, optional deterministic filename pattern.
 2. Reusing the existing `chrome-pdf.mjs` headless Chrome resolution so PNG
    does not add a new dependency.
 3. Documenting the command in `docs/cli.md` and the public API page.
 
-**This skill closes its side by:**
-
-- Deleting `scripts/render-png.mjs` and its `README.md` entry.
-- Removing the `playwright` / `serve-handler` dep notes.
-- Updating `SKILL.md` § OpenPress commands to call `openpress png` directly.
-- Updating `references/qa-checklist.md` to reference the framework command.
+**This skill closes its side by:** nothing to remove. `SKILL.md` and
+`README.md` already point the agent at the expected command + the
+fail-with-substrate-gap protocol.
 
 ---
 
-## GAP-2 · Validator hooks
+## GAP-2 · Validation runtime
 
-**Status:** not started on the framework side. Acceptable as skill-local
-for v1.
+**Status:** waiting for OpenPress `openpress validate` / `openpress inspect`.
 
-**Observed:** the design spec § 8.4 sketches a validator-hook contract
-where `document/openpress.config.mjs` can list extra validators that
-OpenPress runs alongside its built-in checks. That contract does not exist
-yet, so the social-card validator runs as a free-standing script.
+**Observed:** the design spec § 8.4 sketches a validator-hook contract,
+but neither that hook nor a free-standing `openpress validate` exists in
+the framework yet.
 
-**Workaround in this skill:**
+**Workaround in this skill: none.** A previous version shipped
+`scripts/validate-social-card.mjs`, a Playwright-based validator. It was
+**removed** for two reasons:
 
-- `skills/social-card/scripts/validate-social-card.mjs` — standalone
-  Playwright-based validator. Boots its own server, runs its own rules,
-  returns its own exit code.
+- It returned `0 card(s) checked, 0 issue(s)` when it found zero
+  `.reader-page` elements (wrong workspace, build not run, etc.), creating
+  a dangerous **false-green**.
+- Like PNG export, it was the skill shadow-implementing what OpenPress
+  should own. False confidence is worse than a missing check.
 
 **Framework side closes this gap by:**
 
-1. Exposing a `validators: [path, …]` slot in `document/openpress.config.mjs`.
-2. Defining the validator contract: input (rendered DOM / source tree),
-   output (issue list with `{ rule, slug, detail }`), exit semantics.
-3. Wiring built-in checks (overflow, small-type) into the same contract so
-   third-party skills don't reimplement the basics.
+1. Shipping `openpress validate` (or `openpress inspect`) with documented
+   exit codes — non-zero on "no cards found" too, since false-green is the
+   anti-pattern.
+2. Optionally exposing a `validators: [path, …]` hook in
+   `press/openpress.config.mjs` so skills can register domain-specific rules
+   (overflow / density / small-type for social cards) without spawning
+   their own runtime.
 
-**This skill closes its side by:**
-
-- Adapting `validate-social-card.mjs` to export the contract instead of
-  running standalone.
-- Adding the validator path to `document/openpress.config.mjs`.
+**This skill closes its side by:** nothing. The skill instructs the agent
+to call OpenPress's command and stop-with-substrate-gap if absent. When
+the validator-hook contract ships, the skill can contribute its specific
+rule set (overflow / density / small-type / source-missing) — but it will
+register them through OpenPress's contract, not run its own runtime.
 
 ---
 
@@ -105,27 +106,24 @@ ratios in one workspace is not supported.
 
 ---
 
-## GAP-4 · `document/` vs `press/` naming
+## GAP-4 · ~~`document/` vs `press/` naming~~ Resolved on skill side
 
-**Status:** inconsistency between docs and runtime.
+**Status:** resolved on this side. Starter renamed to `press/`.
 
-**Observed:** `apps/web/src/pages/docs/product-boundary.astro` now refers
-to the workspace source as `press/index.tsx` and `press/chapters/**`.
-However, the actual framework code still uses `document/` everywhere
-(see `skills/social-post/starter/document/…`, `documentDir: "document"`
-default in `openpress.config.mjs`). The bundled packs all use `document/`.
+**Observed:** earlier the framework code used `document/` while the
+product-boundary docs used `press/`. This skill originally tracked the
+runtime convention.
 
-**Decision in this skill:** follow what the runtime actually supports.
-The starter uses `document/`, not `press/`.
+**Decision in this skill (2026-05-29):** rename `starter/document/` to
+`starter/press/` to match the 1.0 contract direction (commit `1dcce35`
+in the framework repo). The skill is no longer waiting on the framework
+to converge.
 
-**Framework side closes this gap by either:**
-
-- (a) Doing the rename in code + bundled packs + CLI defaults + tests, and
-      providing a codemod / back-compat shim for downstream workspaces, OR
-- (b) Reverting the product-boundary doc to `document/`.
-
-Whichever way it goes, this skill will follow. Until then there is no
-pending action on this side.
+If the installed OpenPress version still expects `documentDir: "document"`,
+the agent should follow the workspace operation guidance in `SKILL.md`:
+read the installed `@open-press/core`, make the small migration, proceed.
+The starter doesn't try to be backwards-compatible with both conventions
+simultaneously — picking one keeps the starter readable.
 
 ---
 
@@ -134,7 +132,7 @@ pending action on this side.
 **Status:** OBSOLETE. Direction abandoned. Do not implement.
 
 **Original sketch:** the CLI would resolve `--pack github:owner/repo/<skill>`
-to `skills/<skill>/starter/document/` and install the skill alongside.
+to `skills/<skill>/starter/press/` and install the skill alongside.
 
 **Why it's obsolete:** OpenPress will not fetch external skill starters.
 The two-layer split is cleaner if owned this way:
@@ -152,7 +150,7 @@ The two-layer split is cleaner if owned this way:
 bootstrap flow. There is nothing for OpenPress to implement here.
 
 **Implication for the §14 coordination contract:** the shared interface
-`github:owner/repo/social-card → skills/social-card/starter/document/`
+`github:owner/repo/social-card → skills/social-card/starter/press/`
 (spec §14.3) is no longer the integration point. Codex's CLI work item from
 §14.1 ("CLI support for skill-with-starter pack resolution") is **dropped**.
 The new (and only) integration point between this skill and OpenPress is
@@ -165,10 +163,10 @@ not need to know about.
 
 | Gap | Lives where now | Closed by | Cross-repo? |
 | --- | --- | --- | --- |
-| 1 PNG export | this skill (`scripts/render-png.mjs`) | Codex: `openpress png` command | Yes |
-| 2 Validator hooks | this skill (standalone script) | Framework: validator contract | Yes |
+| 1 PNG export | not in skill — waiting on `openpress export png` | Framework: ship `openpress export png` | Yes |
+| 2 Validation runtime | not in skill — waiting on `openpress validate` | Framework: ship `openpress validate` (+ optional config hook) | Yes |
 | 3 Per-frame geometry | deferred (v1 scope only) | Framework v2 | Yes, later |
-| 4 `document/` vs `press/` | docs say `press/`, code uses `document/` | Framework: pick one | Doc-only |
+| 4 ~~`document/` vs `press/`~~ | **resolved** — starter uses `press/` | — | — |
 | 5 ~~Skill-with-starter pack resolution~~ | **OBSOLETE** — skill owns starter, agent copies from installed skill dir | — | — |
 | 6 Spec names XHS / WeChat as v1 target | implementation pivoted to IG / FB / Threads | Codex / spec owner: update spec § 6.1, § 13, § 14.2 | Spec-only |
 | 7 Spec § 14 contract assumes pack-fetch model | superseded by skill-first bootstrap (GAP-5 obsolete) | Codex / spec owner: rewrite § 14.1 + § 14.3 around `skills add` flow | Spec-only |

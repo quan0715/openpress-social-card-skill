@@ -8,8 +8,6 @@ import { Sections, type SectionsPageProps } from "@open-press/core/manuscript";
 // the runtime stops reading the exports.
 export const config = {
   title: "Social Card",
-  subtitle: "IG / Facebook / Threads 1080×1350 carousel",
-  organization: "OpenPress",
   page: {
     id: "social-4x5",
     label: "IG / FB / Threads 1080×1350",
@@ -19,7 +17,7 @@ export const config = {
 };
 
 export const sources = {
-  cards: mdxSource({ preset: "section-folders", root: "chapters" }),
+  cards: mdxSource({ id: "cards", preset: "section-folders", root: "chapters" }),
 };
 
 function CardPage({

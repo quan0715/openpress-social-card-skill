@@ -39,11 +39,11 @@ Layouts shipped: `SwissStatement`.
 
 ## Where the tokens live
 
-`document/theme/tokens.css` is the single source of truth. Override colors,
+`press/theme/tokens.css` is the single source of truth. Override colors,
 type sizes, and padding there — do not paste inline `style={}` into MDX or
 layout components.
 
 If a brand needs a token that does not yet exist, add it to `tokens.css`
 with the `--social-card-` prefix and update the layout CSS in
-`document/theme/social-card.css`. Do not invent ad-hoc variables inside
+`press/theme/social-card.css`. Do not invent ad-hoc variables inside
 component files.

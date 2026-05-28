@@ -16,8 +16,8 @@ v1 ships one geometry that works across Instagram, Facebook, and Threads.
 | Caption floor | 22 px (`--social-card-size-caption`) |
 | Cover anchor | Big number + label (Editorial) or display statement (Swiss) |
 
-Density expectation: 0.45–0.65 (`min-density` validator default).
-Below 0.45 the card looks empty; above 0.7 it crowds.
+Density expectation: 0.45–0.65. Below 0.45 the card looks empty; above 0.7
+it crowds. (Will be checked by `openpress validate` once that ships.)
 
 Notes per platform:
 
@@ -40,7 +40,7 @@ which lives on the OpenPress framework side — see `NOTES.md` GAP-3.
 
 ## Adding a new platform
 
-1. A page geometry entry in `document/openpress.config.mjs` with explicit
+1. A page geometry entry in `press/openpress.config.mjs` with explicit
    width/height.
 2. Padding tokens tuned for the new aspect.
 3. At least one layout component sized for it.

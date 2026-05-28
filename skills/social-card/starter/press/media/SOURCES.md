@@ -1,9 +1,10 @@
-# media/SOURCES.md
+# press/media/SOURCES.md
 
 Source-of-record for every image in this workspace that did **not** come from
 the user. Web-sourced or generated images must appear here before they can be
-referenced from any card. The validator (`scripts/validate-social-card.mjs`)
-treats missing entries as a failure.
+referenced from any card. Missing entries should be treated as a delivery
+blocker — when OpenPress ships `openpress validate`, that command is expected
+to enforce this contract.
 
 ## Schema
 

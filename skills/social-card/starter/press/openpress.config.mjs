@@ -1,8 +1,6 @@
-// social-card starter — IG / Facebook / Threads 1080×1350 social-card workspace.
+// social-card starter — IG / Facebook / Threads 1080×1350 carousel workspace.
 export default {
   title: "Social Card",
-  subtitle: "IG / Facebook / Threads 1080×1350 carousel",
-  organization: "OpenPress",
 
   page: {
     id: "social-4x5",
