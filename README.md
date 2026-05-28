@@ -64,26 +64,20 @@ Restart Codex (or your agent harness) after installing the skill. After restart,
 
 OpenPress only initializes a blank runtime workspace — this skill owns the starter and tells the agent how to bootstrap from it. There is no `--pack` flag, no skill-with-starter pack resolution on the framework side.
 
-## Expected agent behavior
+## What the skill expects from the agent
 
-When invoked, the agent should:
+When invoked, the agent typically:
 
-1. **Intake first.** Ask about target platform, source text, image availability, visual stance, and constraints. Do not generate cards without intake.
-2. **Ensure OpenPress is in place.** If the working directory is not an OpenPress workspace, run `npx @open-press/cli@next init` first. Do **not** pass `--pack` — this skill provides the starter, not OpenPress.
-3. **Use this skill's installed starter.** Read from the installed skill directory (e.g. `${CODEX_HOME:-$HOME/.codex}/skills/social-card/starter/document/` for Codex, `$HOME/.claude/skills/social-card/starter/document/` for Claude Code) and copy it into the workspace.
-4. **Edit source, not output.** Modify MDX cards, theme tokens, and layout components in the workspace; do not patch generated HTML or PNG files.
-5. **Render and validate before delivery.** Run `npm run dev` (or `openpress:pdf` / the skill's `render-png.mjs`) and the skill's `validate-social-card.mjs` before claiming the carousel is done.
-6. **Log web-sourced images.** Every image not supplied by the user goes into `document/media/SOURCES.md` with URL + license + retrieval date before it can be referenced.
+1. **Intakes first.** Asks about target platform, source text, image availability, visual stance, and constraints. Card generation comes after intake, not before.
+2. **Ensures an OpenPress workspace is in place.** Runs `npx @open-press/cli@next init` if the working directory isn't one. No `--pack` — this skill provides the starter.
+3. **Uses this skill's installed starter as the starting point.** Reads from the installed skill directory (e.g. `${CODEX_HOME:-$HOME/.codex}/skills/social-card/starter/document/` for Codex, `$HOME/.claude/skills/social-card/starter/document/` for Claude Code) and copies it into the workspace. If the starter doesn't match the installed OpenPress version, reads the latest OpenPress docs + `@open-press/core` types and does the smallest migration to land the same intent.
+4. **Edits source, not output.** Modifies MDX cards, theme tokens, and layout components in the workspace; renders flow from source.
+5. **Renders and validates before claiming done.** `npm run dev` or `openpress:pdf` for the visual; the skill's `validate-social-card.mjs` for overflow / small-type / density / provenance.
+6. **Logs web-sourced images.** Every image not supplied by the user gets an entry in `document/media/SOURCES.md` with URL + license + retrieval date before it can be referenced.
 
-The agent has failed the skill's contract if any of the following is true:
+The spirit of the skill: it's a guide and a starting point, not a rulebook. The agent owns the implementation; the skill owns the intent — IG / FB / Threads 1080×1350 carousels, MDX-driven, source-backed, OpenPress-as-substrate. If the agent finds a better way to land the intent, take it.
 
-- Generated a single standalone HTML file as the deliverable.
-- Skipped intake and produced cards from the topic alone.
-- Patched the rendered PNG instead of the MDX source.
-- Embedded web-sourced images without a `SOURCES.md` entry.
-- Tried to make OpenPress fetch the starter via `--pack`.
-
-The point of this skill is not to test OpenPress's template system. It is to test whether a skill can correctly route an agent into OpenPress's substrate — workspace, source files, comments, render, export — without reinventing any of it.
+The point of this skill is not to test OpenPress's template system. It is to demonstrate that a skill can correctly route an agent into OpenPress's substrate — workspace, source files, comments, render, export — without reinventing any of it.
 
 ## License
 

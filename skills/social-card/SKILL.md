@@ -36,7 +36,9 @@ from a skill.
 
 ## Workflow
 
-Always run in this order. Do not skip the intake or evidence gates.
+A typical flow looks like this. **Intake comes first** because skill quality depends on
+understanding the user — that one is load-bearing. Everything after can be re-sequenced when the
+context calls for it.
 
 ### 1. Intake
 
@@ -116,22 +118,32 @@ cp -R "$SOCIAL_CARD_SKILL_DIR/starter/document" document
 npm run dev
 ```
 
-The agent's discipline at this step:
+Notes for the agent at this step:
 
-- **Do not** run `openpress init --pack …`. OpenPress does not fetch external skill starters.
-- **Read** the installed skill directory (`$SOCIAL_CARD_SKILL_DIR`) for `starter/`, `references/`,
-  and `scripts/`. These are the source of truth — not anything bundled by OpenPress.
-- **Copy** `starter/document/` into the OpenPress workspace. After copy, the workspace is owned
-  by the user — edit freely.
-- **Do not** try to symlink — agents working over the workspace expect a real file tree.
+- `openpress init --pack …` is not how this works. OpenPress doesn't fetch external skill starters.
+- The installed skill directory (`$SOCIAL_CARD_SKILL_DIR`) is the source of truth for
+  `starter/`, `references/`, and `scripts/`.
+- After the starter is copied in, the workspace belongs to the user — edit it like any other code.
 
-Then edit, in this order of preference:
+**If the starter doesn't run on the current OpenPress version**, that's expected — frameworks
+evolve. The starter is a worked example calibrated for the OpenPress version this skill was last
+validated against (see the `Compatibility` note in `README.md` if present, otherwise treat the
+starter as illustrative). When the starter and the installed `@open-press/core` disagree:
 
-1. `document/chapters/<page>/content/<page>.mdx` — copy text only. Each card is one MDX file.
-2. `document/theme/tokens.css` — brand colors, type, padding.
-3. `document/components/layouts/*.tsx` — only when an existing layout cannot express the page.
-4. `document/media/` — drop images here; reference them via relative path. Web-sourced images
-   **must** be logged in `document/media/SOURCES.md` before they can be referenced.
+1. Read https://open-press.dev/docs and the installed `@open-press/core` type definitions.
+2. Make the smallest migration that preserves the skill's intent — IG / FB / Threads 1080×1350
+   portrait cards, MDX-driven, Editorial / Swiss visual systems, source-backed and editable.
+3. Then continue with the workflow.
+
+Don't wait for a `MIGRATIONS.md` recipe — there isn't one. The starter is a starting point, not
+a contract.
+
+Typical edit targets, roughly in order of impact:
+
+- `document/chapters/<page>/content/<page>.mdx` — copy text. Each card is one MDX file.
+- `document/theme/tokens.css` — brand colors, type, padding.
+- `document/components/layouts/*.tsx` — when an existing layout doesn't express the page.
+- `document/media/` — drop images here; web-sourced images go through `SOURCES.md` first.
 
 ### 6. Review
 
@@ -157,20 +169,28 @@ visual review.
 Iterate by editing the **MDX source / theme tokens / layout components** and re-exporting.
 Never patch the rendered PNG by hand.
 
-## Non-negotiables
+## Hard rules
 
-These are hard rules. Violating them is the skill failing, not a tradeoff.
+These are the lines that define the skill. Violating one means the skill failed, not that the
+agent made a tradeoff.
 
-- **Do not fake current facts, metrics, prices, or release details.** If a number could be wrong,
+- **Don't fake current facts, metrics, prices, or release details.** If a number could be wrong,
   browse and cite before using it.
-- **Do not silently use web images without recording source provenance.** `SOURCES.md` is the
-  ledger; missing entries are a validator failure.
-- **Do not crop faces, key UI text, or product details.** Increase the image area instead.
-- **Do not solve overflow by shrinking text below readable floors** (see `references/qa-checklist.md`
-  for the floor sizes).
-- **Do not mix Editorial and Swiss in one package** unless the user explicitly confirms.
-- **Do not place visible usage instructions inside the image.** The card is the deliverable, not
-  a how-to.
+- **Don't use web images without recording provenance.** `document/media/SOURCES.md` is the
+  ledger — entries before references.
+- **Don't deliver a standalone HTML file.** The deliverable lives inside an OpenPress workspace
+  with source-backed cards. Bypassing the workspace is bypassing the whole skill.
+- **Don't skip intake.** Without intake the skill collapses into a generic prompt.
+
+## Strong defaults
+
+Production-quality guidelines. Break them only when the user explicitly asks.
+
+- Don't crop faces, key UI text, or product details — increase image area instead.
+- Don't solve overflow by shrinking text below the floors in `references/qa-checklist.md`.
+- Don't mix Editorial and Swiss in one carousel.
+- Don't embed visible "instructions to the agent" inside the image — the card is the deliverable,
+  not a how-to.
 
 ## References (load on demand)
 
