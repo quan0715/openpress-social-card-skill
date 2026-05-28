@@ -17,7 +17,7 @@ export const config = {
 };
 
 export const sources = {
-  cards: mdxSource({ id: "cards", preset: "section-folders", root: "chapters" }),
+  cards: mdxSource({ id: "cards", preset: "section-folders", root: "cards" }),
 };
 
 function CardPage({

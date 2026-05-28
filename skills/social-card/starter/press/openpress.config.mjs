@@ -9,7 +9,7 @@ export default {
     height: "1350px",
   },
 
-  sourceDir: "chapters",
+  sourceDir: "cards",
   mediaDir: "media",
   themeDir: "theme",
   designDoc: "design.md",

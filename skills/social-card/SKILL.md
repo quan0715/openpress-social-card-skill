@@ -154,7 +154,7 @@ a contract.
 
 Typical edit targets, roughly in order of impact:
 
-- `press/chapters/<page>/content/<page>.mdx` — copy text. Each card is one MDX file. Layout
+- `press/cards/<page>/content/<page>.mdx` — copy text. Each card is one MDX file. Layout
   components are referenced by name; OpenPress auto-discovers them from `press/components/`, so
   MDX files don't need imports.
 - `press/theme/tokens.css` — brand colors, type, padding.
