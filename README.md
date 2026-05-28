@@ -54,16 +54,36 @@ openpress-social-card-skill/
       scripts/           ← render-png, validate-social-card
 ```
 
-## How it will be installed (future)
-
-Once the OpenPress CLI ships skill-with-starter pack resolution:
+## Install
 
 ```bash
-npx @open-press/cli init my-cards \
-  --pack github:quan0715/openpress-social-card-skill/social-card
+npx -y skills@latest add quan0715/openpress-social-card-skill
 ```
 
-This is being implemented on the OpenPress side in parallel. Until both sides are green, the starter can be validated by manually copying `skills/social-card/starter/document/` into a scratch OpenPress workspace.
+Restart Codex (or your agent harness) after installing the skill. After restart, ask the agent to use the social-card skill. The skill will create an OpenPress workspace and copy its own starter into it.
+
+OpenPress only initializes a blank runtime workspace — this skill owns the starter and tells the agent how to bootstrap from it. There is no `--pack` flag, no skill-with-starter pack resolution on the framework side.
+
+## Expected agent behavior
+
+When invoked, the agent should:
+
+1. **Intake first.** Ask about target platform, source text, image availability, visual stance, and constraints. Do not generate cards without intake.
+2. **Ensure OpenPress is in place.** If the working directory is not an OpenPress workspace, run `npx @open-press/cli@next init` first. Do **not** pass `--pack` — this skill provides the starter, not OpenPress.
+3. **Use this skill's installed starter.** Read from the installed skill directory (e.g. `${CODEX_HOME:-$HOME/.codex}/skills/social-card/starter/document/` for Codex, `$HOME/.claude/skills/social-card/starter/document/` for Claude Code) and copy it into the workspace.
+4. **Edit source, not output.** Modify MDX cards, theme tokens, and layout components in the workspace; do not patch generated HTML or PNG files.
+5. **Render and validate before delivery.** Run `npm run dev` (or `openpress:pdf` / the skill's `render-png.mjs`) and the skill's `validate-social-card.mjs` before claiming the carousel is done.
+6. **Log web-sourced images.** Every image not supplied by the user goes into `document/media/SOURCES.md` with URL + license + retrieval date before it can be referenced.
+
+The agent has failed the skill's contract if any of the following is true:
+
+- Generated a single standalone HTML file as the deliverable.
+- Skipped intake and produced cards from the topic alone.
+- Patched the rendered PNG instead of the MDX source.
+- Embedded web-sourced images without a `SOURCES.md` entry.
+- Tried to make OpenPress fetch the starter via `--pack`.
+
+The point of this skill is not to test OpenPress's template system. It is to test whether a skill can correctly route an agent into OpenPress's substrate — workspace, source files, comments, render, export — without reinventing any of it.
 
 ## License
 

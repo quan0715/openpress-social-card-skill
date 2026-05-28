@@ -1,7 +1,21 @@
 # scripts/
 
-Skill-local scripts. Both run against an OpenPress workspace where this skill
-has been initialized as the starter.
+**Skill-local tools — not OpenPress workspace scripts.** These files live in
+this skill's installed directory (`$CODEX_HOME/skills/social-card/scripts/`
+for Codex, `$HOME/.claude/skills/social-card/scripts/` for Claude Code) and
+are invoked **from the OpenPress workspace** with an absolute path:
+
+```bash
+node "$SOCIAL_CARD_SKILL_DIR/scripts/render-png.mjs" --workspace .
+node "$SOCIAL_CARD_SKILL_DIR/scripts/validate-social-card.mjs" --workspace .
+```
+
+Do not copy these scripts into the workspace — they are owned by the skill.
+The workspace stays clean of skill-specific tooling so it remains portable
+across re-bootstraps.
+
+Both run against an OpenPress workspace where this skill's `starter/document/`
+has been copied in.
 
 | Script | Purpose | Until |
 | --- | --- | --- |

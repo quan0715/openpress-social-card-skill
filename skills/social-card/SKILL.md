@@ -91,22 +91,47 @@ into cards.
 
 ### 5. Workspace operation
 
-This skill **does not** ask the agent to hand-write standalone HTML.
+This skill **does not** ask the agent to hand-write standalone HTML. It also **does not** rely on
+OpenPress to fetch the starter — this skill owns its starter and is responsible for getting it
+into the workspace. OpenPress only initializes a blank runtime workspace; populating it is the
+skill's job.
 
-Initialize the workspace by copying the starter (or via the OpenPress CLI when skill-with-starter
-resolution ships):
+Bootstrap flow:
 
 ```bash
-npx @open-press/cli init my-cards \
-  --pack github:quan0715/openpress-social-card-skill/social-card
+# 1. Init a blank OpenPress workspace. No --pack. OpenPress only sets up the runtime.
+npx @open-press/cli@next init my-cards
+cd my-cards
+
+# 2. Resolve this skill's installed location. Path differs per agent harness:
+#    - Codex:        ${CODEX_HOME:-$HOME/.codex}/skills/social-card
+#    - Claude Code:  $HOME/.claude/skills/social-card
+SOCIAL_CARD_SKILL_DIR="${CODEX_HOME:-$HOME/.codex}/skills/social-card"
+
+# 3. Replace the default document/ with this skill's starter.
+rm -rf document
+cp -R "$SOCIAL_CARD_SKILL_DIR/starter/document" document
+
+# 4. Boot the workbench.
+npm run dev
 ```
+
+The agent's discipline at this step:
+
+- **Do not** run `openpress init --pack …`. OpenPress does not fetch external skill starters.
+- **Read** the installed skill directory (`$SOCIAL_CARD_SKILL_DIR`) for `starter/`, `references/`,
+  and `scripts/`. These are the source of truth — not anything bundled by OpenPress.
+- **Copy** `starter/document/` into the OpenPress workspace. After copy, the workspace is owned
+  by the user — edit freely.
+- **Do not** try to symlink — agents working over the workspace expect a real file tree.
 
 Then edit, in this order of preference:
 
 1. `document/chapters/<page>/content/<page>.mdx` — copy text only. Each card is one MDX file.
 2. `document/theme/tokens.css` — brand colors, type, padding.
 3. `document/components/layouts/*.tsx` — only when an existing layout cannot express the page.
-4. `document/media/` — drop images here; reference them via relative path.
+4. `document/media/` — drop images here; reference them via relative path. Web-sourced images
+   **must** be logged in `document/media/SOURCES.md` before they can be referenced.
 
 ### 6. Review
 
@@ -156,14 +181,18 @@ These are hard rules. Violating them is the skill failing, not a tradeoff.
 
 ## OpenPress commands the skill relies on
 
+Scripts owned by this skill are run **from the OpenPress workspace** but **live in the skill's
+installed directory** — they are skill-local tools, not workspace scripts. Always invoke them
+via the absolute `$SOCIAL_CARD_SKILL_DIR` path with `--workspace .`.
+
 | Command | Lives in | Purpose |
 | --- | --- | --- |
-| `npx @open-press/cli init` | OpenPress | Create the workspace from this starter |
+| `npx @open-press/cli@next init` | OpenPress | Create a blank runtime workspace. No `--pack`. |
 | `npm run dev` | OpenPress workspace | Workbench preview |
 | `npm run build` | OpenPress workspace | Render to `dist-react/` |
-| `npm run openpress:pdf` | OpenPress workspace | PDF output (also previews PNG layout) |
-| `node scripts/render-png.mjs` | **this skill** | PNG export (until OpenPress ships `openpress png`) |
-| `node scripts/validate-social-card.mjs` | **this skill** | Social-card validation |
+| `npm run openpress:pdf` | OpenPress workspace | PDF output |
+| `node "$SOCIAL_CARD_SKILL_DIR/scripts/render-png.mjs" --workspace .` | **this skill** | PNG export (stopgap until OpenPress ships `openpress png`). Run from inside the workspace. |
+| `node "$SOCIAL_CARD_SKILL_DIR/scripts/validate-social-card.mjs" --workspace .` | **this skill** | Social-card validation. Run from inside the workspace. |
 | `apply-comment` skill | OpenPress | Apply user's `@openpress-comment` markers |
 
 If a command is missing or behaves wrong, **report back via `NOTES.md`**. Do not patch the

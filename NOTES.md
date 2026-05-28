@@ -129,29 +129,35 @@ pending action on this side.
 
 ---
 
-## GAP-5 · Skill-with-starter pack resolution in the CLI
+## GAP-5 · ~~Skill-with-starter pack resolution in the CLI~~ OBSOLETE
 
-**Status:** active. Codex is implementing on the OpenPress side (§ 14.1).
+**Status:** OBSOLETE. Direction abandoned. Do not implement.
 
-**Observed:** the CLI currently resolves `--pack github:owner/repo` to
-the repo's root `starter/document/`. This skill ships under
-`skills/social-card/starter/document/`, so it needs the new resolver:
+**Original sketch:** the CLI would resolve `--pack github:owner/repo/<skill>`
+to `skills/<skill>/starter/document/` and install the skill alongside.
 
-```
-github:owner/repo/<skill-name>
-  -> skills/<skill-name>/starter/document/
-```
+**Why it's obsolete:** OpenPress will not fetch external skill starters.
+The two-layer split is cleaner if owned this way:
 
-**Workaround in this skill:** none required on this side. Until the
-resolver ships, the starter can be validated by manually copying
-`skills/social-card/starter/document/` into a scratch OpenPress workspace.
+- **OpenPress's job ends at `init`** producing a blank runtime workspace.
+- **Skills own their starters.** Agents read installed skill files (via the
+  agent harness's `skills/` directory — `$CODEX_HOME/skills/<skill>` for
+  Codex, `$HOME/.claude/skills/<skill>` for Claude Code) and copy / adapt
+  them into the workspace from the inside.
+- **No cross-repo CLI coupling.** No "skill-with-starter pack" resolver, no
+  GitHub fetch path through `--pack`.
 
-**Framework side closes this gap by:** § 14.1 done-when criteria.
+**This skill's adaptation:** see `SKILL.md` § Workspace operation and
+`README.md` § Install / § Expected agent behavior for the skill-first
+bootstrap flow. There is nothing for OpenPress to implement here.
 
-**This skill closes its side by:**
-
-- Updating `README.md` § How it will be installed to drop "future" / "once …"
-  language once the resolver ships and is documented.
+**Implication for the §14 coordination contract:** the shared interface
+`github:owner/repo/social-card → skills/social-card/starter/document/`
+(spec §14.3) is no longer the integration point. Codex's CLI work item from
+§14.1 ("CLI support for skill-with-starter pack resolution") is **dropped**.
+The new (and only) integration point between this skill and OpenPress is
+the agent harness's skill-install convention — which OpenPress itself does
+not need to know about.
 
 ---
 
@@ -163,8 +169,9 @@ resolver ships, the starter can be validated by manually copying
 | 2 Validator hooks | this skill (standalone script) | Framework: validator contract | Yes |
 | 3 Per-frame geometry | deferred (v1 scope only) | Framework v2 | Yes, later |
 | 4 `document/` vs `press/` | docs say `press/`, code uses `document/` | Framework: pick one | Doc-only |
-| 5 Skill-with-starter pack resolution | manual copy | Codex: new resolver in CLI | Yes |
+| 5 ~~Skill-with-starter pack resolution~~ | **OBSOLETE** — skill owns starter, agent copies from installed skill dir | — | — |
 | 6 Spec names XHS / WeChat as v1 target | implementation pivoted to IG / FB / Threads | Codex / spec owner: update spec § 6.1, § 13, § 14.2 | Spec-only |
+| 7 Spec § 14 contract assumes pack-fetch model | superseded by skill-first bootstrap (GAP-5 obsolete) | Codex / spec owner: rewrite § 14.1 + § 14.3 around `skills add` flow | Spec-only |
 
 If a new gap is discovered during implementation, append a new section
 here — do not file an issue in the framework repo from this side without

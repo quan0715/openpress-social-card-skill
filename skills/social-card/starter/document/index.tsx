@@ -1,7 +1,11 @@
-import { Frame, MdxArea, Press } from "@open-press/core";
+import { Frame, MdxArea, Press, Workspace } from "@open-press/core";
 import { mdxSource } from "@open-press/core/mdx";
 import { Sections, type SectionsPageProps } from "@open-press/core/manuscript";
 
+// Out-of-band exports kept during the 0.x → 1.0 transition. The unreleased
+// 1.0 authoring baseline reads these as JSX props on <Press>, while the
+// current runtime still reads them as module-level exports. Keep both until
+// the runtime stops reading the exports.
 export const config = {
   title: "Social Card",
   subtitle: "IG / Facebook / Threads 1080×1350 carousel",
@@ -46,8 +50,15 @@ function CardPage({
 
 export default function SocialCardDocument() {
   return (
-    <Press>
-      <Sections source="cards" page={CardPage} />
-    </Press>
+    <Workspace name="Social Card">
+      <Press
+        slug="social-card"
+        title={config.title}
+        page={config.page}
+        sources={[sources.cards]}
+      >
+        <Sections source="cards" page={CardPage} />
+      </Press>
+    </Workspace>
   );
 }
