@@ -42,11 +42,20 @@ export script. That stance is non-negotiable — it's the only way the two-layer
 
 - **Target:** Instagram / Facebook / Threads at **1080×1350 (4:5 portrait feed)**. One geometry
   covers all three platforms — they share the same recommended portrait size.
-- **Layouts:** 3 OpenPress-native recipes — Editorial cover, Editorial evidence, Swiss statement.
+- **Recipes:** 6 OpenPress-native magazine layouts — `EditorialCover`, `FieldNotePhoto`,
+  `PullQuote`, `ClosingLedger`, `TallLedger`, `EvidenceFeature`. Plus `SwissStatement` as the
+  alternate Swiss-mode primitive. See `references/layout-recipes.md`.
+- **Themes:** 6 Editorial palettes (Ink Classic default, Indigo Porcelain, Forest Ink, Kraft
+  Paper, Dune, Midnight Ink) + 2 Swiss palettes (IKB Blue, Cinnabar). See
+  `references/theme-presets.md`.
+- **Visual identity:** structured rules in `references/validator-rules.md` ready to register
+  with `openpress validate` when the hook ships. Until then, the rules are agent-readable QA
+  guidance (see `references/qa-checklist.md`).
 - **Export, validation, preview:** owned by OpenPress (current or expected). The skill does not
   ship its own runtime for any of these.
 - **Deferred to v2:** square 1080×1080 (IG / FB), Facebook link-preview 1200×630, per-frame
-  geometry for mixed-ratio carousels, full guizang recipe library.
+  geometry for mixed-ratio carousels, remaining guizang recipes (M03 / M05 / M06 / M09 / M11 /
+  M12 / M13).
 
 ## Workflow
 
@@ -86,24 +95,31 @@ For web-sourced images, always record source URL + license status in
 
 ### 3. Story plan
 
-Produce a page-by-page plan **before** touching the workspace. Keep it short:
+Produce a page-by-page plan **before** touching the workspace. Match each page to one recipe
+from `references/layout-recipes.md`. Keep it short:
 
 ```
-Page 1  cover         <Editorial cover>      "標題 + 副標 + 數字 / 證據錨點"
-Page 2  evidence      <Editorial evidence>   "圖佐證 + 重點 bullets"
-Page 3  closing       <Swiss statement>      "結論句 + CTA"
+Page 1  cover       EditorialCover     title + subtitle + big-number anchor
+Page 2  thesis      PullQuote          one core sentence + kicker + source
+Page 3  evidence    EvidenceFeature    headline + screenshot + takeaways
+Page 4  ledger      TallLedger         4-6 detailed rows
+Page 5  closing     ClosingLedger      summary ledger + closing quote
 ```
 
 Show the plan to the user. Iterate the plan, not the rendered cards.
 
 ### 4. Style choice
 
-After the plan is approved, lock one visual stance (Editorial or Swiss) for the whole project.
-Do not mix per page. If the user explicitly asks for a hybrid, ask once to confirm — mixed
-systems are an anti-pattern by default.
+After the plan is approved, lock **one visual stance + one theme** for the whole carousel.
 
-Edit theme tokens in `press/theme/tokens.css` to land the brand. Do not paste inline styles
-into cards.
+- **Stance**: Editorial (default) or Swiss. Don't mix per page.
+- **Theme**: pick one of the 6 Editorial palettes (Ink Classic / Indigo Porcelain / Forest Ink
+  / Kraft Paper / Dune / Midnight Ink) or one of the 2 Swiss palettes (IKB Blue / Cinnabar).
+  See `references/theme-presets.md` for which palette fits which content tone.
+
+Apply via `data-theme="..."` on the `<Workspace>` or a parent wrapper. Tokens live in
+`press/theme/tokens.css`; for a brand-specific palette, override the seven palette tokens there
+rather than pasting inline styles into cards.
 
 ### 5. Workspace operation
 
@@ -211,10 +227,17 @@ Production-quality guidelines. Break them only when the user explicitly asks.
 
 ## References (load on demand)
 
+- `references/visual-grammar.md` — the magazine vocabulary the skill ports, what was deliberately
+  not ported (WebGL, PNG runtime, validator runtime), and the M-series semantic name map.
 - `references/platform-specs.md` — per-platform pixel sizes, safe areas, density expectations.
-- `references/style-system.md` — Editorial vs Swiss: tokens, type pairings, when to use which.
-- `references/layout-recipes.md` — the v1 layouts and what content shape each one expects.
-- `references/qa-checklist.md` — final visual / typography / image / provenance checks.
+- `references/style-system.md` — Editorial vs Swiss: tokens, type pairings, identity tests,
+  anti-patterns. Quick-reference for mode selection.
+- `references/theme-presets.md` — 6 Editorial + 2 Swiss palettes with full token values.
+- `references/layout-recipes.md` — the 6 v1 recipes and what content shape each one expects.
+- `references/validator-rules.md` — structured rule specs (identity, density, type floors,
+  provenance) ready to register with `openpress validate` when the hook ships.
+- `references/qa-checklist.md` — visual / typography / image / provenance / identity-test
+  checklist for delivery review.
 
 ## OpenPress commands the skill relies on
 

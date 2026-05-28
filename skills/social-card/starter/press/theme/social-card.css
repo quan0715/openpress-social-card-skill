@@ -1,18 +1,61 @@
 /* Social-card layouts.
-   Two visual systems are bundled: Editorial (paper-like, serif-led)
-   and Swiss (graphic, sans, chunky type). Pick one per project; do not
-   mix without explicit user confirmation. */
+   Editorial (paper, serif, atmosphere) and Swiss (graphic, sans, flat
+   surfaces) coexist as two visual systems. Pick one per project;
+   mixing within one carousel is a soft anti-pattern. */
 
-/* ---- shared frame ---- */
+/* ============================================================
+   Shared frame
+   ============================================================ */
 
 .reader-page--social-card {
+  position: relative;
   background: var(--openpress-color-document);
   color: var(--openpress-color-ink);
-  font-family: var(--openpress-font-body);
+  font-family: var(--social-card-font-body, var(--openpress-font-serif));
+  overflow: hidden;
+}
+
+/* Paper grain — required for the Editorial identity test.
+   SVG turbulence noise rendered as a data-URI, blended over the
+   document background. Disabled (opacity 0) on Swiss palettes. */
+.reader-page--social-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+  opacity: var(--social-card-grain-opacity);
+  mix-blend-mode: var(--social-card-grain-blend);
+}
+
+/* Optional ink-wash atmosphere — paper grain alone is enough for the
+   identity test, but covers, dividers, pull quotes, and atmospheric
+   closing pages benefit from a soft contour. Apply via the
+   `.with-ink-wash` modifier on the page-frame container. */
+.reader-page--social-card.with-ink-wash::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(80% 60% at 22% 18%, var(--openpress-accent-soft), transparent 70%),
+    radial-gradient(60% 70% at 82% 88%, color-mix(in srgb, var(--openpress-color-paper-2) 80%, transparent), transparent 75%);
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+}
+
+.reader-page--social-card .page-body,
+.reader-page--social-card .openpress-mdx-area {
+  position: relative;
+  z-index: 2;
 }
 
 .reader-page--social-card .page-body {
   display: block;
+  height: 100%;
 }
 
 .reader-page--social-card .openpress-mdx-area {
@@ -22,89 +65,388 @@
   height: 100%;
 }
 
-/* ---- editorial system ---- */
+/* ============================================================
+   Utility primitives (shared across recipes)
+   ============================================================ */
 
-.editorial-cover,
-.editorial-evidence {
-  display: grid;
-  height: 100%;
-  font-family: var(--openpress-font-serif);
-  color: var(--openpress-color-ink);
-}
-
-.editorial-cover {
-  grid-template-rows: auto 1fr auto;
-  row-gap: 64px;
-}
-
-.editorial-cover__eyebrow {
-  font-family: var(--openpress-font-body);
-  font-size: var(--social-card-size-eyebrow);
-  letter-spacing: 0.12em;
+/* Kicker — small uppercase tag, mono. Used on covers, dividers, closings. */
+.social-card-kicker {
+  font-family: var(--social-card-font-meta);
+  font-size: var(--social-card-kicker);
+  font-weight: var(--social-card-kicker-weight);
+  letter-spacing: var(--social-card-kicker-tracking);
   text-transform: uppercase;
   color: var(--openpress-color-muted);
 }
 
+.social-card-kicker--accent {
+  color: var(--openpress-accent);
+}
+
+/* IssueStrip — top or bottom magazine strip with up to 3 slots, hairline-ruled. */
+.social-card-issue-strip {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-top: 1px solid var(--openpress-color-line);
+  font-family: var(--social-card-font-meta);
+  font-size: var(--social-card-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--openpress-color-muted);
+}
+
+.social-card-issue-strip--top {
+  border-top: none;
+  border-bottom: 1px solid var(--openpress-color-line);
+}
+
+.social-card-issue-strip__middle {
+  text-align: center;
+}
+
+.social-card-issue-strip__right {
+  text-align: right;
+}
+
+/* ============================================================
+   Editorial recipes
+   ============================================================ */
+
+.editorial-cover,
+.editorial-evidence,
+.editorial-field-note,
+.editorial-pull-quote,
+.editorial-closing-ledger,
+.editorial-tall-ledger {
+  display: grid;
+  height: 100%;
+  font-family: var(--social-card-font-display);
+  color: var(--openpress-color-ink);
+}
+
+/* ---- M01 EditorialCover ---- */
+
+.editorial-cover {
+  grid-template-rows: auto auto 1fr auto;
+  row-gap: 36px;
+}
+
 .editorial-cover__title {
-  font-size: var(--social-card-size-title);
-  line-height: var(--social-card-lh-tight);
-  font-weight: 500;
+  font-size: var(--social-card-display);
+  font-weight: var(--social-card-display-weight);
+  letter-spacing: var(--social-card-display-tracking);
+  line-height: var(--social-card-display-lh);
   margin: 0;
-  letter-spacing: -0.02em;
 }
 
 .editorial-cover__subtitle {
-  font-size: var(--social-card-size-subtitle);
-  line-height: var(--social-card-lh-snug);
+  font-size: var(--social-card-subhead);
+  font-style: italic;
+  font-weight: var(--social-card-subhead-weight);
+  line-height: var(--social-card-subhead-lh);
   color: var(--openpress-color-muted);
-  font-weight: 400;
-  margin: 24px 0 0;
+  margin: 12px 0 0;
+}
+
+.editorial-cover__well {
+  position: relative;
+  background: var(--openpress-color-paper-2);
+  overflow: hidden;
+  min-height: 320px;
+}
+
+.editorial-cover__well img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .editorial-cover__anchor {
   display: grid;
-  gap: 12px;
+  grid-template-columns: auto 1fr;
+  align-items: end;
+  gap: 28px;
   border-top: 1px solid var(--openpress-color-line);
   padding-top: 24px;
 }
 
 .editorial-cover__anchor-number {
-  font-size: var(--social-card-size-bignum);
-  font-family: var(--openpress-font-serif);
-  font-weight: 500;
-  line-height: 0.9;
-  color: var(--openpress-accent);
+  font-family: var(--social-card-font-display);
+  font-size: var(--social-card-bignum);
+  font-weight: var(--social-card-bignum-weight);
+  line-height: var(--social-card-bignum-lh);
   letter-spacing: -0.04em;
+  color: var(--openpress-accent);
 }
 
-.editorial-cover__anchor-label {
-  font-family: var(--openpress-font-body);
-  font-size: var(--social-card-size-caption);
+.editorial-cover__anchor-meta {
+  display: grid;
+  gap: 8px;
+  font-family: var(--social-card-font-meta);
+  font-size: var(--social-card-micro);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
   color: var(--openpress-color-muted);
 }
 
-.editorial-cover__anchor-caption {
-  font-family: var(--openpress-font-body);
-  font-size: var(--social-card-size-caption);
-  color: var(--openpress-color-muted);
-  line-height: var(--social-card-lh-body);
+.editorial-cover__anchor-meta strong {
+  font-weight: var(--social-card-kicker-weight);
+  color: var(--openpress-color-ink);
 }
 
-/* Editorial evidence: image-led, body bullets below */
+/* ---- M02 FieldNotePhoto ---- */
+
+.editorial-field-note {
+  grid-template-rows: 1fr auto;
+  row-gap: 32px;
+}
+
+.editorial-field-note__photo {
+  position: relative;
+  background: var(--openpress-color-paper-2);
+  overflow: hidden;
+}
+
+.editorial-field-note__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.editorial-field-note__bottom {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 40px;
+  align-items: start;
+  border-top: 1px solid var(--openpress-color-line);
+  padding-top: 24px;
+}
+
+.editorial-field-note__takeaway {
+  font-size: 56px;
+  line-height: var(--social-card-headline-lh);
+  font-weight: var(--social-card-headline-weight);
+  letter-spacing: var(--social-card-headline-tracking);
+  margin: 0;
+}
+
+.editorial-field-note__caption {
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body-s);
+  line-height: var(--social-card-body-lh);
+  color: var(--openpress-color-muted);
+  font-style: italic;
+}
+
+/* ---- M04 PullQuote ---- */
+
+.editorial-pull-quote {
+  grid-template-rows: auto 1fr auto;
+  row-gap: 40px;
+}
+
+.editorial-pull-quote__quote {
+  font-family: var(--social-card-font-display);
+  font-size: 84px;
+  font-weight: var(--social-card-display-weight);
+  letter-spacing: var(--social-card-display-tracking);
+  line-height: var(--social-card-display-lh);
+  margin: 0;
+  align-self: center;
+  text-wrap: balance;
+}
+
+.editorial-pull-quote__quote::before {
+  content: "“";
+  display: block;
+  font-size: 0.9em;
+  line-height: 0.5;
+  color: var(--openpress-accent);
+  margin-bottom: 16px;
+}
+
+.editorial-pull-quote__source {
+  border-top: 1px solid var(--openpress-color-line);
+  padding-top: 16px;
+  display: grid;
+  gap: 8px;
+  font-family: var(--social-card-font-meta);
+  font-size: var(--social-card-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--openpress-color-muted);
+}
+
+.editorial-pull-quote__source strong {
+  font-weight: var(--social-card-kicker-weight);
+  color: var(--openpress-color-ink);
+}
+
+/* ---- M07 ClosingLedger ---- */
+
+.editorial-closing-ledger {
+  grid-template-rows: auto auto 1fr auto;
+  row-gap: 32px;
+}
+
+.editorial-closing-ledger__title {
+  font-size: var(--social-card-headline);
+  font-weight: var(--social-card-headline-weight);
+  letter-spacing: var(--social-card-headline-tracking);
+  line-height: var(--social-card-headline-lh);
+  margin: 0;
+}
+
+.editorial-closing-ledger__rows {
+  display: grid;
+  gap: 24px;
+  border-top: 1px solid var(--openpress-color-line);
+  border-bottom: 1px solid var(--openpress-color-line);
+  padding: 24px 0;
+}
+
+.editorial-closing-ledger__row {
+  display: grid;
+  gap: 6px;
+}
+
+.editorial-closing-ledger__row-title {
+  font-size: 30px;
+  font-weight: var(--social-card-headline-weight);
+  line-height: var(--social-card-headline-lh);
+}
+
+.editorial-closing-ledger__row-sub {
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body-s);
+  line-height: var(--social-card-body-lh);
+  color: var(--openpress-color-muted);
+}
+
+.editorial-closing-ledger__closing {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 32px;
+}
+
+.editorial-closing-ledger__closing-quote {
+  font-family: var(--social-card-font-display);
+  font-size: 38px;
+  font-style: italic;
+  font-weight: var(--social-card-subhead-weight);
+  line-height: var(--social-card-subhead-lh);
+  margin: 0;
+}
+
+.editorial-closing-ledger__signature {
+  font-family: var(--social-card-font-meta);
+  font-size: var(--social-card-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--openpress-color-muted);
+  text-align: right;
+}
+
+/* ---- M08 TallLedger ---- */
+
+.editorial-tall-ledger {
+  grid-template-rows: auto 1fr;
+  row-gap: 32px;
+}
+
+.editorial-tall-ledger__title {
+  font-size: var(--social-card-headline);
+  font-weight: var(--social-card-headline-weight);
+  letter-spacing: var(--social-card-headline-tracking);
+  line-height: var(--social-card-headline-lh);
+  margin: 0;
+}
+
+.editorial-tall-ledger__rows {
+  display: grid;
+  grid-auto-rows: minmax(118px, auto);
+}
+
+.editorial-tall-ledger__row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  align-items: start;
+  gap: 24px;
+  padding: 20px 0;
+  border-top: 1px solid var(--openpress-color-line);
+}
+
+.editorial-tall-ledger__row:last-child {
+  border-bottom: 1px solid var(--openpress-color-line);
+}
+
+.editorial-tall-ledger__row-index {
+  font-family: var(--social-card-font-meta);
+  font-size: var(--social-card-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--openpress-color-muted);
+  padding-top: 6px;
+}
+
+.editorial-tall-ledger__row-body {
+  display: grid;
+  gap: 6px;
+}
+
+.editorial-tall-ledger__row-title {
+  font-size: 38px;
+  font-weight: var(--social-card-headline-weight);
+  line-height: var(--social-card-headline-lh);
+}
+
+.editorial-tall-ledger__row-consequence {
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body-s);
+  line-height: var(--social-card-body-lh);
+  color: var(--openpress-color-muted);
+}
+
+/* ---- M10 EvidenceFeature ---- */
 
 .editorial-evidence {
-  grid-template-rows: 1fr auto;
-  row-gap: 48px;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 32px;
+}
+
+.editorial-evidence__head {
+  display: grid;
+  gap: 12px;
+}
+
+.editorial-evidence__headline {
+  font-size: 56px;
+  font-weight: var(--social-card-headline-weight);
+  letter-spacing: var(--social-card-headline-tracking);
+  line-height: var(--social-card-headline-lh);
+  margin: 0;
+}
+
+.editorial-evidence__lead {
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body);
+  line-height: var(--social-card-body-lh);
+  color: var(--openpress-color-muted);
+  margin: 0;
 }
 
 .editorial-evidence__media {
-  display: grid;
-  place-items: stretch;
-  background: var(--openpress-color-line);
-  border-radius: 8px;
+  position: relative;
+  background: var(--openpress-color-paper-2);
   overflow: hidden;
+  min-height: 480px;
 }
 
 .editorial-evidence__media img {
@@ -114,42 +456,33 @@
   display: block;
 }
 
-.editorial-evidence__body {
+.editorial-evidence__takeaways {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
+  border-top: 1px solid var(--openpress-color-line);
+  padding-top: 20px;
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body-s);
+  line-height: var(--social-card-body-lh);
 }
 
-.editorial-evidence__title {
-  font-size: 56px;
-  line-height: var(--social-card-lh-snug);
-  margin: 0;
-  font-weight: 500;
-}
-
-.editorial-evidence__body ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.editorial-evidence__takeaway {
   display: grid;
-  gap: 14px;
-  font-family: var(--openpress-font-body);
-  font-size: var(--social-card-size-body);
-  line-height: var(--social-card-lh-body);
+  gap: 4px;
 }
 
-.editorial-evidence__body li {
-  padding-left: 1.4em;
-  position: relative;
-}
-
-.editorial-evidence__body li::before {
-  content: "—";
-  position: absolute;
-  left: 0;
+.editorial-evidence__takeaway-index {
+  font-family: var(--social-card-font-meta);
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--openpress-accent);
 }
 
-/* ---- swiss system ---- */
+/* ============================================================
+   Swiss recipes
+   ============================================================ */
 
 .swiss-statement {
   display: grid;
@@ -157,23 +490,23 @@
   grid-template-rows: auto 1fr auto;
   row-gap: 56px;
   font-family: var(--openpress-font-body);
-  background: var(--openpress-color-document);
   color: var(--openpress-color-ink);
 }
 
 .swiss-statement__eyebrow {
-  font-size: var(--social-card-size-eyebrow);
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-family: var(--openpress-font-mono);
+  font-size: var(--social-card-kicker);
+  font-weight: var(--social-card-kicker-weight);
+  letter-spacing: var(--social-card-kicker-tracking);
   text-transform: uppercase;
   color: var(--openpress-accent);
 }
 
 .swiss-statement__display {
-  font-size: var(--social-card-size-stmt);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  font-weight: 800;
+  font-size: 124px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
   margin: 0;
   align-self: center;
 }
@@ -189,19 +522,21 @@
   align-items: end;
   gap: 24px;
   border-top: 4px solid var(--openpress-color-ink);
-  padding-top: 24px;
-  font-size: var(--social-card-size-caption);
+  padding-top: 20px;
+  font-family: var(--openpress-font-mono);
+  font-size: var(--social-card-micro);
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  font-weight: 600;
 }
 
-/* ---- shared primitives ---- */
+/* ============================================================
+   Shared image / source primitives (used by ImageWell etc.)
+   ============================================================ */
 
 .openpress-image-well {
   display: block;
-  background: var(--openpress-color-line);
-  border-radius: 8px;
+  background: var(--openpress-color-paper-2);
   overflow: hidden;
 }
 
@@ -213,7 +548,7 @@
 }
 
 .openpress-source-credit {
-  font-family: var(--openpress-font-body);
+  font-family: var(--social-card-font-meta);
   font-size: 18px;
   letter-spacing: 0.04em;
   color: var(--openpress-color-muted);

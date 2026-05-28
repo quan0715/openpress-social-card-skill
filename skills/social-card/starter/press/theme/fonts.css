@@ -1,9 +1,27 @@
-/* Web-safe fallback chain. Replace with local @font-face entries if you
-   want a specific brand face — keep PingFang / Noto Sans TC as the CJK
-   fallback so Traditional Chinese type renders correctly. */
+/* Editorial mode wants a real serif for display + body, and a mono for
+   kicker / metadata. Swiss mode wants Inter / Noto Sans family only.
+   Both modes share the CJK fallback chain — Traditional and Simplified
+   Chinese both render correctly. */
 
 :root {
-  --openpress-font-body: Inter, "PingFang TC", "Noto Sans TC", sans-serif;
-  --openpress-font-serif: "Source Serif Pro", "Noto Serif TC", Georgia, serif;
-  --openpress-font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
+  --openpress-font-serif: "Source Serif Pro", "Noto Serif TC",
+    "Noto Serif SC", "Songti SC", "Songti TC", Georgia, serif;
+  --openpress-font-body: Inter, "PingFang TC", "PingFang SC",
+    "Noto Sans TC", "Noto Sans SC", sans-serif;
+  --openpress-font-mono: "IBM Plex Mono", "JetBrains Mono",
+    "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* Editorial uses serif for display + body, mono for kicker / meta. */
+  --social-card-font-display: var(--openpress-font-serif);
+  --social-card-font-body: var(--openpress-font-serif);
+  --social-card-font-meta: var(--openpress-font-mono);
+}
+
+/* Swiss mode swaps the serif body for sans, keeps mono for small labels.
+   Scope to a [data-style="swiss"] element so per-package switching works
+   without changing the global tokens. */
+[data-style="swiss"] {
+  --social-card-font-display: var(--openpress-font-body);
+  --social-card-font-body: var(--openpress-font-body);
+  --social-card-font-meta: var(--openpress-font-mono);
 }

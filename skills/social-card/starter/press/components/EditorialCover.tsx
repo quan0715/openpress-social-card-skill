@@ -1,45 +1,75 @@
 import type { ReactNode } from "react";
 
 export interface EditorialCoverProps {
-  eyebrow?: string;
+  /** Small uppercase tag above the title. Series, category, or runner. */
+  kicker?: string;
+  /** Display headline. Serif. 2–4 lines. */
   title: string;
+  /** Optional subhead in serif italic. One short sentence. */
   subtitle?: string;
-  anchorNumber?: string;
-  anchorLabel?: string;
-  anchorCaption?: string;
+  /** Optional cover photo / illustration. Occupies the central well. */
+  image?: {
+    src: string;
+    alt: string;
+  };
+  /** Optional anchor — a big number plus 1–3 short labels. */
+  anchor?: {
+    number: string;
+    label: string;
+    caption?: string;
+  };
+  /** Render an ink-wash atmosphere layer behind the page chrome. */
+  inkWash?: boolean;
+  /** Custom children rendered between the title and the anchor. */
   children?: ReactNode;
 }
 
+/**
+ * Magazine issue cover (M01 family). Best for page 1 of a carousel.
+ * Title is the visual anchor; the optional photo and number anchor are
+ * supporting devices. Don't pack five bullets into the body — that's
+ * EditorialTallLedger's territory.
+ */
 export default function EditorialCover({
-  eyebrow,
+  kicker,
   title,
   subtitle,
-  anchorNumber,
-  anchorLabel,
-  anchorCaption,
+  image,
+  anchor,
+  inkWash,
   children,
 }: EditorialCoverProps) {
   return (
-    <section className="editorial-cover" data-layout="editorial-cover">
+    <section
+      className={`editorial-cover${inkWash ? " with-ink-wash" : ""}`}
+      data-layout="editorial-cover"
+    >
       <header>
-        {eyebrow ? <div className="editorial-cover__eyebrow">{eyebrow}</div> : null}
-        <h1 className="editorial-cover__title">{title}</h1>
-        {subtitle ? <p className="editorial-cover__subtitle">{subtitle}</p> : null}
+        {kicker ? <div className="social-card-kicker">{kicker}</div> : null}
       </header>
 
-      <div>{children}</div>
+      <div>
+        <h1 className="editorial-cover__title">{title}</h1>
+        {subtitle ? <p className="editorial-cover__subtitle">{subtitle}</p> : null}
+      </div>
 
-      {anchorNumber || anchorLabel || anchorCaption ? (
+      {image ? (
+        <figure className="editorial-cover__well">
+          <img src={image.src} alt={image.alt} />
+        </figure>
+      ) : children ? (
+        <div>{children}</div>
+      ) : (
+        <div />
+      )}
+
+      {anchor ? (
         <footer className="editorial-cover__anchor">
-          {anchorNumber ? (
-            <div className="editorial-cover__anchor-number">{anchorNumber}</div>
-          ) : null}
-          {anchorLabel ? (
-            <div className="editorial-cover__anchor-label">{anchorLabel}</div>
-          ) : null}
-          {anchorCaption ? (
-            <div className="editorial-cover__anchor-caption">{anchorCaption}</div>
-          ) : null}
+          <div className="editorial-cover__anchor-number">{anchor.number}</div>
+          <div className="editorial-cover__anchor-meta">
+            <strong>{anchor.label}</strong>
+            {anchor.caption ? <span>{anchor.caption}</span> : null}
+          </div>
         </footer>
       ) : null}
     </section>
