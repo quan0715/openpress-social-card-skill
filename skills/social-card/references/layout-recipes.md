@@ -1,6 +1,6 @@
 # Layout recipes — v1
 
-Six OpenPress-native recipes ship with this skill. Each one is a React component in `press/components/`, used inside MDX cards without imports (OpenPress auto-discovers them).
+Ten OpenPress-native recipes ship with this skill. Each one is a React component in `press/components/`, used inside MDX cards without imports (OpenPress auto-discovers them).
 
 Each recipe expects a specific content shape; matching the shape is the agent's job during the story-plan step. Density floors, anchor requirements, and "minimum content set" lines are not advisory — they prevent the most common failure modes documented in `references/validator-rules.md`.
 
@@ -96,13 +96,93 @@ Each recipe expects a specific content shape; matching the shape is the agent's 
 
 **Don't:** use a logo or icon as the `image`. The well will letterbox and read as broken.
 
+## EditorialEssaySplit (M03 family)
+
+**Use as:** mid-carousel essay page when one idea needs nuance.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | Left-column title or pull. Display serif. |
+| `paragraphs` | yes | 2–3 short paragraphs or numbered fragments. Right column. Plain strings only. |
+| `numbered` | optional | Render the right column as a numbered list instead of paragraphs. |
+
+**Don't:** push 4+ paragraphs into the right column. If the right column gets dense, split into two pages or switch to `MarginaliaEssay` (which adds the marginal column for keywords / fragments without crowding the main column). A title-only page is `PullQuote`, not this.
+
+## EvidenceWall (M06 family)
+
+**Use as:** multi-image proof. Screenshots, references, before-after pairs, small photos that are interpreted together.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `headline` | yes | One headline that interprets the whole wall. Without it the grid reads as decorative. |
+| `images` | yes | 4 for 2×2 layout, 6 for 3×2, or 3 for 3-col. Each must be readable at the final tile size. |
+| `layout` | optional | `"2x2"` (default), `"3-col"`, or `"3x2"`. |
+
+**Don't:** use for decorative imagery. If a single image is the proof, switch to `EvidenceFeature`. If the images don't tile cleanly into the chosen grid, drop one or pick the next layout.
+
+## MarginaliaEssay (M11 family)
+
+**Use as:** the magazine reading-rhythm page. Wide title + main column + narrow marginal column. Use this when `EditorialEssaySplit` feels too empty but `TallLedger` would feel too mechanical.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | Wide title spanning above both columns. |
+| `paragraphs` | yes | 2–3 paragraphs in the main column. |
+| `marginalia` | yes | 3–6 entries, each `{ keyword, note? }`. Renders as keyword (mono accent) + optional gloss (serif italic muted). |
+
+**Don't:** fill the marginal column with decoration. Every entry should carry meaning — a term needing a gloss, a quote fragment supporting the main paragraph, a page reference. If the column can't be filled meaningfully, drop it and switch to `EditorialEssaySplit`.
+
+## SectionDivider (M12 family)
+
+**Use as:** a mid-carousel breath between act 1 and act 2 of a long (7–9 page) carousel.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | yes | "Act II", "Part 2 of 3", "Section · Findings". Required — without a runner label, the empty page reads as broken. |
+| `title` | yes | 3–6 Chinese characters or short English phrase. Display serif, weight 500. |
+| `subtitle` | optional | One short serif-italic sentence describing the section's promise. |
+| `footer` | optional | Bottom issue strip with section meta — left / middle / right slots. |
+
+The component sets the ink-wash atmosphere automatically; this is the one recipe where atmospheric whitespace is the point.
+
+**Don't:** use as a cover or closing. Readers expect the first and last pages of a carousel to carry the strongest content. The divider is specifically a mid-set device.
+
+## Absorbed upstream recipes
+
+Three upstream recipes don't have separate implementations because they reduce to existing components:
+
+| Upstream | Use this instead |
+| --- | --- |
+| M05 Checklist / Buying Guide | `TallLedger` — same "header + 4–6 numbered rows with consequence" structure |
+| M09 Atmospheric Thesis | `PullQuote` (its WebGL atmosphere is the substrate-boundary boundary case — covered by the ink-wash treatment built into `SectionDivider` if needed) |
+| M13 Hero Question | `PullQuote` with the quote phrased as a question (structurally identical to M04) |
+
+See `visual-grammar.md` § Absorbed by existing recipes for the full reasoning.
+
 ## Choosing between recipes
 
-- If the page should be **read** as a magazine feature → Editorial family (all of the above except SwissStatement).
-- If the page should be **felt** as a graphic statement → `SwissStatement` (alternate Swiss recipe still available in `press/components/`).
-- If the page needs an image as **evidence** → `EvidenceFeature` for screenshots / charts, `FieldNotePhoto` for documentary photos.
-- If the page is **mostly type** → `EditorialCover` (title-led with anchor), `PullQuote` (one sentence), `TallLedger` (enumerated detail), `ClosingLedger` (closing recap).
-
-## Recipes deferred to later versions
-
-Upstream guizang ships additional recipes (M03 Editorial Essay Split, M05 Checklist, M06 Evidence Wall, M09 Atmospheric Thesis, M11 Marginalia Essay, M12 Section Divider, M13 Hero Question). These can be added by following the same pattern — React component + CSS class + entry in this file + identity rules in `validator-rules.md`. They're absent in v1 to keep the first slice small enough to validate end-to-end.
+- If the page should be **read** as a magazine feature → Editorial family (everything except `SwissStatement`).
+- If the page should be **felt** as a graphic statement → `SwissStatement`.
+- If the page needs an image as **evidence** →
+  - one large image → `EvidenceFeature`
+  - documentary photo + caption → `FieldNotePhoto`
+  - multiple small images interpreted together → `EvidenceWall`
+- If the page is **mostly type** →
+  - title-led with anchor → `EditorialCover`
+  - one sentence → `PullQuote`
+  - two-column essay → `EditorialEssaySplit`
+  - three-column with margin notes → `MarginaliaEssay`
+  - enumerated detail → `TallLedger`
+  - closing recap → `ClosingLedger`
+- If the carousel is **long (7–9 pages)** and needs a breath → drop a `SectionDivider` between acts.

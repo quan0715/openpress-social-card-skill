@@ -531,6 +531,301 @@
 }
 
 /* ============================================================
+   Additional Editorial recipes (M03 / M06 / M11 / M12 family)
+   ============================================================ */
+
+/* ---- M03 EditorialEssaySplit ---- */
+
+.editorial-essay-split {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr 1px 1.4fr;
+  column-gap: 48px;
+  font-family: var(--social-card-font-display);
+  color: var(--openpress-color-ink);
+}
+
+.editorial-essay-split__left {
+  display: grid;
+  align-content: start;
+  gap: 24px;
+}
+
+.editorial-essay-split__title {
+  font-size: 72px;
+  font-weight: var(--social-card-headline-weight);
+  letter-spacing: var(--social-card-headline-tracking);
+  line-height: var(--social-card-headline-lh);
+  margin: 0;
+}
+
+.editorial-essay-split__rule {
+  background: var(--openpress-color-line);
+  width: 1px;
+}
+
+.editorial-essay-split__right {
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body);
+  line-height: var(--social-card-body-lh);
+}
+
+.editorial-essay-split__paragraph {
+  margin: 0;
+}
+
+.editorial-essay-split__numbered {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 28px;
+  counter-reset: essay-split;
+}
+
+.editorial-essay-split__numbered li {
+  position: relative;
+  padding-left: 76px;
+  counter-increment: essay-split;
+}
+
+.editorial-essay-split__numbered li::before {
+  content: counter(essay-split, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--social-card-font-meta);
+  font-size: var(--social-card-micro);
+  letter-spacing: 0.18em;
+  color: var(--openpress-accent);
+}
+
+/* ---- M06 EvidenceWall ---- */
+
+.editorial-evidence-wall {
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto 1fr;
+  row-gap: 32px;
+}
+
+.editorial-evidence-wall__head {
+  display: grid;
+  gap: 12px;
+}
+
+.editorial-evidence-wall__headline {
+  font-family: var(--social-card-font-display);
+  font-size: var(--social-card-headline);
+  font-weight: var(--social-card-headline-weight);
+  letter-spacing: var(--social-card-headline-tracking);
+  line-height: var(--social-card-headline-lh);
+  margin: 0;
+}
+
+.editorial-evidence-wall__grid {
+  display: grid;
+  gap: 24px;
+}
+
+.editorial-evidence-wall[data-grid="2x2"] .editorial-evidence-wall__grid {
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+}
+
+.editorial-evidence-wall[data-grid="3-col"] .editorial-evidence-wall__grid {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 1fr;
+}
+
+.editorial-evidence-wall[data-grid="3x2"] .editorial-evidence-wall__grid {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: 1fr;
+}
+
+.editorial-evidence-wall__tile {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 10px;
+  margin: 0;
+  min-height: 0;
+}
+
+.editorial-evidence-wall__well {
+  background: var(--openpress-color-paper-2);
+  overflow: hidden;
+}
+
+.editorial-evidence-wall__well img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.editorial-evidence-wall__caption {
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-micro);
+  line-height: var(--social-card-body-lh);
+  color: var(--openpress-color-muted);
+  font-style: italic;
+}
+
+/* ---- M11 MarginaliaEssay ---- */
+
+.editorial-marginalia-essay {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1.6fr 1px 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: 40px;
+  row-gap: 32px;
+  font-family: var(--social-card-font-display);
+  color: var(--openpress-color-ink);
+}
+
+.editorial-marginalia-essay__head {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+}
+
+.editorial-marginalia-essay__title {
+  font-size: var(--social-card-headline);
+  font-weight: var(--social-card-headline-weight);
+  letter-spacing: var(--social-card-headline-tracking);
+  line-height: var(--social-card-headline-lh);
+  margin: 0;
+}
+
+.editorial-marginalia-essay__main {
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body);
+  line-height: var(--social-card-body-lh);
+}
+
+.editorial-marginalia-essay__paragraph {
+  margin: 0;
+}
+
+/* Hairline vertical rule between main and margin columns. The 1px
+   grid column is the rule itself; this border-left rule is the visible
+   stroke. */
+.editorial-marginalia-essay::before {
+  content: "";
+  grid-column: 2;
+  grid-row: 2;
+  background: var(--openpress-color-line);
+  width: 1px;
+}
+
+.editorial-marginalia-essay__margin {
+  display: grid;
+  align-content: start;
+  gap: 24px;
+}
+
+.editorial-marginalia-essay__note {
+  display: grid;
+  gap: 6px;
+}
+
+.editorial-marginalia-essay__keyword {
+  font-family: var(--social-card-font-meta);
+  font-size: var(--social-card-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--openpress-accent);
+}
+
+.editorial-marginalia-essay__gloss {
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body-s);
+  line-height: var(--social-card-body-lh);
+  color: var(--openpress-color-muted);
+  font-style: italic;
+}
+
+/* ---- M12 SectionDivider ---- */
+
+.editorial-section-divider {
+  position: relative;
+  display: grid;
+  height: 100%;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  font-family: var(--social-card-font-display);
+  color: var(--openpress-color-ink);
+}
+
+/* Atmosphere layer local to the divider — independent of the page
+   chrome's optional .with-ink-wash, so this recipe always has the
+   "beat of silence" feeling without needing an MDX modifier. */
+.editorial-section-divider::before {
+  content: "";
+  position: absolute;
+  inset: -96px -88px;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(70% 60% at 30% 30%, var(--openpress-accent-soft), transparent 70%),
+    radial-gradient(60% 60% at 78% 76%, color-mix(in srgb, var(--openpress-color-paper-2) 70%, transparent), transparent 70%);
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+}
+
+.editorial-section-divider__body {
+  display: grid;
+  gap: 24px;
+  align-self: center;
+}
+
+.editorial-section-divider__title {
+  font-size: 132px;
+  font-weight: var(--social-card-display-weight);
+  letter-spacing: var(--social-card-display-tracking);
+  line-height: var(--social-card-display-lh);
+  margin: 0;
+}
+
+.editorial-section-divider__subtitle {
+  font-size: var(--social-card-subhead);
+  font-style: italic;
+  font-weight: var(--social-card-subhead-weight);
+  line-height: var(--social-card-subhead-lh);
+  color: var(--openpress-color-muted);
+  margin: 0;
+}
+
+.editorial-section-divider__footer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--openpress-color-line);
+  font-family: var(--social-card-font-meta);
+  font-size: var(--social-card-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--openpress-color-muted);
+}
+
+.editorial-section-divider__footer-middle {
+  text-align: center;
+}
+
+.editorial-section-divider__footer-right {
+  text-align: right;
+}
+
+/* ============================================================
    Shared image / source primitives (used by ImageWell etc.)
    ============================================================ */
 

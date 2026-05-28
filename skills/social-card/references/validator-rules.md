@@ -92,10 +92,14 @@ Per-recipe density floors (when the rule above is too coarse):
 | --- | --- |
 | EditorialCover | title + (image OR anchor). With neither, the cover reads as a placeholder. |
 | FieldNotePhoto | image filling > 55 % vertical + takeaway + caption. No bare photo. |
+| EditorialEssaySplit | title + ≥ 2 paragraphs (or ≥ 3 numbered fragments). Title alone is `PullQuote`. |
 | PullQuote | kicker + quote + source. Without kicker + source, whitespace reads as missing. |
+| EvidenceWall | headline + ≥ 3 images (for 3-col) or 4 (for 2×2) or 6 (for 3×2). All captioned. |
 | ClosingLedger | title + ≥ 4 ledger rows (each with sub-line) + closing block. 3 short rows fail. |
 | TallLedger | title + ≥ 4 rows, each row ≥ 118 px tall. Bare list of phrases fails. |
 | EvidenceFeature | headline + image filling > 45 % vertical + ≥ 2 takeaways. |
+| MarginaliaEssay | title + ≥ 2 main-column paragraphs + ≥ 3 marginal entries. Marginalia must carry meaning, not decoration. |
+| SectionDivider | kicker + title. Subtitle and footer optional but recommended. This is the one recipe where atmospheric whitespace is intentional. |
 
 ## Type rules
 

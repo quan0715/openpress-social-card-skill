@@ -42,9 +42,10 @@ export script. That stance is non-negotiable — it's the only way the two-layer
 
 - **Target:** Instagram / Facebook / Threads at **1080×1350 (4:5 portrait feed)**. One geometry
   covers all three platforms — they share the same recommended portrait size.
-- **Recipes:** 6 OpenPress-native magazine layouts — `EditorialCover`, `FieldNotePhoto`,
-  `PullQuote`, `ClosingLedger`, `TallLedger`, `EvidenceFeature`. Plus `SwissStatement` as the
-  alternate Swiss-mode primitive. See `references/layout-recipes.md`.
+- **Recipes:** 10 OpenPress-native magazine layouts — `EditorialCover`, `FieldNotePhoto`,
+  `EditorialEssaySplit`, `PullQuote`, `EvidenceWall`, `ClosingLedger`, `TallLedger`,
+  `EvidenceFeature`, `MarginaliaEssay`, `SectionDivider`. Plus `SwissStatement` as the alternate
+  Swiss-mode primitive. See `references/layout-recipes.md`.
 - **Themes:** 6 Editorial palettes (Ink Classic default, Indigo Porcelain, Forest Ink, Kraft
   Paper, Dune, Midnight Ink) + 2 Swiss palettes (IKB Blue, Cinnabar). See
   `references/theme-presets.md`.
@@ -54,8 +55,9 @@ export script. That stance is non-negotiable — it's the only way the two-layer
 - **Export, validation, preview:** owned by OpenPress (current or expected). The skill does not
   ship its own runtime for any of these.
 - **Deferred to v2:** square 1080×1080 (IG / FB), Facebook link-preview 1200×630, per-frame
-  geometry for mixed-ratio carousels, remaining guizang recipes (M03 / M05 / M06 / M09 / M11 /
-  M12 / M13).
+  geometry for mixed-ratio carousels. Three upstream guizang recipes (M05 / M09 / M13) are
+  absorbed by existing components rather than deferred — see `references/visual-grammar.md`
+  § Absorbed by existing recipes.
 
 ## Workflow
 

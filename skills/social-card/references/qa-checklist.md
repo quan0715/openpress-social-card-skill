@@ -34,10 +34,14 @@ A flat paper + serif title + mono labels everywhere fails — switch to Swiss ho
 
 - EditorialCover: title + (image OR anchor) — neither = placeholder
 - FieldNotePhoto: image > 55 % vertical + takeaway + caption
+- EditorialEssaySplit: title + ≥ 2 paragraphs or ≥ 3 numbered fragments
 - PullQuote: kicker + quote + source — all three are anchor points
+- EvidenceWall: headline + ≥ 3 (3-col) / 4 (2×2) / 6 (3×2) captioned images
 - ClosingLedger: title + ≥ 4 rows (each with sub) + closing block
 - TallLedger: title + ≥ 4 rows, each row ≥ 118 px tall
 - EvidenceFeature: headline + image > 45 % vertical + ≥ 2 takeaways
+- MarginaliaEssay: title + ≥ 2 main paragraphs + ≥ 3 marginal entries
+- SectionDivider: kicker + title (atmospheric whitespace intentional)
 
 If a card doesn't reach its floor: **expand the content or switch to a different recipe**. Don't publish under-filled.
 

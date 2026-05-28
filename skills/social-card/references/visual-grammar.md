@@ -36,12 +36,28 @@ The skill uses **semantic names** for components — the M-series numbering surv
 | --- | --- | --- |
 | `EditorialCover` | M01 Cover | Carousel page 1. Title + optional photo well + big-number anchor. |
 | `FieldNotePhoto` | M02 Field Note Photo | Documentary photo as evidence + narrow caption column. |
+| `EditorialEssaySplit` | M03 Editorial Essay Split | Two columns: title / pull on the left, 2–3 paragraphs or numbered fragments on the right. Thin rule between. |
 | `PullQuote` | M04 Pull Quote / Thesis | A core sentence as the whole page. Required: kicker + source. |
+| `EvidenceWall` | M06 Evidence Wall | 2×2 / 3×2 image grid + headline. Use when multiple small images are interpreted together. |
 | `ClosingLedger` | M07 Closing Note | Final-page ledger (4–6 rows + sub-lines) + closing block. |
 | `TallLedger` | M08 Tall Ledger | Detail-heavy enumeration. 4–6 full-width rows with index + consequence. |
 | `EvidenceFeature` | M10 Evidence Feature | Large image (45–65 % vertical) + headline + takeaways. |
+| `MarginaliaEssay` | M11 Marginalia Essay | Wide title + main column + narrow marginal column with keywords / fragments. Hairline vertical rule. |
+| `SectionDivider` | M12 Section Divider | Mid-carousel breath between dense pages. Kicker + huge title + serif italic subtitle + atmospheric background. |
 
-Additional recipes from upstream (M03, M05, M06, M09, M11, M12, M13) are documented but not implemented in v1. They can be added later by following the same Component + CSS class + recipe contract pattern.
+## Absorbed by existing recipes (not separate components)
+
+Three upstream recipes don't need their own implementation in OpenPress because they reduce to existing components:
+
+| Upstream recipe | Absorbed by | Why |
+| --- | --- | --- |
+| M05 Checklist / Buying Guide | `TallLedger` | Both structures are "header + 4–6 numbered rows with item + consequence". M05's optional small photo crop can be added via a child component if needed, but the row structure is identical. |
+| M09 Atmospheric Thesis | `PullQuote` with `kicker` set + `SectionDivider`-like atmosphere | M09's core device is the WebGL ink-flow background. With WebGL off the table (substrate boundary), M09 reduces to "one thesis + atmospheric whitespace" — which is `PullQuote` plus the optional ink-wash treatment. |
+| M13 Hero Question | `PullQuote` with the `quote` slot phrased as a question | M13 is structurally identical to M04 — single sentence as the whole page. The only difference is rhetorical (question vs statement), which is content, not layout. |
+
+If a future use case demonstrates that one of these *does* need a distinct component (e.g. checklist needs a swatch column, atmospheric thesis grows a distinct identity device), it can be added — but adding redundant components creates maintenance overhead without expressive gain.
+
+The remaining unimplemented upstream entry is none: every upstream non-WebGL recipe is either implemented or explicitly absorbed.
 
 ## Token contract
 
