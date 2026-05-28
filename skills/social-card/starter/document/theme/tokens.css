@@ -1,0 +1,31 @@
+:root {
+  /* Document surface */
+  --openpress-color-app-bg: #0b0b0b;
+  --openpress-color-document: #f6f1e7;
+  --openpress-color-ink: #1a1a1a;
+  --openpress-color-muted: #6b6b66;
+  --openpress-color-line: rgba(26, 26, 26, 0.12);
+  --openpress-accent: #d4391c;
+
+  /* Card padding. Override to change card margins instead of editing
+     theme/base/page-contract.css. */
+  --openpress-page-padding-top: 96px;
+  --openpress-page-padding-x: 88px;
+  --openpress-page-padding-bottom: 96px;
+  --openpress-page-body-gap: 32px;
+
+  /* Typography scale tuned for 1080×1350 viewing at thumbnail size.
+     Floors here are the readable minimums — do not shrink past them. */
+  --social-card-size-eyebrow: 26px;
+  --social-card-size-title: 96px;
+  --social-card-size-subtitle: 40px;
+  --social-card-size-body: 30px;          /* readable floor for body copy */
+  --social-card-size-caption: 22px;       /* readable floor for captions */
+  --social-card-size-bignum: 168px;
+  --social-card-size-stmt: 132px;         /* swiss statement display */
+
+  /* Line heights */
+  --social-card-lh-tight: 1.05;
+  --social-card-lh-snug: 1.18;
+  --social-card-lh-body: 1.35;
+}

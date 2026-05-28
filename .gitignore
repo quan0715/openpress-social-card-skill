@@ -1,0 +1,17 @@
+node_modules/
+.DS_Store
+*.log
+
+# OpenPress generated artifacts (when starter is exercised against a workspace)
+.openpress/
+.deploy/
+.turbo/
+dist/
+dist-react/
+public/openpress/
+output/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp

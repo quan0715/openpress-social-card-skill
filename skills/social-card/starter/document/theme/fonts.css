@@ -1,0 +1,9 @@
+/* Web-safe fallback chain. Replace with local @font-face entries if you
+   want a specific brand face — keep PingFang / Noto Sans TC as the CJK
+   fallback so Traditional Chinese type renders correctly. */
+
+:root {
+  --openpress-font-body: Inter, "PingFang TC", "Noto Sans TC", sans-serif;
+  --openpress-font-serif: "Source Serif Pro", "Noto Serif TC", Georgia, serif;
+  --openpress-font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
+}
