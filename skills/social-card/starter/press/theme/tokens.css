@@ -6,15 +6,19 @@
      Override per project via [data-theme="..."] on a parent element, or
      edit these tokens directly to land a custom brand. See
      references/theme-presets.md for the six bundled palettes. */
-  --openpress-color-document: #f3f0e8;
-  --openpress-color-paper-2: #ebe6da;
-  --openpress-color-ink: #0a0a0b;
-  --openpress-color-muted: #68625a;
-  --openpress-color-line: rgba(10, 10, 11, 0.22);
-  --openpress-accent: #111111;
-  --openpress-accent-soft: #d8d2c6;
+  --openpress-color-document: #fdfdfc;
+  --openpress-color-paper-2: #eee8dc;
+  --openpress-color-ink: #16251b;
+  --openpress-color-muted: #677168;
+  --openpress-color-line: rgba(22, 37, 27, 0.20);
+  --openpress-accent: #2e6b4f;
+  --openpress-accent-soft: #e8eee6;
+  --openpress-ink-rgb: 22, 37, 27;
+  --openpress-paper-rgb: 253, 253, 252;
+  --openpress-accent-rgb: 46, 107, 79;
 
-  /* Card padding (1080 × 1350 page). Override to change card margins
+  /* Card padding (1080 × 1440 page). Mirrors the Guizang editorial seed:
+     .poster.xhs .content { padding: 96px 88px; }.
      instead of editing theme/base/page-contract.css. */
   --openpress-page-padding-top: 96px;
   --openpress-page-padding-x: 88px;
@@ -24,43 +28,44 @@
   /* Type scale — "the larger, the lighter" rule.
      Display weight is medium (500) with wide tracking;
      small text weight is medium (500) with much wider tracking.
-     Body floors are readable at IG/FB/Threads thumbnail size (≈200 px wide). */
+     Body floors are readable at social-feed thumbnail size (≈200 px wide). */
 
-  --social-card-display: 112px;
+  --social-card-display: 104px;
   --social-card-display-weight: 500;
-  --social-card-display-tracking: 0.04em;
-  --social-card-display-lh: 1.05;
+  --social-card-display-tracking: 0.035em;
+  --social-card-display-lh: 1.08;
 
   --social-card-headline: 64px;
   --social-card-headline-weight: 500;
   --social-card-headline-tracking: 0.02em;
   --social-card-headline-lh: 1.12;
 
-  --social-card-subhead: 38px;
+  --social-card-subhead: 36px;
   --social-card-subhead-weight: 400;
   --social-card-subhead-lh: 1.25;
 
-  --social-card-body-l: 34px;
-  --social-card-body: 30px;          /* readable floor for body */
-  --social-card-body-s: 26px;
+  --social-card-body-l: 28px;
+  --social-card-body: 24px;          /* editorial seed body default */
+  --social-card-body-s: 22px;
   --social-card-body-weight: 400;
-  --social-card-body-lh: 1.45;
+  --social-card-body-lh: 1.65;
 
-  --social-card-caption: 24px;
-  --social-card-micro: 22px;          /* readable floor for small text */
+  --social-card-caption: 20px;
+  --social-card-micro: 18px;
 
-  --social-card-kicker: 22px;
+  --social-card-kicker: 21px;
   --social-card-kicker-weight: 500;
   --social-card-kicker-tracking: 0.22em;
 
-  --social-card-bignum: 192px;
+  --social-card-bignum: 168px;
   --social-card-bignum-weight: 500;
   --social-card-bignum-lh: 0.92;
 
   /* Grain layer opacity. Light themes use multiply blend; the dark
      Midnight Ink theme overrides this with screen blend below. */
-  --social-card-grain-opacity: 0.35;
+  --social-card-grain-opacity: 0.16;
   --social-card-grain-blend: multiply;
+  --social-card-paper-wash-opacity: 0.08;
 }
 
 /* ============================================================
@@ -75,6 +80,9 @@
   --openpress-color-line: rgba(10, 31, 61, 0.20);
   --openpress-accent: #315d93;
   --openpress-accent-soft: #d7e1ec;
+  --openpress-ink-rgb: 10, 31, 61;
+  --openpress-paper-rgb: 242, 244, 245;
+  --openpress-accent-rgb: 49, 93, 147;
 }
 
 [data-theme="forest-ink"] {
@@ -85,6 +93,9 @@
   --openpress-color-line: rgba(22, 37, 27, 0.22);
   --openpress-accent: #2e6b4f;
   --openpress-accent-soft: #d4dfd2;
+  --openpress-ink-rgb: 22, 37, 27;
+  --openpress-paper-rgb: 245, 241, 232;
+  --openpress-accent-rgb: 46, 107, 79;
 }
 
 [data-theme="kraft-paper"] {
@@ -95,6 +106,9 @@
   --openpress-color-line: rgba(42, 30, 19, 0.24);
   --openpress-accent: #9b5a2e;
   --openpress-accent-soft: #d5b58f;
+  --openpress-ink-rgb: 42, 30, 19;
+  --openpress-paper-rgb: 238, 223, 199;
+  --openpress-accent-rgb: 155, 90, 46;
 }
 
 [data-theme="dune"] {
@@ -105,6 +119,9 @@
   --openpress-color-line: rgba(31, 26, 20, 0.22);
   --openpress-accent: #8f7650;
   --openpress-accent-soft: #d4c2a4;
+  --openpress-ink-rgb: 31, 26, 20;
+  --openpress-paper-rgb: 240, 230, 210;
+  --openpress-accent-rgb: 143, 118, 80;
 }
 
 /* Midnight Ink — the only sanctioned dark Editorial palette.
@@ -120,9 +137,13 @@
   --openpress-color-line: rgba(236, 226, 207, 0.22);
   --openpress-accent: #d4a04a;
   --openpress-accent-soft: #3a2a14;
+  --openpress-ink-rgb: 236, 226, 207;
+  --openpress-paper-rgb: 14, 13, 12;
+  --openpress-accent-rgb: 212, 160, 74;
 
   --social-card-grain-opacity: 0.28;
   --social-card-grain-blend: screen;
+  --social-card-paper-wash-opacity: 0.85;
 }
 
 /* ============================================================
@@ -137,9 +158,13 @@
   --openpress-color-line: rgba(10, 10, 10, 0.20);
   --openpress-accent: #002fa7;
   --openpress-accent-soft: #d6dffb;
+  --openpress-ink-rgb: 10, 10, 10;
+  --openpress-paper-rgb: 250, 250, 248;
+  --openpress-accent-rgb: 0, 47, 167;
 
   /* Swiss disables paper grain — flat surfaces are part of the system. */
   --social-card-grain-opacity: 0;
+  --social-card-paper-wash-opacity: 0;
 }
 
 [data-theme="cinnabar"] {
@@ -150,6 +175,10 @@
   --openpress-color-line: rgba(10, 10, 10, 0.20);
   --openpress-accent: #d4391c;
   --openpress-accent-soft: #f8d6cc;
+  --openpress-ink-rgb: 10, 10, 10;
+  --openpress-paper-rgb: 250, 250, 248;
+  --openpress-accent-rgb: 212, 57, 28;
 
   --social-card-grain-opacity: 0;
+  --social-card-paper-wash-opacity: 0;
 }

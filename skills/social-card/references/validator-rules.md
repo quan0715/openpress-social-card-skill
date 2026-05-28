@@ -78,7 +78,7 @@ check:
     - under-filled: empty with no reason
   pass conditions:
     1. filled + justified-empty bands cover ≥ 100 %
-    2. filled bands cover ≥ 70 % of canvas height (≥ 945 px of 1350 px)
+    2. filled bands cover ≥ 70 % of canvas height (≥ 1008 px of 1440 px)
     3. no two adjacent bands are both justified-empty
 reason: |
   Under-filled cards read as "PowerPoint with a missing element" at
@@ -108,11 +108,11 @@ Per-recipe density floors (when the rule above is too coarse):
 ```
 applies_to: all elements rendering body copy
 severity: error
-check: computed font-size >= 30px for body, >= 22px for caption
+check: computed font-size >= 24px for body, >= 18px for caption
 reason: |
-  Cards are viewed at IG/FB/Threads feed thumbnail size (≈ 200 px wide).
-  Body smaller than 30 px is unreadable in feed; captions smaller than
-  22 px disappear.
+  Cards are viewed at social feed thumbnail size (≈ 200 px wide).
+  Body smaller than 24 px loses the Editorial reading texture; captions
+  smaller than 18 px disappear.
 ```
 
 ### `title-character-cap`
@@ -124,7 +124,7 @@ check:
   - Chinese: <= 14 characters per line; total <= 24 characters
   - Latin: <= 28 characters per line; total <= 60 characters
 reason: |
-  Cover headlines must read at IG thumbnail size. Long headlines wrap
+  Cover headlines must read at social-feed thumbnail size. Long headlines wrap
   unpredictably and the focal point is lost.
 ```
 

@@ -43,11 +43,14 @@ fail-with-substrate-gap protocol.
 
 ## GAP-2 · Validation runtime
 
-**Status:** waiting for OpenPress `openpress validate` / `openpress inspect`.
+**Status:** base OpenPress `validate` / `inspect` exists; domain-specific
+social-card rules still need a framework hook.
 
-**Observed:** the design spec § 8.4 sketches a validator-hook contract,
-but neither that hook nor a free-standing `openpress validate` exists in
-the framework yet.
+**Observed:** the current OpenPress workspace can run `validate` and
+`inspect` for build/overflow sanity. The remaining missing piece is the
+validator-hook contract sketched in design spec § 8.4: skills still need a
+way to register domain-specific checks such as minimum density, tiny type,
+missing sources, and editorial/swiss identity drift.
 
 **Workaround in this skill: none.** A previous version shipped
 `scripts/validate-social-card.mjs`, a Playwright-based validator. It was
@@ -61,10 +64,9 @@ the framework yet.
 
 **Framework side closes this gap by:**
 
-1. Shipping `openpress validate` (or `openpress inspect`) with documented
-   exit codes — non-zero on "no cards found" too, since false-green is the
-   anti-pattern.
-2. Optionally exposing a `validators: [path, …]` hook in
+1. Keeping `openpress validate` / `openpress inspect` as the mandatory
+   baseline with documented non-zero exit codes.
+2. Exposing a `validators: [path, …]` hook in
    `press/openpress.config.mjs` so skills can register domain-specific rules
    (overflow / density / small-type for social cards) without spawning
    their own runtime.
@@ -81,15 +83,15 @@ register them through OpenPress's contract, not run its own runtime.
 
 **Status:** deferred to framework v2 per spec § 8.3 + § 13.5.
 
-**Observed:** mixed-ratio carousels (e.g. 4:5 hero + 1:1 detail, or any
-combination across IG / FB / Threads variants + FB link preview) need
+**Observed:** mixed-ratio carousels (e.g. 3:4 hero + 1:1 detail, or any
+combination across Rednote, IG / FB / Threads variants + link preview) need
 per-frame geometry. Current `config.page` is workspace-level, so two
 ratios in one workspace is not supported.
 
 **Workaround in this skill:**
 
-- v1 targets only IG / FB / Threads 1080×1350 — single ratio.
-- Square 1080×1080 and FB link-preview 1200×630 explicitly deferred
+- v1 targets only 1080×1440 editorial portrait — single ratio.
+- 4:5 feed, square 1080×1080, and FB link-preview 1200×630 explicitly deferred
   (`SKILL.md` § First-slice scope).
 
 **Framework side closes this gap by:**
@@ -100,8 +102,8 @@ ratios in one workspace is not supported.
 
 **This skill closes its side by:**
 
-- Adding square 1080×1080 + FB link-preview 1200×630 layouts.
-- Adding mixed-ratio carousel composition (e.g. 4:5 hero + 1:1 detail in one
+- Adding 4:5 feed, square 1080×1080, and FB link-preview 1200×630 layouts.
+- Adding mixed-ratio carousel composition (e.g. 3:4 hero + 1:1 detail in one
   workspace).
 
 ---
@@ -164,11 +166,11 @@ not need to know about.
 | Gap | Lives where now | Closed by | Cross-repo? |
 | --- | --- | --- | --- |
 | 1 PNG export | not in skill — waiting on `openpress export png` | Framework: ship `openpress export png` | Yes |
-| 2 Validation runtime | not in skill — waiting on `openpress validate` | Framework: ship `openpress validate` (+ optional config hook) | Yes |
+| 2 Validation runtime | base exists; skill rules waiting on validator hook | Framework: expose optional config hook | Yes |
 | 3 Per-frame geometry | deferred (v1 scope only) | Framework v2 | Yes, later |
 | 4 ~~`document/` vs `press/`~~ | **resolved** — starter uses `press/` | — | — |
 | 5 ~~Skill-with-starter pack resolution~~ | **OBSOLETE** — skill owns starter, agent copies from installed skill dir | — | — |
-| 6 Spec names XHS / WeChat as v1 target | implementation pivoted to IG / FB / Threads | Codex / spec owner: update spec § 6.1, § 13, § 14.2 | Spec-only |
+| 6 Spec names XHS / WeChat as v1 target | aligned — starter uses 1080×1440 editorial card geometry | — | — |
 | 7 Spec § 14 contract assumes pack-fetch model | superseded by skill-first bootstrap (GAP-5 obsolete) | Codex / spec owner: rewrite § 14.1 + § 14.3 around `skills add` flow | Spec-only |
 
 If a new gap is discovered during implementation, append a new section
@@ -177,30 +179,20 @@ the user's go-ahead.
 
 ---
 
-## GAP-6 · Design spec still names Xiaohongshu / WeChat as targets
+## GAP-6 · ~~Design spec still names Xiaohongshu / WeChat as targets~~ Resolved
 
-**Status:** spec out of sync with implementation direction (Codex / spec
-owner to update).
+**Status:** resolved on the skill side. The starter is back on the
+1080×1440 editorial portrait baseline.
 
 **Observed:** `docs/superpowers/specs/2026-05-28-openpress-social-card-skill-design.md`
 in the framework repo describes the first-slice target as **Xiaohongshu
 1080×1440** with WeChat 21:9 + 1:1 covers as v2 follow-ups (§ 6.1, § 13.2,
-§ 14.2 done-when criteria). The user has since redirected this skill to
-**Instagram / Facebook / Threads 1080×1350**.
+§ 14.2 done-when criteria).
 
-**Workaround in this skill:** the implementation has already pivoted. All
-runtime artifacts (`openpress.config.mjs`, `index.tsx`, references, README,
-SKILL.md) target IG / FB / Threads at 1080×1350. The spec's XHS/WeChat
-language is no longer authoritative.
+**Decision in this skill (2026-05-29):** keep the original 1080×1440
+editorial card geometry as the visual baseline. Future 1080×1350 / square /
+link-preview variants should be added as explicit geometries, not by
+quietly retuning the baseline.
 
-**Framework / spec side closes this gap by:**
-
-1. Updating the design spec § 6.1 page-geometry list to read
-   `social-4x5: 1080×1350` as the v1 target.
-2. Updating § 13 implementation decisions and § 14.2 done-when criteria
-   accordingly.
-3. Moving Xiaohongshu / WeChat from "first target" to "alternate regional
-   targets" — they can still be valid future packs but are not the v1
-   reference implementation.
-
-**This skill closes its side by:** no action — already pivoted.
+**This skill closes its side by:** aligning `openpress.config.mjs`,
+`index.tsx`, references, README, and SKILL.md around 1080×1440.

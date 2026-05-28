@@ -24,7 +24,7 @@ A flat paper + serif title + mono labels everywhere fails — switch to Swiss ho
 ## Mechanical (will hook into `openpress validate`)
 
 - [ ] **No overflow** on any card. Footer not crashed by content above.
-- [ ] **No text below floors**: body ≥ 30 px, caption / micro ≥ 22 px.
+- [ ] **No text below floors**: body ≥ 24 px, caption / micro ≥ 18 px.
 - [ ] **4-band density**: classify each 25 % horizontal band as filled / justified-empty / under-filled. Filled bands ≥ 70 % of canvas height; no adjacent justified-empty bands.
 - [ ] **Title character cap**: cover headlines ≤ 14 Chinese chars or 28 Latin chars per line; total ≤ 24 / 60.
 - [ ] **One accent** across the entire carousel.
@@ -49,7 +49,7 @@ If a card doesn't reach its floor: **expand the content or switch to a different
 
 ### Type
 
-- [ ] Cover title reads at IG/FB/Threads feed thumbnail size (≈ 200 px wide).
+- [ ] Cover title reads at social-feed thumbnail size (≈ 200 px wide).
 - [ ] No line of body text exceeds 24 Chinese chars / 80 Latin chars.
 - [ ] Display weight is 500 (Editorial) or ≤ 300 (Swiss) — no surprise bold headlines.
 - [ ] Kicker / meta / labels are weight 500 with wide tracking (≈ 0.22em).

@@ -1,6 +1,6 @@
 ---
 name: social-card
-description: Use when generating fixed-size social cards (Instagram / Facebook / Threads, 1080×1350 portrait) from a source article, brief, or topic. Owns intake, story planning, visual stance, layout selection, image strategy, and review. Renders, edits, comments, and exports happen in OpenPress — do not reimplement those.
+description: Use when generating fixed-size editorial social cards (Rednote/Xiaohongshu-style 1080×1440 portrait) from a source article, brief, or topic. Owns intake, story planning, visual stance, layout selection, image strategy, and review. Renders, edits, comments, and exports happen in OpenPress — do not reimplement those.
 ---
 
 # Social Card Skill
@@ -40,8 +40,8 @@ export script. That stance is non-negotiable — it's the only way the two-layer
 
 ## First-slice scope (v1)
 
-- **Target:** Instagram / Facebook / Threads at **1080×1350 (4:5 portrait feed)**. One geometry
-  covers all three platforms — they share the same recommended portrait size.
+- **Target:** editorial portrait cards at **1080×1440 (3:4)**, matching the original
+  guizang/Rednote visual baseline.
 - **Recipes:** 10 OpenPress-native magazine layouts — `EditorialCover`, `FieldNotePhoto`,
   `EditorialEssaySplit`, `PullQuote`, `EvidenceWall`, `ClosingLedger`, `TallLedger`,
   `EvidenceFeature`, `MarginaliaEssay`, `SectionDivider`. Plus `SwissStatement` as the alternate
@@ -54,7 +54,7 @@ export script. That stance is non-negotiable — it's the only way the two-layer
   guidance (see `references/qa-checklist.md`).
 - **Export, validation, preview:** owned by OpenPress (current or expected). The skill does not
   ship its own runtime for any of these.
-- **Deferred to v2:** square 1080×1080 (IG / FB), Facebook link-preview 1200×630, per-frame
+- **Deferred to v2:** square 1080×1080, 4:5 feed 1080×1350, Facebook link-preview 1200×630, per-frame
   geometry for mixed-ratio carousels. Three upstream guizang recipes (M05 / M09 / M13) are
   absorbed by existing components rather than deferred — see `references/visual-grammar.md`
   § Absorbed by existing recipes.
@@ -69,8 +69,8 @@ context calls for it.
 
 Ask once, in one message:
 
-1. **Target platform(s)** — Instagram, Facebook, Threads (v1 supports all three at 1080×1350).
-   Square 1080×1080 and FB link-preview 1200×630 are deferred to v2.
+1. **Target platform(s)** — v1 defaults to 1080×1440 editorial portrait. Square, 4:5 feed,
+   and FB link-preview variants are deferred to v2.
 2. **Source material** — paste text, link, or attached file. If only a topic is given, ask whether
    to research first or to brainstorm a draft together.
 3. **Image availability** — does the user have photos / screenshots / brand assets, or should the
@@ -101,9 +101,9 @@ Produce a page-by-page plan **before** touching the workspace. Match each page t
 from `references/layout-recipes.md`. Keep it short:
 
 ```
-Page 1  cover       EditorialCover     title + subtitle + big-number anchor
-Page 2  thesis      PullQuote          one core sentence + kicker + source
-Page 3  evidence    EvidenceFeature    headline + screenshot + takeaways
+Page 1  cover       EditorialCover     title + subtitle + image + issue strip
+Page 2  field note  FieldNotePhoto     documentary image + takeaway + caption
+Page 3  essay       EditorialEssaySplit title + 2-3 fragments
 Page 4  ledger      TallLedger         4-6 detailed rows
 Page 5  closing     ClosingLedger      summary ledger + closing quote
 ```
@@ -137,10 +137,24 @@ Bootstrap flow:
 npx @open-press/cli@next init my-cards
 cd my-cards
 
-# 2. Resolve this skill's installed location. Path differs per agent harness:
-#    - Codex:        ${CODEX_HOME:-$HOME/.codex}/skills/social-card
-#    - Claude Code:  $HOME/.claude/skills/social-card
-SOCIAL_CARD_SKILL_DIR="${CODEX_HOME:-$HOME/.codex}/skills/social-card"
+# 2. Resolve this skill's installed location. Path differs by harness
+#    and by whether `skills add` installed into the current workspace.
+for candidate in \
+  "$PWD/.agents/skills/social-card" \
+  "$HOME/.agents/skills/social-card" \
+  "${CODEX_HOME:-$HOME/.codex}/skills/social-card" \
+  "$HOME/.claude/skills/social-card"
+do
+  if [ -d "$candidate/starter/press" ]; then
+    SOCIAL_CARD_SKILL_DIR="$candidate"
+    break
+  fi
+done
+
+if [ -z "${SOCIAL_CARD_SKILL_DIR:-}" ]; then
+  echo "social-card skill starter not found" >&2
+  exit 1
+fi
 
 # 3. Replace the default press/ with this skill's starter.
 rm -rf press
@@ -163,7 +177,7 @@ validated against (see the `Compatibility` note in `README.md` if present, other
 starter as illustrative). When the starter and the installed `@open-press/core` disagree:
 
 1. Read https://open-press.dev/docs and the installed `@open-press/core` type definitions.
-2. Make the smallest migration that preserves the skill's intent — IG / FB / Threads 1080×1350
+2. Make the smallest migration that preserves the skill's intent — 1080×1440 editorial
    portrait cards, MDX-driven, Editorial / Swiss visual systems, source-backed and editable.
 3. Then continue with the workflow.
 

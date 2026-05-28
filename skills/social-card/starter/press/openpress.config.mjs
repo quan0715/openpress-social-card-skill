@@ -1,12 +1,12 @@
-// social-card starter — IG / Facebook / Threads 1080×1350 carousel workspace.
+// social-card starter — editorial portrait 1080×1440 carousel workspace.
 export default {
   title: "Social Card",
 
   page: {
-    id: "social-4x5",
-    label: "IG / FB / Threads 1080×1350",
+    id: "social-xhs-3x4",
+    label: "Rednote / Editorial 1080×1440",
     width: "1080px",
-    height: "1350px",
+    height: "1440px",
   },
 
   sourceDir: "cards",

@@ -12,7 +12,7 @@ export interface TallLedgerProps {
   kicker?: string;
   /** Page title — what the ledger is enumerating. */
   title: string;
-  /** 4–6 rows. Each row consumes 118–170 px on a 1080×1350 canvas; do
+  /** 4–6 rows. Each row consumes 118–170 px on a 1080×1440 canvas; do
    * not let the ledger occupy only the middle third of the page. */
   rows: TallLedgerRow[];
 }
@@ -23,7 +23,7 @@ export interface TallLedgerProps {
  * capabilities, agent responsibilities. Each row is a meaningful
  * statement, not a single phrase.
  *
- * Anti-pattern: a 3-row ledger floating in the middle of a 1080×1350
+ * Anti-pattern: a 3-row ledger floating in the middle of a 1080×1440
  * canvas. If you only have 3 items, either expand each into title +
  * consequence + example, or switch to ClosingLedger which can wrap
  * with a quote / signature.

@@ -1,13 +1,13 @@
 # openpress-social-card-skill
 
-> 為 OpenPress 設計的社群卡片(Instagram / Facebook / Threads)生成 skill。從 `guizang-social-card-skill` 的工作流啟發,重寫成 OpenPress-native 的版本,版面以 IG/FB/Threads 通用的 1080×1350 portrait 為主。
+> 為 OpenPress 設計的社群卡片生成 skill。從 `guizang-social-card-skill` 的工作流啟發,重寫成 OpenPress-native 的版本,首要版面對齊原 Editorial / Rednote 1080×1440 portrait。
 
 [![License](https://img.shields.io/badge/license-MIT-black)](LICENSE)
 [![Status](https://img.shields.io/badge/status-WIP%20scaffold-orange)](#status)
 
 ## Status
 
-**v0 — scaffold only.** The skill workflow, starter, and reference docs are in place; rendering, preview, export, and validation are explicitly OpenPress's responsibility (not shipped from this skill — see § What this skill tests). Not usable as a finished skill until the OpenPress side ships the commands listed in § Expected future OpenPress commands.
+**v0 — starter smoke-tested against current OpenPress 1.0 workspace contract.** The skill workflow, starter, and reference docs are in place; rendering, preview, export, and validation remain OpenPress's responsibility (not shipped from this skill — see § What this skill tests). PNG export is still waiting on the OpenPress side.
 
 See the design spec (developed in the OpenPress framework repo) at `docs/superpowers/specs/2026-05-28-openpress-social-card-skill-design.md` for what this skill is meant to do.
 
@@ -20,7 +20,7 @@ An **external skill** that targets OpenPress's fixed-layout application layer.
 
 This is the first external reference implementation of OpenPress's two-layer product model. See the OpenPress repo's `docs/product-boundary` for the model.
 
-First-slice target: **IG / Facebook / Threads 1080×1350 (4:5 portrait feed)**. Square 1080×1080 and Facebook link-preview 1200×630 are tracked for v2.
+First-slice target: **Editorial portrait 1080×1440 (3:4)**, matching the original social-card visual baseline. Square, 4:5 feed, and link-preview variants are tracked as future geometry work.
 
 ## Attribution / 致謝
 
@@ -68,12 +68,12 @@ When invoked, the agent typically:
 
 1. **Intakes first.** Asks about target platform, source text, image availability, visual stance, and constraints. Card generation comes after intake, not before.
 2. **Ensures an OpenPress workspace is in place.** Runs `npx @open-press/cli@next init` if the working directory isn't one. No `--pack` — this skill provides the starter.
-3. **Uses this skill's installed starter as the starting point.** Reads from the installed skill directory (e.g. `${CODEX_HOME:-$HOME/.codex}/skills/social-card/starter/press/` for Codex, `$HOME/.claude/skills/social-card/starter/press/` for Claude Code) and copies it into the workspace. If the starter doesn't match the installed OpenPress version, reads the latest OpenPress docs + `@open-press/core` types and does the smallest migration to land the same intent.
+3. **Uses this skill's installed starter as the starting point.** Reads from the installed skill directory (first check `./.agents/skills/social-card/starter/press/`, then `$HOME/.agents/skills/social-card/`, `${CODEX_HOME:-$HOME/.codex}/skills/social-card/`, and `$HOME/.claude/skills/social-card/`) and copies it into the workspace. If the starter doesn't match the installed OpenPress version, reads the latest OpenPress docs + `@open-press/core` types and does the smallest migration to land the same intent.
 4. **Edits source, not output.** Modifies MDX cards, theme tokens, and layout components in the workspace; renders flow from source.
 5. **Renders and validates via OpenPress commands.** `npm run dev` for preview, `npm run build` / `openpress:pdf` for output, `openpress validate` and `openpress export png` once they ship. If a needed command isn't present in the installed OpenPress version, the agent should stop and report the missing substrate capability — **not** implement a skill-local renderer or validator.
 6. **Logs web-sourced images.** Every image not supplied by the user gets an entry in `press/media/SOURCES.md` with URL + license + retrieval date before it can be referenced.
 
-The spirit of the skill: it's a guide and a starting point, not a rulebook. The agent owns the implementation; the skill owns the intent — IG / FB / Threads 1080×1350 carousels, MDX-driven, source-backed, OpenPress-as-substrate. If the agent finds a better way to land the intent, take it.
+The spirit of the skill: it's a guide and a starting point, not a rulebook. The agent owns the implementation; the skill owns the intent — 1080×1440 editorial social cards, MDX-driven, source-backed, OpenPress-as-substrate. If the agent finds a better way to land the intent, take it.
 
 The point of this skill is not to test OpenPress's template system. It is to demonstrate that a skill can correctly route an agent into OpenPress's substrate — workspace, source files, comments, render, export — without reinventing any of it.
 

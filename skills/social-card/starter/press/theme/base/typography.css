@@ -13,37 +13,59 @@
   color: var(--openpress-color-ink);
   font-family: var(--social-card-font-body, var(--openpress-font-serif));
   overflow: hidden;
+  isolation: isolate;
 }
 
 /* Paper grain — required for the Editorial identity test.
-   SVG turbulence noise rendered as a data-URI, blended over the
-   document background. Disabled (opacity 0) on Swiss palettes. */
+   Guizang's original editorial seed uses a tiny dotted paper speckle,
+   not a heavy black vignette. Keep this subtle so light palettes stay
+   paper-like instead of grey. Disabled (opacity 0) on Swiss palettes. */
 .reader-page--social-card::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>");
-  background-size: 220px 220px;
+  background-image: radial-gradient(
+    rgba(var(--openpress-ink-rgb), 0.045) 1px,
+    transparent 1px
+  );
+  background-size: 3px 3px;
   opacity: var(--social-card-grain-opacity);
   mix-blend-mode: var(--social-card-grain-blend);
 }
 
-/* Optional ink-wash atmosphere — paper grain alone is enough for the
-   identity test, but covers, dividers, pull quotes, and atmospheric
-   closing pages benefit from a soft contour. Apply via the
-   `.with-ink-wash` modifier on the page-frame container. */
-.reader-page--social-card.with-ink-wash::after {
+/* Paper wash — the second half of the Editorial background system.
+   The base wash is a faint vertical ink tone, close to Guizang's
+   template. Pages that opt into `.with-ink-wash` add localized
+   atmosphere without blackening the whole card. */
+.reader-page--social-card::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--openpress-ink-rgb), 0.02),
+    rgba(var(--openpress-ink-rgb), 0.045) 60%,
+    rgba(var(--openpress-ink-rgb), 0.065)
+  );
+  opacity: var(--social-card-paper-wash-opacity);
+  mix-blend-mode: multiply;
+}
+
+.reader-page--social-card:has(.with-ink-wash)::after {
   background:
-    radial-gradient(80% 60% at 22% 18%, var(--openpress-accent-soft), transparent 70%),
-    radial-gradient(60% 70% at 82% 88%, color-mix(in srgb, var(--openpress-color-paper-2) 80%, transparent), transparent 75%);
-  opacity: 0.55;
+    radial-gradient(80% 48% at 22% 14%, rgba(var(--openpress-accent-rgb), 0.045), transparent 68%),
+    radial-gradient(68% 54% at 86% 88%, rgba(var(--openpress-ink-rgb), 0.025), transparent 72%),
+    linear-gradient(
+      180deg,
+      rgba(var(--openpress-ink-rgb), 0.018),
+      rgba(var(--openpress-ink-rgb), 0.04) 60%,
+      rgba(var(--openpress-ink-rgb), 0.06)
+    );
+  opacity: var(--social-card-paper-wash-opacity);
   mix-blend-mode: multiply;
 }
 
@@ -131,8 +153,8 @@
 /* ---- M01 EditorialCover ---- */
 
 .editorial-cover {
-  grid-template-rows: auto auto 1fr auto;
-  row-gap: 36px;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  row-gap: 28px;
 }
 
 .editorial-cover__title {
@@ -141,6 +163,7 @@
   letter-spacing: var(--social-card-display-tracking);
   line-height: var(--social-card-display-lh);
   margin: 0;
+  text-wrap: balance;
 }
 
 .editorial-cover__subtitle {
@@ -156,7 +179,9 @@
   position: relative;
   background: var(--openpress-color-paper-2);
   overflow: hidden;
-  min-height: 320px;
+  min-height: 260px;
+  border: 1px solid rgba(var(--openpress-ink-rgb), 0.18);
+  box-shadow: 0 28px 70px -44px rgba(var(--openpress-ink-rgb), 0.36);
 }
 
 .editorial-cover__well img {
@@ -166,50 +191,71 @@
   display: block;
 }
 
+.editorial-cover__lead {
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body-l);
+  font-weight: var(--social-card-body-weight);
+  line-height: 1.55;
+  color: rgba(var(--openpress-ink-rgb), 0.82);
+  margin: 0;
+}
+
 .editorial-cover__anchor {
   display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: end;
-  gap: 28px;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 32px;
   border-top: 1px solid var(--openpress-color-line);
-  padding-top: 24px;
-}
-
-.editorial-cover__anchor-number {
-  font-family: var(--social-card-font-display);
-  font-size: var(--social-card-bignum);
-  font-weight: var(--social-card-bignum-weight);
-  line-height: var(--social-card-bignum-lh);
-  letter-spacing: -0.04em;
-  color: var(--openpress-accent);
-}
-
-.editorial-cover__anchor-meta {
-  display: grid;
-  gap: 8px;
+  padding-top: 18px;
   font-family: var(--social-card-font-meta);
   font-size: var(--social-card-micro);
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--openpress-color-muted);
 }
 
+.editorial-cover__anchor-number {
+  order: 2;
+  font-family: var(--social-card-font-meta);
+  font-size: var(--social-card-micro);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  color: var(--openpress-color-muted);
+  text-align: center;
+}
+
+.editorial-cover__anchor-meta {
+  display: contents;
+}
+
 .editorial-cover__anchor-meta strong {
+  order: 1;
   font-weight: var(--social-card-kicker-weight);
-  color: var(--openpress-color-ink);
+  color: var(--openpress-color-muted);
+}
+
+.editorial-cover__anchor-meta span {
+  order: 3;
+  text-align: right;
 }
 
 /* ---- M02 FieldNotePhoto ---- */
 
 .editorial-field-note {
-  grid-template-rows: 1fr auto;
-  row-gap: 32px;
+  grid-template-rows: auto 1fr;
+  row-gap: 48px;
 }
 
 .editorial-field-note__photo {
   position: relative;
   background: var(--openpress-color-paper-2);
   overflow: hidden;
+  align-self: end;
+  min-height: 0;
+  aspect-ratio: 3 / 4;
+  border: 1px solid rgba(var(--openpress-ink-rgb), 0.14);
+  box-shadow: 0 26px 64px -46px rgba(var(--openpress-ink-rgb), 0.34);
 }
 
 .editorial-field-note__photo img {
@@ -221,27 +267,30 @@
 
 .editorial-field-note__bottom {
   display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 40px;
-  align-items: start;
-  border-top: 1px solid var(--openpress-color-line);
-  padding-top: 24px;
+  grid-template-columns: 7fr 4fr;
+  gap: 48px;
+  align-items: end;
+  min-height: 0;
 }
 
 .editorial-field-note__takeaway {
-  font-size: 56px;
+  font-size: 84px;
   line-height: var(--social-card-headline-lh);
   font-weight: var(--social-card-headline-weight);
   letter-spacing: var(--social-card-headline-tracking);
   margin: 0;
+  max-width: 8.5em;
+  text-wrap: balance;
 }
 
 .editorial-field-note__caption {
   font-family: var(--social-card-font-body);
-  font-size: var(--social-card-body-s);
-  line-height: var(--social-card-body-lh);
+  font-size: 25px;
+  line-height: 1.5;
   color: var(--openpress-color-muted);
-  font-style: italic;
+  margin: 0;
+  border-left: 1px solid var(--openpress-color-line);
+  padding-left: 28px;
 }
 
 /* ---- M04 PullQuote ---- */
@@ -540,6 +589,7 @@
   display: grid;
   height: 100%;
   grid-template-columns: 1fr 1px 1.4fr;
+  grid-template-rows: 1fr auto;
   column-gap: 48px;
   font-family: var(--social-card-font-display);
   color: var(--openpress-color-ink);
@@ -549,6 +599,8 @@
   display: grid;
   align-content: start;
   gap: 24px;
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .editorial-essay-split__title {
@@ -557,20 +609,38 @@
   letter-spacing: var(--social-card-headline-tracking);
   line-height: var(--social-card-headline-lh);
   margin: 0;
+  text-wrap: balance;
 }
 
 .editorial-essay-split__rule {
   background: var(--openpress-color-line);
   width: 1px;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .editorial-essay-split__right {
   display: grid;
   align-content: start;
-  gap: 24px;
+  gap: 0;
+  grid-column: 3;
+  grid-row: 1;
   font-family: var(--social-card-font-body);
   font-size: var(--social-card-body);
   line-height: var(--social-card-body-lh);
+}
+
+.editorial-essay-split__note {
+  grid-column: 1 / -1;
+  align-self: end;
+  max-width: 760px;
+  border-top: 1px solid var(--openpress-color-line);
+  padding-top: 24px;
+  margin: 48px 0 0;
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body-l);
+  line-height: 1.55;
+  color: rgba(var(--openpress-ink-rgb), 0.76);
 }
 
 .editorial-essay-split__paragraph {
@@ -582,14 +652,16 @@
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 28px;
+  gap: 0;
   counter-reset: essay-split;
+  border-top: 1px solid var(--openpress-color-line);
 }
 
 .editorial-essay-split__numbered li {
   position: relative;
-  padding-left: 76px;
+  padding: 22px 0 22px 76px;
   counter-increment: essay-split;
+  border-bottom: 1px solid var(--openpress-color-line);
 }
 
 .editorial-essay-split__numbered li::before {

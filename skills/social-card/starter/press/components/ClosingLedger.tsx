@@ -14,7 +14,7 @@ export interface ClosingLedgerProps {
   kicker?: string;
   /** Big takeaway title for the closing page. ≤ 2 lines. */
   title: string;
-  /** 4–6 ledger rows. Fewer than 4 under-fills 1080×1350; in that case
+  /** 4–6 ledger rows. Fewer than 4 under-fills 1080×1440; in that case
    * either expand each row or switch to PullQuote. */
   rows: ClosingLedgerRow[];
   /** Closing block: pull-quote, signature line, or CTA. One is
@@ -31,7 +31,7 @@ export interface ClosingLedgerProps {
  * closing block. The mood should feel like the end of a magazine
  * feature — not a sales banner.
  *
- * 3 short rows on 1080×1350 is a failure mode. Either expand or switch
+ * 3 short rows on 1080×1440 is a failure mode. Either expand or switch
  * to PullQuote for the closing.
  */
 export default function ClosingLedger({

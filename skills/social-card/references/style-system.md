@@ -107,4 +107,4 @@ These all render without errors but fail the identity tests:
 
 `press/theme/tokens.css` is the single source of truth for palette + type scale + grain settings. Override via `[data-theme="..."]` (for palette swaps) or by editing the file directly (for brand customization).
 
-`press/theme/social-card.css` defines the recipe layout classes. Don't paste inline `style={}` into MDX cards — if a brand needs a token that doesn't exist, add it to `tokens.css` with the `--social-card-` prefix.
+`press/theme/base/typography.css` defines the recipe layout classes. Don't paste inline `style={}` into MDX cards — if a brand needs a token that doesn't exist, add it to `tokens.css` with the `--social-card-` prefix.

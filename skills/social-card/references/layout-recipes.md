@@ -16,7 +16,7 @@ Each recipe expects a specific content shape; matching the shape is the agent's 
 | `title` | yes | 2–4 visual lines. Display serif, weight 500, wide tracking. |
 | `subtitle` | optional | One short serif-italic sentence below the title. |
 | `image` | optional | Photo or illustration in the central well. Use when the image carries meaning, not when filling space. |
-| `anchor` | recommended | `{ number, label, caption? }` — the big-number anchor at the bottom. Single 1–3-digit number with a short uppercase label. |
+| `anchor` | recommended | `{ number, label, caption? }` — the issue strip at the bottom. Use `number: "—"` for the quiet magazine separator. |
 | `inkWash` | optional | Adds a radial atmospheric wash. Use sparingly — covers and pull quotes only. |
 
 **Don't:** stack five bullets in the body. Use `TallLedger` for that.
@@ -63,7 +63,7 @@ Each recipe expects a specific content shape; matching the shape is the agent's 
 | `rows` | yes | 4–6 ledger items, each `{ title, sub }`. Sub-line is required — bare title list is too thin. |
 | `closing` | yes | `{ quote?, signature? }` — at least one. The closing block grounds the page; without it the carousel ends abruptly. |
 
-**Don't:** ship 3 short rows on a 1080×1350 canvas. Either expand each row's `sub` to a meaningful consequence, or switch to `PullQuote`.
+**Don't:** ship 3 short rows on a 1080×1440 canvas. Either expand each row's `sub` to a meaningful consequence, or switch to `PullQuote`.
 
 ## TallLedger (M08 family)
 
@@ -108,6 +108,7 @@ Each recipe expects a specific content shape; matching the shape is the agent's 
 | `title` | yes | Left-column title or pull. Display serif. |
 | `paragraphs` | yes | 2–3 short paragraphs or numbered fragments. Right column. Plain strings only. |
 | `numbered` | optional | Render the right column as a numbered list instead of paragraphs. |
+| `note` | optional | Bottom note spanning both columns. Use when the split needs a lower anchor. |
 
 **Don't:** push 4+ paragraphs into the right column. If the right column gets dense, split into two pages or switch to `MarginaliaEssay` (which adds the marginal column for keywords / fragments without crowding the main column). A title-only page is `PullQuote`, not this.
 

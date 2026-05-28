@@ -12,7 +12,9 @@ export interface EditorialCoverProps {
     src: string;
     alt: string;
   };
-  /** Optional anchor — a big number plus 1–3 short labels. */
+  /** Optional short lead below the cover image. */
+  note?: string;
+  /** Optional issue-strip anchor — label, separator/page number, and caption. */
   anchor?: {
     number: string;
     label: string;
@@ -35,6 +37,7 @@ export default function EditorialCover({
   title,
   subtitle,
   image,
+  note,
   anchor,
   inkWash,
   children,
@@ -62,6 +65,8 @@ export default function EditorialCover({
       ) : (
         <div />
       )}
+
+      {note ? <p className="editorial-cover__lead">{note}</p> : null}
 
       {anchor ? (
         <footer className="editorial-cover__anchor">

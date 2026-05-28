@@ -1,6 +1,6 @@
 ## social-card 0.1
 
-Three IG / Facebook / Threads 1080×1350 layouts: Editorial cover, Editorial evidence, Swiss statement.
+Five 1080×1440 editorial social-card layouts: cover, field note, essay split, ledger, closing.
 
 One MDX file per card, one layout per card. No mixed visual systems.
 

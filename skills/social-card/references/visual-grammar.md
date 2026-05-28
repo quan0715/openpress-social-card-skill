@@ -1,6 +1,6 @@
 # Visual grammar
 
-This is the OpenPress-native magazine grammar the skill ships. It's adapted in clean-room form from the design language of `guizang-social-card-skill` — no source code, CSS, HTML, or assets were copied; what was studied is the public design language (taste, type rules, recipe taxonomy, identity tests).
+This is the OpenPress-native magazine grammar the skill ships. It's adapted in clean-room form from the design language of `guizang-social-card-skill`: the upstream HTML/CSS was used as a measurement reference for page geometry, typography roles, spacing, and recipe proportions, but no source files or assets are copied into this MIT skill.
 
 The skill's job is to bring **a magazine-grade visual vocabulary** into an OpenPress workspace. OpenPress's job is everything else (runtime, preview, render, validation, export).
 
@@ -12,8 +12,9 @@ The skill's job is to bring **a magazine-grade visual vocabulary** into an OpenP
 | Swiss International visual mode | `[data-style="swiss"]` alternate — sans, flat, accent | CSS + components |
 | 6 Editorial palettes | `[data-theme="ink-classic"]` (default) + 5 others | `theme/tokens.css` |
 | Type scale (display / headline / subhead / body / kicker / micro) with "the larger, the lighter" rule | `--social-card-display` / `--social-card-headline` / etc., display weight 500 + wide tracking, kicker weight 500 + very wide tracking | `theme/tokens.css` |
-| Paper grain atmosphere | SVG turbulence noise rendered as a CSS data-URI overlay (no WebGL, no canvas, no JS) | `theme/social-card.css` |
-| Optional ink-wash for covers / quotes | `.with-ink-wash` modifier on the page-frame, soft radial gradient | `theme/social-card.css` |
+| 1080×1440 editorial card geometry | `page.width = 1080px`, `page.height = 1440px`, padding 96px / 88px | `press/index.tsx` + `theme/tokens.css` |
+| Paper grain atmosphere | CSS paper speckle + wash overlay (no WebGL, no canvas, no JS) | `theme/base/typography.css` |
+| Optional ink-wash for covers / quotes | `.with-ink-wash` modifier detected by the page frame, soft localized gradient | `theme/base/typography.css` |
 | Recipe library (M01, M02, M04, M07, M08, M10) | Semantic React components: `EditorialCover`, `FieldNotePhoto`, `PullQuote`, `ClosingLedger`, `TallLedger`, `EvidenceFeature` | `press/components/` |
 | Editorial / Swiss identity tests | Documented in `validator-rules.md`, expected to plug into `openpress validate` when it ships | `references/validator-rules.md` |
 | 4-band density check | Same as above | `references/validator-rules.md` |
@@ -23,10 +24,9 @@ The skill's job is to bring **a magazine-grade visual vocabulary** into an OpenP
 | From guizang | Why not |
 | --- | --- |
 | Seed HTML templates | The starter is an OpenPress workspace, not a template file. JSX + auto-discovered components do the same job. |
-| WebGL ink-flow background | Skill-local runtime — violates the two-layer split. Replaced by CSS radial gradient + SVG noise overlay, which gets ≈90% of the atmosphere with 0% of the runtime cost. |
+| WebGL ink-flow background | Skill-local runtime — violates the two-layer split. Replaced by CSS dotted paper grain + soft wash overlays, which preserve the editorial paper feel without adding a JS runtime. |
 | Playwright PNG export | Owned by OpenPress (`openpress export png`, expected). Skill stops and reports a substrate gap if missing — never ships a stopgap. |
 | Density validator runtime | Owned by OpenPress (`openpress validate`, expected). Rule definitions are kept here as structured specs ready to register when the validator-hook contract lands. |
-| 1080×1440 (Xiaohongshu 3:4) geometry | This skill targets IG / FB / Threads 1080×1350 (4:5). The density / floor numbers are adapted accordingly. |
 
 ## Recipe naming map
 
@@ -34,9 +34,9 @@ The skill uses **semantic names** for components — the M-series numbering surv
 
 | Semantic name | Upstream reference | Best for |
 | --- | --- | --- |
-| `EditorialCover` | M01 Cover | Carousel page 1. Title + optional photo well + big-number anchor. |
+| `EditorialCover` | M01 Cover | Carousel page 1. Title + optional photo well + issue-strip anchor. |
 | `FieldNotePhoto` | M02 Field Note Photo | Documentary photo as evidence + narrow caption column. |
-| `EditorialEssaySplit` | M03 Editorial Essay Split | Two columns: title / pull on the left, 2–3 paragraphs or numbered fragments on the right. Thin rule between. |
+| `EditorialEssaySplit` | M03 Editorial Essay Split | Two columns: title / pull on the left, 2–3 paragraphs or numbered fragments on the right. Thin rule between; optional bottom note anchors the lower canvas. |
 | `PullQuote` | M04 Pull Quote / Thesis | A core sentence as the whole page. Required: kicker + source. |
 | `EvidenceWall` | M06 Evidence Wall | 2×2 / 3×2 image grid + headline. Use when multiple small images are interpreted together. |
 | `ClosingLedger` | M07 Closing Note | Final-page ledger (4–6 rows + sub-lines) + closing block. |
@@ -70,14 +70,14 @@ The remaining unimplemented upstream entry is none: every upstream non-WebGL rec
 --openpress-accent           single accent — sparing use
 --openpress-accent-soft      light tint of accent (washes, backgrounds)
 
---social-card-display        cover headline (≈112px)
+--social-card-display        cover headline (≈104px)
 --social-card-headline       page headline (≈64px)
---social-card-subhead        serif italic subhead (≈38px)
---social-card-body-l/body/body-s   body sizes (34 / 30 / 26 px)
---social-card-caption        24px
---social-card-micro          22px — floor for any small text
---social-card-kicker         22px uppercase mono runner
---social-card-bignum         192px — cover anchor number
+--social-card-subhead        serif italic subhead (≈36px)
+--social-card-body-l/body/body-s   body sizes (28 / 24 / 22 px)
+--social-card-caption        20px
+--social-card-micro          18px
+--social-card-kicker         21px uppercase mono runner
+--social-card-bignum         168px — large-number reserve token
 
 --social-card-grain-opacity  paper grain intensity (0 disables for Swiss)
 --social-card-grain-blend    multiply (light themes) / screen (Midnight Ink)

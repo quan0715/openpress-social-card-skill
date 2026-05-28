@@ -8,6 +8,8 @@ export interface EditorialEssaySplitProps {
   paragraphs: string[];
   /** Render the right column as a numbered list instead of paragraphs. */
   numbered?: boolean;
+  /** Optional bottom note spanning both columns. Anchors the lower canvas. */
+  note?: string;
 }
 
 /**
@@ -27,6 +29,7 @@ export default function EditorialEssaySplit({
   title,
   paragraphs,
   numbered,
+  note,
 }: EditorialEssaySplitProps) {
   return (
     <section className="editorial-essay-split" data-layout="editorial-essay-split">
@@ -50,6 +53,7 @@ export default function EditorialEssaySplit({
           ))
         )}
       </div>
+      {note ? <p className="editorial-essay-split__note">{note}</p> : null}
     </section>
   );
 }

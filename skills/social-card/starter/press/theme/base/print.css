@@ -1,0 +1,21 @@
+@media print {
+  html,
+  body {
+    background: transparent;
+  }
+
+  .reader-pages {
+    display: block;
+    padding: 0;
+  }
+
+  .reader-page {
+    display: block;
+    box-shadow: none;
+    break-after: page;
+  }
+
+  .reader-page:last-child {
+    break-after: auto;
+  }
+}

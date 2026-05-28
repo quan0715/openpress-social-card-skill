@@ -26,8 +26,8 @@ export interface SectionDividerProps {
  * Don't open or close a carousel with this — readers expect the first
  * and last pages to carry the strongest content.
  *
- * The component sets the `with-ink-wash` modifier on the page chrome
- * by default — atmosphere is non-optional for this recipe.
+ * The component sets the `with-ink-wash` modifier by default; the
+ * OpenPress page frame detects it and paints the atmosphere layer.
  */
 export default function SectionDivider({
   kicker,
