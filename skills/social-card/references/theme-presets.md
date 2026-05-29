@@ -94,36 +94,76 @@ accent-soft  #3a2a14
 
 Midnight Ink also overrides the paper grain — opacity drops to 0.28 and blend mode switches to `screen`. Don't stack opaque card fills on top; dark Editorial relies on photo bleeds and warm gilt accent for hierarchy, not background blocks.
 
-## Swiss palettes (2)
+## Swiss palettes (4 canonical + 1 alternate)
 
-The Swiss palettes pair a flat off-white surface with one high-saturation accent. Paper grain is disabled (opacity 0) — flat surfaces are part of the Swiss system.
+The Swiss palettes pair a flat off-white surface with one high-saturation accent. Paper grain and paper wash are both disabled — flat surfaces are part of the Swiss system. Every Swiss palette also exposes the three Swiss grey tokens (`--openpress-grey-1`, `-2`, `-3`) and the `--openpress-accent-on` token (text colour rendered on top of accent fill).
 
-### IKB Blue
+### IKB Blue (default Swiss)
 
-Default Swiss palette. For AI, technology, product updates, design, engineering.
-
-```
-paper        #fafaf8
-paper-2      #f0f0ee
-ink          #0a0a0a
-muted        #737373
-line         rgba(10, 10, 10, 0.20)
-accent       #002fa7
-accent-soft  #d6dffb
-```
-
-### Cinnabar
-
-For announcements, launches, campaign moments — higher-energy Swiss.
+For AI, technology, product updates, design, engineering.
 
 ```
-paper        #fafaf8
-paper-2      #f0f0ee
-ink          #0a0a0a
-muted        #737373
-line         rgba(10, 10, 10, 0.20)
-accent       #d4391c
-accent-soft  #f8d6cc
+paper          #fafaf8
+paper-2        #f0f0ee
+ink            #0a0a0a
+grey-1         #f0f0ee
+grey-2         #d4d4d2
+grey-3         #737373
+accent         #002fa7    Klein Blue
+accent-soft    #d6dffb
+accent-on      #ffffff
+```
+
+### Lemon Yellow
+
+For consumer, retail, youth-leaning content, sports, Y2K aesthetic, energetic launches.
+
+```
+paper          #fafaf8
+ink            #0a0a0a
+grey-1/2/3     identical to IKB
+accent         #ffd500
+accent-soft    #fff4b3
+accent-on      #0a0a0a     ← ink on light accent
+```
+
+### Lemon Green
+
+For ecology, health, Gen-Z brands, green-tech, fitness, plant-based content.
+
+```
+paper          #fafaf8
+ink            #0a0a0a
+grey-1/2/3     identical to IKB
+accent         #c5e803
+accent-soft    #ebf6b2
+accent-on      #0a0a0a     ← ink on light accent
+```
+
+### Safety Orange
+
+For warnings, news, industrial, vibrant launches, hazard / alert framing.
+
+```
+paper          #fafaf8
+ink            #0a0a0a
+grey-1/2/3     identical to IKB
+accent         #ff6b35
+accent-soft    #ffd4c0
+accent-on      #ffffff
+```
+
+### Cinnabar (alternate, non-canonical)
+
+Kept for projects already using it. For new Swiss projects pick one of the four canonical accents above.
+
+```
+paper          #fafaf8
+ink            #0a0a0a
+grey-1/2/3     identical to IKB
+accent         #d4391c
+accent-soft    #f8d6cc
+accent-on      #ffffff
 ```
 
 ## Custom palettes

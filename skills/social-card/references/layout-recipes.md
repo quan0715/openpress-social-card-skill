@@ -182,6 +182,77 @@ The component sets the ink-wash atmosphere automatically; this is the one recipe
 
 **Don't:** use as a cover or closing. Readers expect the first and last pages of a carousel to carry the strongest content. The divider is specifically a mid-set device.
 
+## SwissAccentCover (S01 family)
+
+**Use as:** the cover of a Swiss carousel, or any single high-impact statement page.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | recommended | Short accent-coloured tag at the top. |
+| `title` | yes | Big light-weight title. 1–2 lines. |
+| `subtitle` | optional | Short serif lead. |
+| `background` | optional | `"paper"` (default off-white), `"accent"` (full accent fill), or `"ink"` (dark inversion). |
+| `mat` | optional | `"dot"` (default), `"ring"`, `"cross"`, or `"none"`. Decorative pattern behind the content. |
+| `diagram` | optional | A simple system block, comparison shape, or two-node diagram. Use sparingly — one abstract block max. |
+| `footer` | optional | Mono metadata strip at bottom. |
+
+**Don't:** pack two ideas. The cover carries one clear concept. If you need comparison, switch to `SwissTwoSignals`.
+
+## SwissTwoSignals (S02 family)
+
+**Use as:** comparison cards — two sources, two options, two product directions.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | Page title that introduces the comparison. |
+| `signals` | yes | Exactly two `{ label, title, body?, variant? }` cards. |
+
+Per signal:
+
+- `label` — short uppercase label.
+- `title` — the option or source name.
+- `body` — optional short explanation.
+- `variant` — card fill: `"ink"`, `"outlined"` (default), `"accent"`, or `"fill"`. Mixing one ink + one outlined creates the tension this recipe calls for.
+
+**Don't:** add a third card. If three options matter, switch to a three-column ledger or split into two pages.
+
+## SwissFileCard (S03 family)
+
+**Use as:** a named object with a short property list — Markdown source, memory record, database row, state schema, file manifest.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | Page title — what this card is about. |
+| `fileType` | yes | Mono uppercase tag, e.g. `"MARKDOWN"`, `"DATABASE"`. |
+| `fileName` | yes | The file name or object identifier. Renders large. |
+| `properties` | yes | 3–4 `{ label, value }` rows. Mono labels, plain values. |
+| `variant` | optional | `"fill"` (default grey-1) or `"outlined"`. |
+
+**Don't:** use this for free-form lists. If the data isn't object-shaped, switch to `TallLedger` (Editorial) or a future Swiss `KPITower` / `HBarChart`.
+
+## SwissLedger (S07 family)
+
+**Use as:** the closing page of a Swiss carousel — three takeaways with explanation.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | "Closing", "Summary", "Takeaways". |
+| `title` | yes | Big thesis. ≤ 2 lines. |
+| `rows` | yes | 3 (canonical) or 4 `{ number, phrase, explanation }` rows. |
+| `variant` | optional | `"paper"` (default) for inline closure. `"ink"` for a dark closure card that fills the whole page — the strongest way to end a Swiss carousel. |
+
+**Don't:** ship 2 short rows. Either expand to 3 with proper explanations, or switch to `SwissTwoSignals`.
+
 ## Absorbed upstream recipes
 
 Three upstream recipes don't have separate implementations because they reduce to existing components:

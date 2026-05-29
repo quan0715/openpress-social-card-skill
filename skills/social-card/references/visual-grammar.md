@@ -47,6 +47,11 @@ The skill uses **semantic names** for components — the M-series numbering surv
 | `EvidenceFeature` | M10 Evidence Feature | Large image (45–65 % vertical) + headline + takeaways. |
 | `MarginaliaEssay` | M11 Marginalia Essay | Wide title + main column + narrow marginal column with keywords / fragments. Hairline vertical rule. |
 | `SectionDivider` | M12 Section Divider | Mid-carousel breath between dense pages. Kicker + huge title + serif italic subtitle + atmospheric background. |
+| `SwissStatement` | (legacy Swiss primitive) | Single graphic statement with CTA strip. The minimal Swiss recipe. |
+| `SwissAccentCover` | S01 Accent Cover | Swiss carousel cover — big light-weight title + optional diagram + decorative mat. |
+| `SwissTwoSignals` | S02 Two Signals | Side-by-side comparison cards — typically one ink + one outlined. |
+| `SwissFileCard` | S03 Data Layer / File Card | Named object + property list — Markdown, database, state, schema. |
+| `SwissLedger` | S07 Takeaway Ledger | Swiss closing page — 3 rows of `{ number, phrase, explanation }`. Optional dark variant. |
 
 ## Absorbed by existing recipes (not separate components)
 

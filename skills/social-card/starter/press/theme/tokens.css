@@ -66,6 +66,21 @@
   --social-card-grain-opacity: 0.16;
   --social-card-grain-blend: multiply;
   --social-card-paper-wash-opacity: 0.08;
+
+  /* Spacing scale — Swiss primitive system inherits this (8/12/16/24/32/
+     40/48/64/80/96/160). Numbered for consistency with the upstream
+     Swiss seed; layout components reference them via var(--social-card-sp-N). */
+  --social-card-sp-3: 8px;
+  --social-card-sp-4: 12px;
+  --social-card-sp-5: 16px;
+  --social-card-sp-6: 24px;
+  --social-card-sp-7: 32px;
+  --social-card-sp-8: 40px;
+  --social-card-sp-9: 48px;
+  --social-card-sp-10: 64px;
+  --social-card-sp-11: 80px;
+  --social-card-sp-12: 96px;
+  --social-card-sp-13: 160px;
 }
 
 /* ============================================================
@@ -147,7 +162,15 @@
 }
 
 /* ============================================================
-   Swiss palettes — alternates when the project is Swiss mode
+   Swiss palettes — 4 mutually exclusive accent palettes
+   Every Swiss palette exposes the same surface contract:
+     paper / ink / grey-1 / grey-2 / grey-3 / accent / accent-on
+   --openpress-grey-1: light grey (Swiss card-fill background)
+   --openpress-grey-2: mid grey (hairline rules, outlined card border)
+   --openpress-grey-3: dark grey (muted text)
+   --openpress-accent-on: text colour rendered on top of accent fill —
+     white for dark accents (IKB blue, safety orange, cinnabar);
+     ink for light accents (lemon yellow, lemon green).
    ============================================================ */
 
 [data-theme="ikb-blue"] {
@@ -162,12 +185,81 @@
   --openpress-paper-rgb: 250, 250, 248;
   --openpress-accent-rgb: 0, 47, 167;
 
-  /* Swiss disables paper grain — flat surfaces are part of the system. */
+  --openpress-grey-1: #f0f0ee;
+  --openpress-grey-2: #d4d4d2;
+  --openpress-grey-3: #737373;
+  --openpress-accent-on: #ffffff;
+
+  --social-card-grain-opacity: 0;
+  --social-card-paper-wash-opacity: 0;
+}
+
+[data-theme="lemon-yellow"] {
+  --openpress-color-document: #fafaf8;
+  --openpress-color-paper-2: #f0f0ee;
+  --openpress-color-ink: #0a0a0a;
+  --openpress-color-muted: #737373;
+  --openpress-color-line: rgba(10, 10, 10, 0.20);
+  --openpress-accent: #ffd500;
+  --openpress-accent-soft: #fff4b3;
+  --openpress-ink-rgb: 10, 10, 10;
+  --openpress-paper-rgb: 250, 250, 248;
+  --openpress-accent-rgb: 255, 213, 0;
+
+  --openpress-grey-1: #f0f0ee;
+  --openpress-grey-2: #d4d4d2;
+  --openpress-grey-3: #737373;
+  --openpress-accent-on: #0a0a0a;
+
+  --social-card-grain-opacity: 0;
+  --social-card-paper-wash-opacity: 0;
+}
+
+[data-theme="lemon-green"] {
+  --openpress-color-document: #fafaf8;
+  --openpress-color-paper-2: #f0f0ee;
+  --openpress-color-ink: #0a0a0a;
+  --openpress-color-muted: #737373;
+  --openpress-color-line: rgba(10, 10, 10, 0.20);
+  --openpress-accent: #c5e803;
+  --openpress-accent-soft: #ebf6b2;
+  --openpress-ink-rgb: 10, 10, 10;
+  --openpress-paper-rgb: 250, 250, 248;
+  --openpress-accent-rgb: 197, 232, 3;
+
+  --openpress-grey-1: #f0f0ee;
+  --openpress-grey-2: #d4d4d2;
+  --openpress-grey-3: #737373;
+  --openpress-accent-on: #0a0a0a;
+
+  --social-card-grain-opacity: 0;
+  --social-card-paper-wash-opacity: 0;
+}
+
+[data-theme="safety-orange"] {
+  --openpress-color-document: #fafaf8;
+  --openpress-color-paper-2: #f0f0ee;
+  --openpress-color-ink: #0a0a0a;
+  --openpress-color-muted: #737373;
+  --openpress-color-line: rgba(10, 10, 10, 0.20);
+  --openpress-accent: #ff6b35;
+  --openpress-accent-soft: #ffd4c0;
+  --openpress-ink-rgb: 10, 10, 10;
+  --openpress-paper-rgb: 250, 250, 248;
+  --openpress-accent-rgb: 255, 107, 53;
+
+  --openpress-grey-1: #f0f0ee;
+  --openpress-grey-2: #d4d4d2;
+  --openpress-grey-3: #737373;
+  --openpress-accent-on: #ffffff;
+
   --social-card-grain-opacity: 0;
   --social-card-paper-wash-opacity: 0;
 }
 
 [data-theme="cinnabar"] {
+  /* Non-canonical Swiss alternate. Kept for projects already using it;
+     for new projects pick one of the four official accents above. */
   --openpress-color-document: #fafaf8;
   --openpress-color-paper-2: #f0f0ee;
   --openpress-color-ink: #0a0a0a;
@@ -178,6 +270,11 @@
   --openpress-ink-rgb: 10, 10, 10;
   --openpress-paper-rgb: 250, 250, 248;
   --openpress-accent-rgb: 212, 57, 28;
+
+  --openpress-grey-1: #f0f0ee;
+  --openpress-grey-2: #d4d4d2;
+  --openpress-grey-3: #737373;
+  --openpress-accent-on: #ffffff;
 
   --social-card-grain-opacity: 0;
   --social-card-paper-wash-opacity: 0;

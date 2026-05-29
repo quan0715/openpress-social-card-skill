@@ -42,15 +42,17 @@ export script. That stance is non-negotiable — it's the only way the two-layer
 
 - **Target:** editorial portrait cards at **1080×1440 (3:4)**, matching the original
   guizang/Rednote visual baseline.
-- **Recipes:** 11 OpenPress-native magazine layouts — `EditorialCover`, `FieldNotePhoto`,
-  `EditorialNoteRows`, `EditorialEssaySplit`, `PullQuote`, `EvidenceWall`, `ClosingLedger`,
-  `TallLedger`, `EvidenceFeature`, `MarginaliaEssay`, `SectionDivider`. Plus `SwissStatement`
-  as the alternate Swiss-mode primitive. See `references/layout-recipes.md`.
+- **Recipes:** 11 Editorial recipes (`EditorialCover`, `FieldNotePhoto`, `EditorialNoteRows`,
+  `EditorialEssaySplit`, `PullQuote`, `EvidenceWall`, `ClosingLedger`, `TallLedger`,
+  `EvidenceFeature`, `MarginaliaEssay`, `SectionDivider`) plus 5 Swiss recipes
+  (`SwissStatement`, `SwissAccentCover`, `SwissTwoSignals`, `SwissFileCard`, `SwissLedger`).
+  See `references/layout-recipes.md`.
 - **Page chrome:** `PageChrome` fixes issue-strip headers / footers outside the recipe content
   flow. Use it around cards that need stable top / bottom metadata; don't let individual recipes
   push the footer down.
 - **Themes:** 6 Editorial palettes (Ink Classic default, Indigo Porcelain, Forest Ink, Kraft
-  Paper, Dune, Midnight Ink) + 2 Swiss palettes (IKB Blue, Cinnabar). See
+  Paper, Dune, Midnight Ink) + 4 canonical Swiss palettes (IKB Blue, Lemon Yellow, Lemon Green,
+  Safety Orange) + Cinnabar alternate. See
   `references/theme-presets.md`.
 - **Visual identity:** structured rules in `references/validator-rules.md` ready to register
   with `openpress validate` when the hook ships. Until then, the rules are agent-readable QA
@@ -119,7 +121,8 @@ After the plan is approved, lock **one visual stance + one theme** for the whole
 
 - **Stance**: Editorial (default) or Swiss. Don't mix per page.
 - **Theme**: pick one of the 6 Editorial palettes (Ink Classic / Indigo Porcelain / Forest Ink
-  / Kraft Paper / Dune / Midnight Ink) or one of the 2 Swiss palettes (IKB Blue / Cinnabar).
+  / Kraft Paper / Dune / Midnight Ink) or one of the 4 canonical Swiss palettes (IKB Blue /
+  Lemon Yellow / Lemon Green / Safety Orange — Cinnabar is a non-canonical alternate).
   See `references/theme-presets.md` for which palette fits which content tone.
 
 Apply via `data-theme="..."` on the `<Workspace>` or a parent wrapper. Tokens live in
@@ -248,12 +251,16 @@ Production-quality guidelines. Break them only when the user explicitly asks.
 
 - `references/background-systems.md` — the layered atmosphere model (paper grain + paper wash +
   optional ink-wash), per-theme overrides, RGB-triplet token contract, why WebGL was excluded.
+- `references/swiss-primitives.md` — Swiss design primitive system (type roles, layout
+  utilities, card fills, mats, chrome). Required reading before composing Swiss recipes or
+  adding new Swiss components.
 - `references/visual-grammar.md` — the magazine vocabulary the skill ports, what was deliberately
   not ported (WebGL, PNG runtime, validator runtime), and the M-series semantic name map.
 - `references/platform-specs.md` — per-platform pixel sizes, safe areas, density expectations.
 - `references/style-system.md` — Editorial vs Swiss: tokens, type pairings, identity tests,
   anti-patterns. Quick-reference for mode selection.
-- `references/theme-presets.md` — 6 Editorial + 2 Swiss palettes with full token values.
+- `references/theme-presets.md` — 6 Editorial + 4 canonical Swiss + 1 alternate palette with
+  full token values.
 - `references/layout-recipes.md` — the 6 v1 recipes and what content shape each one expects.
 - `references/validator-rules.md` — structured rule specs (identity, density, type floors,
   provenance) ready to register with `openpress validate` when the hook ships.
