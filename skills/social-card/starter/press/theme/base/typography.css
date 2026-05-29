@@ -105,35 +105,26 @@
   color: var(--openpress-accent);
 }
 
-/* PageChrome — fixed page metadata outside recipe flow. */
+/* PageChrome — fixed page metadata outside recipe flow.
+   Uses grid `auto 1fr auto` so header sits at the top, footer pins to
+   the bottom, and the recipe content fills whatever's left. Content
+   that grows past its row simply gets clipped by the page frame — it
+   cannot crash through the footer (anti-pattern C in style-system.md).
+   Avoid `position: absolute` for the strips: that's the failure mode
+   the upstream guidance explicitly warns against. */
 .social-card-page-chrome {
-  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   height: 100%;
 }
 
 .social-card-page-chrome__content {
-  height: 100%;
-  padding-top: var(--social-card-fixed-header-space, 76px);
-  padding-bottom: var(--social-card-fixed-footer-space, 74px);
+  min-height: 0;     /* allow shrink inside grid row */
+  overflow: hidden;  /* clip any overflow at the row boundary */
 }
 
 .social-card-page-chrome__content > [data-layout] {
   height: 100%;
-}
-
-.social-card-page-chrome > .social-card-issue-strip {
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 3;
-}
-
-.social-card-page-chrome > .social-card-issue-strip--top {
-  top: 0;
-}
-
-.social-card-page-chrome > .social-card-issue-strip--bottom {
-  bottom: 0;
 }
 
 /* IssueStrip — top or bottom magazine strip with up to 3 slots, hairline-ruled. */

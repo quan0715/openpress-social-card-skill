@@ -171,7 +171,10 @@ reason: |
 ### `footer-collision`
 
 ```
-applies_to: pages with .swiss-statement__cta or .editorial-closing-ledger__closing
+applies_to:
+  - pages wrapped in .social-card-page-chrome
+  - pages with .swiss-statement__cta
+  - pages with .editorial-closing-ledger__closing
 severity: error
 check:
   - footer is positioned via flex (margin-top: auto) or grid (auto 1fr auto),
@@ -179,7 +182,10 @@ check:
   - content above does not extend past the footer's expected top edge
 reason: |
   Absolutely-positioned footers get crashed through by overflowing content
-  above. Flex / grid patterns are safe; absolute is not.
+  above. Flex / grid patterns are safe; absolute is not. The PageChrome
+  wrapper uses grid auto 1fr auto for exactly this reason — header and
+  footer pin to row 1 and row 3, recipe content fills row 2, and overflow
+  is clipped at the row boundary rather than crashing into adjacent rows.
 ```
 
 ### `one-accent-per-package`
