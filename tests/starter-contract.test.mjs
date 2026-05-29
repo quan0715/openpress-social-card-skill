@@ -56,10 +56,10 @@ test("starter fixes page chrome positions outside recipe flow", () => {
 
   assert.equal(fs.existsSync(componentPath), true, "missing PageChrome component");
   assert.match(css, /\.social-card-page-chrome\s*{/);
-  assert.match(css, /\.social-card-page-chrome\s*>\s*\.social-card-issue-strip/);
-  assert.match(css, /position:\s*absolute/);
-  assert.match(css, /top:\s*0/);
-  assert.match(css, /bottom:\s*0/);
+  assert.match(css, /grid-template-rows:\s*auto\s+1fr\s+auto/);
+  assert.match(css, /\.social-card-page-chrome__content\s*{/);
+  assert.match(css, /min-height:\s*0/);
+  assert.match(css, /overflow:\s*hidden/);
 });
 
 test("starter M03 uses horizontal note rows instead of crowded two-column split", () => {
