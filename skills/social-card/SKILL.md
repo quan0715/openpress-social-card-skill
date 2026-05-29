@@ -42,10 +42,13 @@ export script. That stance is non-negotiable — it's the only way the two-layer
 
 - **Target:** editorial portrait cards at **1080×1440 (3:4)**, matching the original
   guizang/Rednote visual baseline.
-- **Recipes:** 10 OpenPress-native magazine layouts — `EditorialCover`, `FieldNotePhoto`,
-  `EditorialEssaySplit`, `PullQuote`, `EvidenceWall`, `ClosingLedger`, `TallLedger`,
-  `EvidenceFeature`, `MarginaliaEssay`, `SectionDivider`. Plus `SwissStatement` as the alternate
-  Swiss-mode primitive. See `references/layout-recipes.md`.
+- **Recipes:** 11 OpenPress-native magazine layouts — `EditorialCover`, `FieldNotePhoto`,
+  `EditorialNoteRows`, `EditorialEssaySplit`, `PullQuote`, `EvidenceWall`, `ClosingLedger`,
+  `TallLedger`, `EvidenceFeature`, `MarginaliaEssay`, `SectionDivider`. Plus `SwissStatement`
+  as the alternate Swiss-mode primitive. See `references/layout-recipes.md`.
+- **Page chrome:** `PageChrome` fixes issue-strip headers / footers outside the recipe content
+  flow. Use it around cards that need stable top / bottom metadata; don't let individual recipes
+  push the footer down.
 - **Themes:** 6 Editorial palettes (Ink Classic default, Indigo Porcelain, Forest Ink, Kraft
   Paper, Dune, Midnight Ink) + 2 Swiss palettes (IKB Blue, Cinnabar). See
   `references/theme-presets.md`.
@@ -103,7 +106,7 @@ from `references/layout-recipes.md`. Keep it short:
 ```
 Page 1  cover       EditorialCover     title + subtitle + image + issue strip
 Page 2  field note  FieldNotePhoto     documentary image + takeaway + caption
-Page 3  essay       EditorialEssaySplit title + 2-3 fragments
+Page 3  notes       EditorialNoteRows   title + 3 horizontal observations
 Page 4  ledger      TallLedger         4-6 detailed rows
 Page 5  closing     ClosingLedger      summary ledger + closing quote
 ```

@@ -105,6 +105,37 @@
   color: var(--openpress-accent);
 }
 
+/* PageChrome — fixed page metadata outside recipe flow. */
+.social-card-page-chrome {
+  position: relative;
+  height: 100%;
+}
+
+.social-card-page-chrome__content {
+  height: 100%;
+  padding-top: var(--social-card-fixed-header-space, 76px);
+  padding-bottom: var(--social-card-fixed-footer-space, 74px);
+}
+
+.social-card-page-chrome__content > [data-layout] {
+  height: 100%;
+}
+
+.social-card-page-chrome > .social-card-issue-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+.social-card-page-chrome > .social-card-issue-strip--top {
+  top: 0;
+}
+
+.social-card-page-chrome > .social-card-issue-strip--bottom {
+  bottom: 0;
+}
+
 /* IssueStrip — top or bottom magazine strip with up to 3 slots, hairline-ruled. */
 .social-card-issue-strip {
   display: grid;
@@ -141,6 +172,7 @@
 .editorial-cover,
 .editorial-evidence,
 .editorial-field-note,
+.editorial-note-rows,
 .editorial-pull-quote,
 .editorial-closing-ledger,
 .editorial-tall-ledger {
@@ -291,6 +323,67 @@
   margin: 0;
   border-left: 1px solid var(--openpress-color-line);
   padding-left: 28px;
+}
+
+/* ---- M03 EditorialNoteRows ---- */
+
+.editorial-note-rows {
+  align-content: start;
+  gap: 42px;
+}
+
+.editorial-note-rows__head {
+  display: grid;
+  gap: 24px;
+}
+
+.editorial-note-rows__title {
+  max-width: 820px;
+  font-size: 62px;
+  font-weight: var(--social-card-headline-weight);
+  letter-spacing: var(--social-card-headline-tracking);
+  line-height: 1.18;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.editorial-note-rows__rows {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--openpress-color-line);
+}
+
+.editorial-note-rows__row {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 24px;
+  align-items: baseline;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--openpress-color-line);
+  font-family: var(--social-card-font-body);
+}
+
+.editorial-note-rows__no {
+  font-family: var(--social-card-font-display);
+  font-size: 54px;
+  font-style: italic;
+  line-height: 1;
+  color: var(--openpress-accent);
+}
+
+.editorial-note-rows__text {
+  font-size: 27px;
+  line-height: 1.45;
+  color: rgba(var(--openpress-ink-rgb), 0.82);
+}
+
+.editorial-note-rows__note {
+  max-width: 760px;
+  margin: 0;
+  font-family: var(--social-card-font-body);
+  font-size: var(--social-card-body-l);
+  line-height: 1.55;
+  color: rgba(var(--openpress-ink-rgb), 0.76);
 }
 
 /* ---- M04 PullQuote ---- */
@@ -852,10 +945,36 @@
   mix-blend-mode: multiply;
 }
 
+.editorial-section-divider::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--openpress-color-line);
+  opacity: 0.72;
+}
+
 .editorial-section-divider__body {
+  position: relative;
   display: grid;
   gap: 24px;
   align-self: center;
+  min-height: 100%;
+  align-content: center;
+  z-index: 1;
+}
+
+.editorial-section-divider__body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -28px;
+  width: 1px;
+  background: var(--openpress-color-line);
+  opacity: 0.72;
 }
 
 .editorial-section-divider__title {

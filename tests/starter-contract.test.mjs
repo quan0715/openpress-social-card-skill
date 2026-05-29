@@ -49,3 +49,41 @@ test("runtime typography layer contains the social-card visual system", () => {
   assert.match(css, /editorial-essay-split__note/);
   assert.match(css, /swiss-statement__display/);
 });
+
+test("starter fixes page chrome positions outside recipe flow", () => {
+  const css = fs.readFileSync(path.join(themeRoot, "base/typography.css"), "utf8");
+  const componentPath = path.join(starterRoot, "components/PageChrome.tsx");
+
+  assert.equal(fs.existsSync(componentPath), true, "missing PageChrome component");
+  assert.match(css, /\.social-card-page-chrome\s*{/);
+  assert.match(css, /\.social-card-page-chrome\s*>\s*\.social-card-issue-strip/);
+  assert.match(css, /position:\s*absolute/);
+  assert.match(css, /top:\s*0/);
+  assert.match(css, /bottom:\s*0/);
+});
+
+test("starter M03 uses horizontal note rows instead of crowded two-column split", () => {
+  const css = fs.readFileSync(path.join(themeRoot, "base/typography.css"), "utf8");
+  const componentPath = path.join(starterRoot, "components/EditorialNoteRows.tsx");
+  const m03 = fs.readFileSync(
+    path.join(starterRoot, "cards/03-evidence/content/03-evidence.mdx"),
+    "utf8",
+  );
+
+  assert.equal(fs.existsSync(componentPath), true, "missing EditorialNoteRows component");
+  assert.match(m03, /<EditorialNoteRows\b/);
+  assert.doesNotMatch(m03, /<EditorialEssaySplit\b/);
+  assert.match(css, /\.editorial-note-rows__row\s*{/);
+  assert.match(css, /grid-template-columns:\s*84px\s+1fr/);
+});
+
+test("section divider decoration fills the page axis instead of text width", () => {
+  const css = fs.readFileSync(path.join(themeRoot, "base/typography.css"), "utf8");
+
+  assert.match(css, /\.editorial-section-divider::after/);
+  assert.match(css, /left:\s*0/);
+  assert.match(css, /right:\s*0/);
+  assert.match(css, /\.editorial-section-divider__body::before/);
+  assert.match(css, /top:\s*0/);
+  assert.match(css, /bottom:\s*0/);
+});

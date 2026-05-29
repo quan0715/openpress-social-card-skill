@@ -26,7 +26,7 @@ export default function IssueStrip({
   const className =
     position === "top"
       ? "social-card-issue-strip social-card-issue-strip--top"
-      : "social-card-issue-strip";
+      : "social-card-issue-strip social-card-issue-strip--bottom";
   return (
     <div className={className} data-component="issue-strip">
       <div>{left}</div>

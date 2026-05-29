@@ -1,31 +1,39 @@
-<TallLedger
-  kicker="OpenPress substrate 一覽"
-  title="這些事 skill 一律不做"
-  rows={[
-    {
-      index: "01",
-      title: "Inline edit",
-      consequence: "Workbench 直接編輯 MDX / TSX 源檔,skill 不另起 editor。",
-    },
-    {
-      index: "02",
-      title: "Dev server",
-      consequence: "Vite-based preview 由 OpenPress 提供,skill 不自跑 server。",
-    },
-    {
-      index: "03",
-      title: "Comment marker",
-      consequence: "`@openpress-comment` 走 apply-comment skill,不自造 review 流程。",
-    },
-    {
-      index: "04",
-      title: "Render / PDF / PNG",
-      consequence: "Build / pdf / export 命令屬 OpenPress,skill 沒有 Playwright stopgap。",
-    },
-    {
-      index: "05",
-      title: "Page geometry",
-      consequence: "Fixed-page geometry 由 framework 定義,skill 只指定 1080×1440 editorial portrait。",
-    },
-  ]}
-/>
+<PageChrome
+  bottom={{
+    left: "Substrate responsibilities",
+    middle: "—",
+    right: "04 / 05",
+  }}
+>
+  <TallLedger
+    kicker="OpenPress substrate 一覽"
+    title="這些事 skill 一律不做"
+    rows={[
+      {
+        index: "01",
+        title: "Inline edit",
+        consequence: "Workbench 直接編輯 MDX / TSX 源檔,skill 不另起 editor。",
+      },
+      {
+        index: "02",
+        title: "Dev server",
+        consequence: "Vite-based preview 由 OpenPress 提供,skill 不自跑 server。",
+      },
+      {
+        index: "03",
+        title: "Comment marker",
+        consequence: "`@openpress-comment` 走 apply-comment skill,不自造 review 流程。",
+      },
+      {
+        index: "04",
+        title: "Render / PDF / PNG",
+        consequence: "Build / pdf / export 命令屬 OpenPress,skill 沒有 Playwright stopgap。",
+      },
+      {
+        index: "05",
+        title: "Page geometry",
+        consequence: "Fixed-page geometry 由 framework 定義,skill 只指定 1080×1440 editorial portrait。",
+      },
+    ]}
+  />
+</PageChrome>

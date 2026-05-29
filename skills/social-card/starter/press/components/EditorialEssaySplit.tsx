@@ -3,10 +3,12 @@ export interface EditorialEssaySplitProps {
   kicker?: string;
   /** Left-column title or pull. Display serif. */
   title: string;
-  /** 2–3 short paragraphs OR numbered fragments. Right column. Plain
-   * strings only — no inline JSX. */
+  /** 2–3 short paragraphs. Right column. Plain strings only — no inline JSX. */
   paragraphs: string[];
-  /** Render the right column as a numbered list instead of paragraphs. */
+  /**
+   * Legacy compatibility only. New 1 / 2 / 3 observation pages should use
+   * EditorialNoteRows so the numbered rhythm can span the full page width.
+   */
   numbered?: boolean;
   /** Optional bottom note spanning both columns. Anchors the lower canvas. */
   note?: string;
@@ -15,14 +17,13 @@ export interface EditorialEssaySplitProps {
 /**
  * Two-column essay split (M03 family). Best for explaining one idea
  * with nuance: left side carries the title or pull, right side carries
- * 2–3 short paragraphs (or numbered fragments). Thin rule between.
+ * 2–3 short paragraphs. Thin rule between.
  *
  * Keep paragraphs short — if the right column becomes dense, split into
  * two pages or switch to MarginaliaEssay (which adds a margin column
  * for keywords / fragments without crowding the main column).
  *
- * Minimum content: title + 3 short paragraphs OR title + 2 paragraphs
- * + numbered footer list. Title alone is PullQuote, not this.
+ * Minimum content: title + 2 paragraphs. Title alone is PullQuote, not this.
  */
 export default function EditorialEssaySplit({
   kicker,

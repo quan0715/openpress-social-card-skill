@@ -34,7 +34,8 @@ A flat paper + serif title + mono labels everywhere fails — switch to Swiss ho
 
 - EditorialCover: title + (image OR anchor) — neither = placeholder
 - FieldNotePhoto: image > 55 % vertical + takeaway + caption
-- EditorialEssaySplit: title + ≥ 2 paragraphs or ≥ 3 numbered fragments
+- EditorialNoteRows: title + exactly 3 horizontal rows
+- EditorialEssaySplit: title + ≥ 2 paragraphs; not for numbered observation rows
 - PullQuote: kicker + quote + source — all three are anchor points
 - EvidenceWall: headline + ≥ 3 (3-col) / 4 (2×2) / 6 (3×2) captioned images
 - ClosingLedger: title + ≥ 4 rows (each with sub) + closing block
@@ -86,7 +87,7 @@ If a card doesn't reach its floor: **expand the content or switch to a different
 
 - [ ] No thick big title in Swiss (weight 700+ on huge type).
 - [ ] No Editorial-without-atmosphere page (flat paper + serif title + mono labels everywhere with no photo / quote / ledger).
-- [ ] No absolutely-positioned footer.
+- [ ] No recipe-local footer drifting with content. Use `PageChrome` for fixed top / bottom issue strips.
 - [ ] No full-bleed photo with title crossing the subject.
 - [ ] No mixed accents across pages.
 - [ ] No decorative SVG shapes (blobs, ovals, drops).

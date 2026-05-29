@@ -96,9 +96,29 @@ Each recipe expects a specific content shape; matching the shape is the agent's 
 
 **Don't:** use a logo or icon as the `image`. The well will letterbox and read as broken.
 
-## EditorialEssaySplit (M03 family)
+## EditorialNoteRows (M03 family, default)
 
-**Use as:** mid-carousel essay page when one idea needs nuance.
+**Use as:** mid-carousel evidence / observation page where three short findings should read as
+a horizontal sequence. This is the default M03 treatment because it keeps the page calm and avoids
+the crowding that happens when numbered notes are forced into a two-column essay.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | One calm display title. Keep it shorter than a cover title. |
+| `rows` | yes | Exactly 3 rows for M03. Each row is `{ no?, text }`; numbers default to `01`, `02`, `03`. |
+| `note` | optional | Short bottom marginal note. Use when the rows need a field-note anchor. |
+
+**Don't:** convert 1 / 2 / 3 observations into side-by-side columns. The row rhythm should span
+the page width, with rules filling the horizontal axis. If each point needs a paragraph, split it
+into another card or use `EditorialEssaySplit` only for true essay copy.
+
+## EditorialEssaySplit (M03 alternate)
+
+**Use as:** mid-carousel essay page when one idea needs nuance and the content is actual paragraph
+copy, not a numbered observation sequence.
 
 **Content shape:**
 
@@ -106,11 +126,14 @@ Each recipe expects a specific content shape; matching the shape is the agent's 
 | --- | --- | --- |
 | `kicker` | optional | |
 | `title` | yes | Left-column title or pull. Display serif. |
-| `paragraphs` | yes | 2–3 short paragraphs or numbered fragments. Right column. Plain strings only. |
-| `numbered` | optional | Render the right column as a numbered list instead of paragraphs. |
+| `paragraphs` | yes | 2–3 short paragraphs. Right column. Plain strings only. |
+| `numbered` | optional | Legacy compatibility only. New 1 / 2 / 3 observation pages should use `EditorialNoteRows`. |
 | `note` | optional | Bottom note spanning both columns. Use when the split needs a lower anchor. |
 
-**Don't:** push 4+ paragraphs into the right column. If the right column gets dense, split into two pages or switch to `MarginaliaEssay` (which adds the marginal column for keywords / fragments without crowding the main column). A title-only page is `PullQuote`, not this.
+**Don't:** use this for 1 / 2 / 3 field observations; use `EditorialNoteRows` so the numbers and
+rules fill the page width. Don't push 4+ paragraphs into the right column. If the right column gets
+dense, split into two pages or switch to `MarginaliaEssay` (which adds the marginal column for
+keywords / fragments without crowding the main column). A title-only page is `PullQuote`, not this.
 
 ## EvidenceWall (M06 family)
 
@@ -182,7 +205,8 @@ See `visual-grammar.md` § Absorbed by existing recipes for the full reasoning.
 - If the page is **mostly type** →
   - title-led with anchor → `EditorialCover`
   - one sentence → `PullQuote`
-  - two-column essay → `EditorialEssaySplit`
+  - three horizontal observations → `EditorialNoteRows`
+  - two-column essay copy → `EditorialEssaySplit`
   - three-column with margin notes → `MarginaliaEssay`
   - enumerated detail → `TallLedger`
   - closing recap → `ClosingLedger`

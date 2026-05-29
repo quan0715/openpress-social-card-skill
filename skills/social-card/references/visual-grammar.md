@@ -15,7 +15,8 @@ The skill's job is to bring **a magazine-grade visual vocabulary** into an OpenP
 | 1080×1440 editorial card geometry | `page.width = 1080px`, `page.height = 1440px`, padding 96px / 88px | `press/index.tsx` + `theme/tokens.css` |
 | Paper grain atmosphere | CSS paper speckle + wash overlay (no WebGL, no canvas, no JS) | `theme/base/typography.css` |
 | Optional ink-wash for covers / quotes | `.with-ink-wash` modifier detected by the page frame, soft localized gradient | `theme/base/typography.css` |
-| Recipe library (M01, M02, M04, M07, M08, M10) | Semantic React components: `EditorialCover`, `FieldNotePhoto`, `PullQuote`, `ClosingLedger`, `TallLedger`, `EvidenceFeature` | `press/components/` |
+| Recipe library (M01, M02, M03, M04, M07, M08, M10) | Semantic React components: `EditorialCover`, `FieldNotePhoto`, `EditorialNoteRows`, `PullQuote`, `ClosingLedger`, `TallLedger`, `EvidenceFeature` | `press/components/` |
+| Fixed page chrome | `PageChrome` wraps recipe content and pins issue-strip headers / footers outside the content flow | `press/components/PageChrome.tsx` |
 | Editorial / Swiss identity tests | Documented in `validator-rules.md`, expected to plug into `openpress validate` when it ships | `references/validator-rules.md` |
 | 4-band density check | Same as above | `references/validator-rules.md` |
 
@@ -36,7 +37,8 @@ The skill uses **semantic names** for components — the M-series numbering surv
 | --- | --- | --- |
 | `EditorialCover` | M01 Cover | Carousel page 1. Title + optional photo well + issue-strip anchor. |
 | `FieldNotePhoto` | M02 Field Note Photo | Documentary photo as evidence + narrow caption column. |
-| `EditorialEssaySplit` | M03 Editorial Essay Split | Two columns: title / pull on the left, 2–3 paragraphs or numbered fragments on the right. Thin rule between; optional bottom note anchors the lower canvas. |
+| `EditorialNoteRows` | M03 Editorial Note Rows | Default M03. One title + three full-width horizontal numbered observations. Rules fill the page width. |
+| `EditorialEssaySplit` | M03 Editorial Essay Split alternate | Two columns: title / pull on the left, 2–3 true paragraphs on the right. Use only when the content is essay copy, not 1 / 2 / 3 field notes. |
 | `PullQuote` | M04 Pull Quote / Thesis | A core sentence as the whole page. Required: kicker + source. |
 | `EvidenceWall` | M06 Evidence Wall | 2×2 / 3×2 image grid + headline. Use when multiple small images are interpreted together. |
 | `ClosingLedger` | M07 Closing Note | Final-page ledger (4–6 rows + sub-lines) + closing block. |
