@@ -26,14 +26,15 @@ First-slice target: **Editorial portrait 1080×1440 (3:4)**, matching the origin
 
 This project is a **clean-room OpenPress-native rewrite** of the workflow and decision logic behind [`guizang-social-card-skill`](https://github.com/op7418/guizang-social-card-skill). The original skill proved that high-quality social-card generation needs a real application layer rather than another prompt pack. This project preserves the creative judgment captured in that workflow while moving rendering, workspace, and editing into OpenPress.
 
-**Upstream:** https://github.com/op7418/guizang-social-card-skill
+**Upstream:** https://github.com/op7418/guizang-social-card-skill (AGPL-3.0 as of 2026-05-27)
 
 **Relationship to the original:**
 
-- Inspired by the workflow, taste system (Editorial / Swiss), layout recipes, and validation rules described in `guizang-social-card-skill`.
-- Behavior and concepts are studied and re-implemented in OpenPress-native form.
-- **No source code, HTML templates, CSS, or assets from the original repo are copied directly into this one.** Where a direct port would be unavoidable, the source file will carry a per-file attribution notice and will be licensed accordingly.
+- Inspired by the workflow, taste system (Editorial / Swiss), layout recipes, identity tests, layered background system, and 4-band density check described in `guizang-social-card-skill`.
+- The **design language** (taste rules, recipe taxonomy, type scale, identity tests, atmosphere layer model) consists of factual / methodological ideas, not protected by copyright. Studying and re-implementing those in a different codebase is the basis of any clean-room rewrite.
+- **No source code, HTML templates, CSS, or assets from the original repo are copied directly into this one.** Selector names, token names, CSS values, and component APIs are all OpenPress-native expressions. Where the underlying technique is shared (e.g. dot-pattern paper grain via `radial-gradient`), the CSS rules are written from scratch in this codebase.
 - This repo does not bundle, redistribute, or rehost any artifact from the original repo.
+- The upstream switched to AGPL-3.0 on 2026-05-27. This skill remains under MIT because the rewrite is clean-room — see `LICENSE` § Attribution for the full reasoning. If verbatim porting of upstream code becomes necessary in the future, the affected files will carry per-file AGPL notices and be excluded from the MIT scope.
 
 If you are the author of the upstream repo and want the attribution updated, please open an issue.
 

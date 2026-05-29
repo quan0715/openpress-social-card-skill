@@ -25,7 +25,19 @@ SOFTWARE.
 ## Attribution
 
 This project is a clean-room OpenPress-native rewrite inspired by the
-workflow and decision logic of `guizang-social-card-skill`. The MIT license
-above applies to code written in this repository. Any artifacts derived from
-external sources retain their original license; see per-file notices and
-`README.md` § Attribution for details.
+workflow and decision logic of `guizang-social-card-skill`
+(https://github.com/op7418/guizang-social-card-skill).
+
+As of 2026-05-27 the upstream switched to AGPL-3.0. This skill remains
+under MIT because clean-room rewrite obligations only attach to derived
+code, and no source code, CSS, HTML, or assets from the upstream were
+copied into this repository. The design language studied (taste rules,
+recipe taxonomy, type scale, identity tests, layered background system)
+consists of factual / methodological ideas, which copyright does not
+protect.
+
+If verbatim porting of any upstream code becomes necessary in the future
+— for example, to maintain compatibility with an upstream contract —
+the affected files will carry per-file AGPL notices and be excluded
+from the MIT scope. Until then, the MIT license above applies to all
+code written in this repository.

@@ -246,6 +246,8 @@ Production-quality guidelines. Break them only when the user explicitly asks.
 
 ## References (load on demand)
 
+- `references/background-systems.md` — the layered atmosphere model (paper grain + paper wash +
+  optional ink-wash), per-theme overrides, RGB-triplet token contract, why WebGL was excluded.
 - `references/visual-grammar.md` — the magazine vocabulary the skill ports, what was deliberately
   not ported (WebGL, PNG runtime, validator runtime), and the M-series semantic name map.
 - `references/platform-specs.md` — per-platform pixel sizes, safe areas, density expectations.
