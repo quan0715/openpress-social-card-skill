@@ -44,9 +44,10 @@ export script. That stance is non-negotiable — it's the only way the two-layer
   guizang/Rednote visual baseline.
 - **Recipes:** 11 Editorial recipes (`EditorialCover`, `FieldNotePhoto`, `EditorialNoteRows`,
   `EditorialEssaySplit`, `PullQuote`, `EvidenceWall`, `ClosingLedger`, `TallLedger`,
-  `EvidenceFeature`, `MarginaliaEssay`, `SectionDivider`) plus 5 Swiss recipes
-  (`SwissStatement`, `SwissAccentCover`, `SwissTwoSignals`, `SwissFileCard`, `SwissLedger`).
-  See `references/layout-recipes.md`.
+  `EvidenceFeature`, `MarginaliaEssay`, `SectionDivider`) plus 13 Swiss recipes
+  (`SwissStatement`, `SwissAccentCover`, `SwissTwoSignals`, `SwissFileCard`, `SwissBrowserMock`,
+  `SwissTrapRows`, `SwissPipeline`, `SwissLedger`, `SwissImageHero`, `SwissKPITower`,
+  `SwissHBarChart`, `SwissStackedLedger`, `SwissMatrix`). See `references/layout-recipes.md`.
 - **Page chrome:** `PageChrome` fixes issue-strip headers / footers outside the recipe content
   flow. Use it around cards that need stable top / bottom metadata; don't let individual recipes
   push the footer down.

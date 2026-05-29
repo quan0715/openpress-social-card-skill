@@ -83,6 +83,14 @@ Use sparingly. One mat per page. Never on dense content pages where text needs t
 | `SwissFileCard` | `.swiss-h-xl`, `.swiss-t-cat`, `.swiss-card-{fill,outlined}`, mono labels |
 | `SwissLedger` | `.swiss-h-xl`, `.swiss-t-cat`, 3-row grid with accent-coloured numbers, optional `--ink` full-card background |
 | `SwissStatement` (legacy) | Built-in display, eyebrow, CTA strip — predates the primitive system |
+| `SwissBrowserMock` | `.swiss-h-xl`, `.swiss-device-browser` (CSS chrome), `.swiss-card-fill` × N modules, `.swiss-t-meta` |
+| `SwissTrapRows` | `.swiss-h-xl`, `.swiss-t-cat`, 3 hairline-bordered rows with accent-coloured mono labels |
+| `SwissPipeline` | `.swiss-h-xl`, `.swiss-card-outlined` × 3 steps, accent-coloured numbers, mono step labels |
+| `SwissImageHero` | `.swiss-h-statement` in overlay, `.swiss-t-cat`, 3 stat blocks under image |
+| `SwissKPITower` | `.swiss-h-xl`, accent-bar with inline `style="height:..."` per column, mono labels |
+| `SwissHBarChart` | `.swiss-h-xl`, hairline rows with grey-1 track + accent fill, mono values |
+| `SwissStackedLedger` | `.swiss-h-xl`, 4–6 hairline rows with weight-300 big number + label + optional icon |
+| `SwissMatrix` | `.swiss-h-xl`, 2×4 outlined cell grid (max 1 `--accent` cell), bottom hero stat with `.swiss-h-xl` num-mega |
 
 ## Extending Swiss
 

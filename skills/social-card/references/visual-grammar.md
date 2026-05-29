@@ -52,6 +52,14 @@ The skill uses **semantic names** for components — the M-series numbering surv
 | `SwissTwoSignals` | S02 Two Signals | Side-by-side comparison cards — typically one ink + one outlined. |
 | `SwissFileCard` | S03 Data Layer / File Card | Named object + property list — Markdown, database, state, schema. |
 | `SwissLedger` | S07 Takeaway Ledger | Swiss closing page — 3 rows of `{ number, phrase, explanation }`. Optional dark variant. |
+| `SwissBrowserMock` | S04 Interface / Browser Mock | Stylized browser frame wrapping a hero + 2–3 modules. CSS-only chrome. |
+| `SwissTrapRows` | S05 Trap / Warning Rows | 3 anti-pattern rows with mono label + consequence. Safety Orange-friendly. |
+| `SwissPipeline` | S06 Pipeline / Architecture | 3-step workflow — source → render → share, each with number / label / action / consequence. |
+| `SwissImageHero` | S08 Image Hero (3:4-adapted) | Hero photo + overlay title + 3 quantified stats. Image-led launch / release page. |
+| `SwissKPITower` | S09 KPI Tower | 4-column data tower with proportional bar heights via `heightPx`. |
+| `SwissHBarChart` | S10 H-Bar Chart | 5–6 ranking rows with `fillPercent` bar widths. |
+| `SwissStackedLedger` | S11 Stacked Ledger | 4–6 big-number + label + optional icon rows. Quantified inventory. |
+| `SwissMatrix` | S12 Matrix + Hero Stat | 8-cell capability matrix + bottom hero stat. Cell count must match hero number. |
 
 ## Absorbed by existing recipes (not separate components)
 

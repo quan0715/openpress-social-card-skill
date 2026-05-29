@@ -253,6 +253,123 @@ Per signal:
 
 **Don't:** ship 2 short rows. Either expand to 3 with proper explanations, or switch to `SwissTwoSignals`.
 
+## SwissBrowserMock (S04 family)
+
+**Use as:** explaining HTML / UI / interface concepts inside a stylized browser frame.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | Page title above the browser. |
+| `hero` | yes | `{ title, body? }` — the primary message inside the frame. |
+| `modules` | optional | 2–3 functional modules below the hero, each `{ label, body }`. Renders as small fill cards. |
+| `action` | optional | Bottom action / CTA strip text. |
+
+The browser chrome is pure CSS (3-dot title bar above a hairline-bordered content area). Don't overload the frame with content — one hero plus a few modules.
+
+## SwissTrapRows (S05 family)
+
+**Use as:** "do not do this" pages, anti-pattern lists, risk callouts.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | "Anti-patterns", "Pitfalls", "Don't". |
+| `title` | yes | Big warning title. |
+| `rows` | yes | 3 `{ label, consequence }` rows. Two reads thin; four crowds. |
+
+Safety Orange pairs naturally with this recipe, but any Swiss accent works — the hairline rows and mono labels carry the warning identity.
+
+## SwissPipeline (S06 family)
+
+**Use as:** workflows, layered systems, source → render → share architectures.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | Page title — what the pipeline describes. |
+| `steps` | yes | 3 `{ number, label, action, consequence }` steps. Outlined cards stacked vertically on 1080×1440. |
+
+**Don't:** ship a 5-step pipeline on portrait — split into two pages or switch to `TallLedger` for a longer enumeration.
+
+## SwissImageHero (S08 family, 3:4-adapted)
+
+**Use as:** product launches with one strong photo, release notes, hero shots with quantified anchors below.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | Above the image. |
+| `image` | yes | `{ src, alt, position? }`. Fills the upper 3:2 area. |
+| `overlayKicker` | optional | Accent kicker inside the overlay block. |
+| `title` | yes | Display title in the overlay (`h-statement` size). |
+| `stats` | yes | Exactly 3 `{ number, label }` quantified anchors below. |
+
+**Don't:** use without a real photo — the image isn't decorative. If you don't have evidence imagery, switch to `SwissAccentCover`.
+
+## SwissKPITower (S09 family)
+
+**Use as:** release notes, traffic dashboards, growth posts — anywhere 3–4 numbers need to be compared at a glance.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | Page title. |
+| `columns` | yes | 4 `{ number, label, heightPx, muted? }` columns. Heights encode magnitudes proportionally (largest ≈ 320 px). At most one `muted: true` column per tower as a baseline. |
+
+**Hard rule:** `heightPx` must agree with the data. Inventing heights breaks Swiss honesty. If you only have 2 numbers, switch to `SwissTwoSignals`.
+
+## SwissHBarChart (S10 family)
+
+**Use as:** rankings, comparisons of 5–6 items, "top N" lists.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | What the ranking is. |
+| `rows` | yes | 5–6 `{ label, value, fillPercent }` rows. The widest row should be exactly the largest value (100 % or the normalization base). |
+
+**Hard limit:** max 6 rows on 1080×1440. Inventing percentages is the most common identity failure for this recipe.
+
+## SwissStackedLedger (S11 family)
+
+**Use as:** shopping lists, expense rollups, agent capability inventories — any "big number + label + (optional icon)" row stack.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | What's being rolled up. |
+| `rows` | yes | 4–6 `{ number, label, sub?, icon? }` rows. Icon is a `ReactNode` — supply an inline SVG or skip. |
+
+**Hard requirement:** real numerical evidence per row. If you cannot produce a number for an item, switch to `SwissTrapRows` or `TallLedger`.
+
+## SwissMatrix (S12 family)
+
+**Use as:** capability matrices, agent inventories, "this set covers X domains" pages where 8 small cells back a single bottom-line number.
+
+**Content shape:**
+
+| Slot | Required | Notes |
+| --- | --- | --- |
+| `kicker` | optional | |
+| `title` | yes | Page title. |
+| `cells` | yes | 8 `{ index, title, accent? }` cells in a 2×4 grid. At most one cell can be `accent: true`. |
+| `heroStat` | yes | `{ kicker, sentence, number }` — bottom hero stat. **The `number` must match the cell count** (e.g. `"8"` for 8 cells). |
+
+**Hard rule:** the hero-stat number must agree with the grid. Displaying a number unsupported by the grid is the most common identity failure for this recipe.
+
 ## Absorbed upstream recipes
 
 Three upstream recipes don't have separate implementations because they reduce to existing components:

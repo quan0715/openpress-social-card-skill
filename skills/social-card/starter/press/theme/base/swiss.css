@@ -551,3 +551,458 @@
 .swiss-ledger--ink .swiss-ledger__row-explanation {
   color: rgba(var(--openpress-paper-rgb), 0.7);
 }
+
+/* ---- Device browser frame (used by S04 SwissBrowserMock) ---- */
+
+.swiss-device-browser {
+  position: relative;
+  background: var(--openpress-color-document);
+  border: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.swiss-device-browser::before {
+  content: "";
+  display: block;
+  height: 32px;
+  background: var(--openpress-grey-1, var(--openpress-color-paper-2));
+  border-bottom: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+  background-image:
+    radial-gradient(circle at 16px 16px, var(--openpress-grey-3, var(--openpress-color-muted)) 4px, transparent 4.5px),
+    radial-gradient(circle at 34px 16px, var(--openpress-grey-3, var(--openpress-color-muted)) 4px, transparent 4.5px),
+    radial-gradient(circle at 52px 16px, var(--openpress-grey-3, var(--openpress-color-muted)) 4px, transparent 4.5px);
+}
+
+/* ---- S04 SwissBrowserMock ---- */
+
+.swiss-browser-mock {
+  grid-template-rows: auto 1fr auto;
+  row-gap: var(--social-card-sp-7);
+}
+
+.swiss-browser-mock__frame { min-height: 0; }
+
+.swiss-browser-mock__body {
+  padding: var(--social-card-sp-9);
+  display: grid;
+  gap: var(--social-card-sp-7);
+}
+
+.swiss-browser-mock__hero { display: grid; gap: var(--social-card-sp-4); }
+
+.swiss-browser-mock__modules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--social-card-sp-5);
+}
+
+.swiss-browser-mock__module {
+  padding: var(--social-card-sp-6);
+  display: grid;
+  gap: var(--social-card-sp-3);
+}
+
+.swiss-browser-mock__action {
+  padding-top: var(--social-card-sp-5);
+  border-top: 4px solid var(--openpress-color-ink);
+}
+
+/* ---- S05 SwissTrapRows ---- */
+
+.swiss-trap-rows {
+  grid-template-rows: auto 1fr;
+  row-gap: var(--social-card-sp-8);
+}
+
+.swiss-trap-rows__rows {
+  display: grid;
+  gap: var(--social-card-sp-6);
+}
+
+.swiss-trap-rows__row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--social-card-sp-7);
+  align-items: start;
+  padding: var(--social-card-sp-6) 0;
+  border-top: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+}
+
+.swiss-trap-rows__row:last-child {
+  border-bottom: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+}
+
+.swiss-trap-rows__label {
+  font-family: var(--openpress-font-mono);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--openpress-accent);
+  padding-top: 6px;
+}
+
+.swiss-trap-rows__consequence {
+  font-family: var(--openpress-font-body);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ---- S06 SwissPipeline ---- */
+
+.swiss-pipeline {
+  grid-template-rows: auto 1fr;
+  row-gap: var(--social-card-sp-8);
+}
+
+.swiss-pipeline__steps {
+  display: grid;
+  gap: var(--social-card-sp-6);
+}
+
+.swiss-pipeline__step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--social-card-sp-7);
+  align-items: start;
+}
+
+.swiss-pipeline__step-number {
+  font-family: var(--openpress-font-body);
+  font-weight: 200;
+  font-size: 72px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--openpress-accent);
+  align-self: center;
+}
+
+.swiss-pipeline__step-body { display: grid; gap: var(--social-card-sp-3); }
+
+.swiss-pipeline__step-label {
+  font-family: var(--openpress-font-mono);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--openpress-grey-3, var(--openpress-color-muted));
+}
+
+.swiss-pipeline__step-action {
+  font-family: var(--openpress-font-body);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.25;
+}
+
+.swiss-pipeline__step-consequence {
+  font-family: var(--openpress-font-body);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.55;
+  color: var(--openpress-grey-3, var(--openpress-color-muted));
+}
+
+/* ---- S08 SwissImageHero ---- */
+
+.swiss-image-hero {
+  grid-template-rows: auto 1fr auto;
+  row-gap: var(--social-card-sp-7);
+}
+
+.swiss-image-hero__kicker {
+  margin: 0;
+}
+
+.swiss-image-hero__media {
+  position: relative;
+  background: var(--openpress-grey-1, var(--openpress-color-paper-2));
+  overflow: hidden;
+  min-height: 0;
+  aspect-ratio: 3 / 2;
+}
+
+.swiss-image-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.swiss-image-hero__overlay {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: var(--social-card-sp-7) var(--social-card-sp-8);
+  background: rgba(var(--openpress-ink-rgb), 0.78);
+  color: var(--openpress-color-document);
+  max-width: 78%;
+  display: grid;
+  gap: var(--social-card-sp-3);
+}
+
+.swiss-image-hero__overlay .swiss-h-statement,
+.swiss-image-hero__overlay .swiss-t-cat {
+  color: var(--openpress-color-document);
+}
+
+.swiss-image-hero__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--social-card-sp-7);
+  padding-top: var(--social-card-sp-5);
+  border-top: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+}
+
+.swiss-image-hero__stat-num {
+  font-family: var(--openpress-font-body);
+  font-weight: 200;
+  font-size: 80px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.swiss-image-hero__stat-label {
+  font-family: var(--openpress-font-mono);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--openpress-grey-3, var(--openpress-color-muted));
+  margin-top: var(--social-card-sp-3);
+}
+
+/* ---- S09 SwissKPITower ---- */
+
+.swiss-kpi-tower {
+  grid-template-rows: auto 1fr;
+  row-gap: var(--social-card-sp-8);
+}
+
+/* On 1080×1440 the row collapses to 2 columns × 2 rows so each KPI
+   gets breathing room. On wider boards the upstream uses 4 columns. */
+.swiss-kpi-tower__row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--social-card-sp-7);
+  align-items: end;
+}
+
+.swiss-kpi-tower__col {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: var(--social-card-sp-3);
+}
+
+.swiss-kpi-tower__num {
+  font-family: var(--openpress-font-body);
+  font-weight: 200;
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.swiss-kpi-tower__label {
+  font-family: var(--openpress-font-mono);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--openpress-grey-3, var(--openpress-color-muted));
+}
+
+.swiss-kpi-tower__bar {
+  background: var(--openpress-accent);
+  width: 100%;
+  /* height supplied inline */
+  align-self: end;
+}
+
+.swiss-kpi-tower__col--muted .swiss-kpi-tower__bar {
+  background: var(--openpress-grey-2, var(--openpress-color-line));
+}
+
+/* ---- S10 SwissHBarChart ---- */
+
+.swiss-h-bar-chart {
+  grid-template-rows: auto 1fr;
+  row-gap: var(--social-card-sp-8);
+}
+
+.swiss-h-bar-chart__rows { display: grid; gap: var(--social-card-sp-5); }
+
+.swiss-h-bar-chart__row {
+  display: grid;
+  grid-template-columns: 1.4fr 4fr auto;
+  gap: var(--social-card-sp-6);
+  align-items: center;
+  padding: var(--social-card-sp-3) 0;
+  border-top: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+}
+
+.swiss-h-bar-chart__row:last-child {
+  border-bottom: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+}
+
+.swiss-h-bar-chart__row-label {
+  font-family: var(--openpress-font-body);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.swiss-h-bar-chart__row-track {
+  position: relative;
+  background: var(--openpress-grey-1, var(--openpress-color-paper-2));
+  height: 32px;
+}
+
+.swiss-h-bar-chart__row-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--openpress-accent);
+  /* width supplied inline */
+}
+
+.swiss-h-bar-chart__row-value {
+  font-family: var(--openpress-font-mono);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 0.04em;
+  color: var(--openpress-color-ink);
+  text-align: right;
+  min-width: 72px;
+}
+
+/* ---- S11 SwissStackedLedger ---- */
+
+.swiss-stacked-ledger {
+  grid-template-rows: auto 1fr;
+  row-gap: var(--social-card-sp-8);
+}
+
+.swiss-stacked-ledger__rows { display: grid; gap: 0; }
+
+.swiss-stacked-ledger__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--social-card-sp-7);
+  align-items: center;
+  padding: var(--social-card-sp-6) 0;
+  border-top: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+}
+
+.swiss-stacked-ledger__row:last-child {
+  border-bottom: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+}
+
+.swiss-stacked-ledger__num {
+  font-family: var(--openpress-font-body);
+  font-weight: 300;
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  min-width: 200px;
+}
+
+.swiss-stacked-ledger__label {
+  display: grid;
+  gap: var(--social-card-sp-3);
+}
+
+.swiss-stacked-ledger__label-main {
+  font-family: var(--openpress-font-body);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.25;
+}
+
+.swiss-stacked-ledger__label-sub {
+  font-family: var(--openpress-font-body);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--openpress-grey-3, var(--openpress-color-muted));
+}
+
+.swiss-stacked-ledger__icon {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  color: var(--openpress-grey-3, var(--openpress-color-muted));
+}
+
+.swiss-stacked-ledger__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- S12 SwissMatrix ---- */
+
+.swiss-matrix {
+  grid-template-rows: auto 1fr auto;
+  row-gap: var(--social-card-sp-7);
+}
+
+.swiss-matrix__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--social-card-sp-5);
+  align-content: start;
+}
+
+.swiss-matrix__cell {
+  border: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+  padding: var(--social-card-sp-6);
+  display: grid;
+  gap: var(--social-card-sp-3);
+}
+
+.swiss-matrix__cell--accent {
+  background: var(--openpress-accent);
+  color: var(--openpress-accent-on, #ffffff);
+  border-color: var(--openpress-accent);
+}
+
+.swiss-matrix__cell--accent .swiss-matrix__cell-num {
+  color: var(--openpress-accent-on, #ffffff);
+}
+
+.swiss-matrix__cell-num {
+  font-family: var(--openpress-font-mono);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.14em;
+  color: var(--openpress-accent);
+}
+
+.swiss-matrix__cell-title {
+  font-family: var(--openpress-font-body);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.25;
+}
+
+.swiss-matrix__hero-stat {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--social-card-sp-7);
+  padding-top: var(--social-card-sp-6);
+  border-top: 1px solid var(--openpress-grey-2, var(--openpress-color-line));
+}
+
+.swiss-matrix__hero-stat-left { display: grid; gap: var(--social-card-sp-3); }
+
+.swiss-matrix__hero-stat-num {
+  font-family: var(--openpress-font-body);
+  font-weight: 200;
+  font-size: 168px;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
