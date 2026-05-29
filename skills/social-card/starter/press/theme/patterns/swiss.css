@@ -317,7 +317,13 @@
 
 .swiss-accent-cover--accent .swiss-h-xl,
 .swiss-accent-cover--accent .swiss-h-statement,
-.swiss-accent-cover--accent .swiss-h-hero { color: var(--openpress-accent-on, #ffffff); }
+.swiss-accent-cover--accent .swiss-h-hero,
+.swiss-accent-cover--accent .swiss-lead,
+.swiss-accent-cover--accent .swiss-t-cat,
+.swiss-accent-cover--accent .swiss-t-meta,
+.swiss-accent-cover--accent .swiss-accent-cover__foot {
+  color: var(--openpress-accent-on, #ffffff);
+}
 .swiss-accent-cover--ink .swiss-h-xl,
 .swiss-accent-cover--ink .swiss-h-statement,
 .swiss-accent-cover--ink .swiss-h-hero { color: var(--openpress-color-document); }
@@ -476,12 +482,8 @@
   background: var(--openpress-color-ink);
   color: var(--openpress-color-document);
   padding: var(--social-card-sp-9);
-  /* Negative margins counter the page padding so the dark card fills
-     the entire usable area. */
-  margin: calc(var(--openpress-page-padding-top) * -1)
-          calc(var(--openpress-page-padding-x) * -1)
-          calc(var(--openpress-page-padding-bottom) * -1);
-  width: auto;
+  margin: 0;
+  width: 100%;
   height: 100%;
 }
 

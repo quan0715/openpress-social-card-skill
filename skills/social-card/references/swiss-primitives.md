@@ -2,7 +2,7 @@
 
 Swiss International is **not** "an Editorial layout with a blue accent." It's a complete design primitive system — type roles, layout primitives, card fills, decorative mats, and chrome — that compose into recipes (S01–S12 family).
 
-This reference documents the primitive layer that lives in `theme/base/swiss.css`. Recipe components (`SwissAccentCover`, `SwissTwoSignals`, `SwissFileCard`, `SwissLedger`, `SwissStatement`) compose these primitives. MDX cards typically don't touch the primitives directly — but agents extending the skill should.
+This reference documents the primitive layer that lives in `theme/patterns/swiss.css`. Recipe components (`SwissAccentCover`, `SwissTwoSignals`, `SwissFileCard`, `SwissLedger`, `SwissStatement`) compose these primitives. MDX cards typically don't touch the primitives directly — but agents extending the skill should.
 
 ## Type roles
 
