@@ -151,19 +151,52 @@ reason: |
 ### `subject-safe-zone`
 
 ```
-applies_to: EvidenceFeature with image, EditorialCover with image
-severity: warn
+applies_to:
+  - EditorialCover with image
+  - EvidenceFeature
+  - FieldNotePhoto
+  - EvidenceWall
+  - SwissImageHero
+severity:
+  warn  — if subject-map MDX comment is missing
+  error — if a display title (>= 72 px) overlaps a face / hand / key UI
+          text per the subject map
 check:
-  - if the image has a documented subject map (HTML comment near the
-    <img>), display title placement does not overlap a face, hand, or
-    key product feature
-  - if no subject map is present, warn that one is recommended for
-    text-on-image cards
+  - a subject-map MDX comment exists near the recipe call (documenting
+    face/focal location, silhouette edges, and safe text zones)
+  - display titles do not overlap the documented subject silhouette
+  - `image.position` is set explicitly when the subject is in upper or
+    lower third (see references/image-overlay.md § Crop guards)
 reason: |
   Full-bleed photo with title crossing the subject is the most common
   failure mode that survives every other check — the HTML is valid,
   the image loads, the title renders, but the result is unreadable at
-  thumbnail size.
+  thumbnail size. The subject-map comment is the only way to make this
+  reviewable; without it the layout is impossible to validate
+  mechanically. See references/image-overlay.md for the full rule set
+  and per-recipe failure modes.
+```
+
+### `text-on-image-mask`
+
+```
+applies_to: any card where text overlays an image
+severity: error
+check:
+  - no full-canvas vertical falloff (linear-gradient(180deg, rgba(0,0,0,X)…)
+    over inset: 0 on the image well or recipe section)
+  - no pure-black mask colour (#000) — mask tones must be image-toned
+    (forest moss, dusk, snow grey-blue, sepia)
+  - no flat black/white rectangle behind the title
+  - no img { opacity: 0.6 } — kills photo depth
+  - if a tint is applied, it is localized (radial-gradient or one-sided
+    linear) with peak alpha ≤ 0.30
+reason: |
+  Uniform black mask treatment downgrades editorial photography to
+  game-key-art annotation. Real magazine covers solve readability by
+  photo selection, not by caulking over a bad photo with a 70% black
+  scrim. See references/image-overlay.md Rule 1 for the no-mask-first
+  stance and the localized-tint fallback contract.
 ```
 
 ## Layout integrity rules

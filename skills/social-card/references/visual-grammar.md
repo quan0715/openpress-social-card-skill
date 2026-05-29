@@ -15,6 +15,8 @@ The skill's job is to bring **a magazine-grade visual vocabulary** into an OpenP
 | 1080×1440 editorial card geometry | `page.width = 1080px`, `page.height = 1440px`, padding 96px / 88px | `press/index.tsx` + `theme/tokens.css` |
 | Layered background system (paper grain + paper wash + atmospheric ink-wash) | Three CSS layers via `::before` (grain dot pattern, multiply) + `::after` (paper wash vertical ink tint, upgraded by `:has(.with-ink-wash)::after` for atmospheric pages). See `references/background-systems.md`. | `theme/base/typography.css` |
 | RGB-triplet color tokens for stacked alpha composition | `--openpress-ink-rgb` / `--openpress-paper-rgb` / `--openpress-accent-rgb` exposed on every theme | `theme/tokens.css` |
+| Image overlay + subject safety rules | Selection-first stance, localized image-toned tint fallback, subject-map MDX comments, crop guards via `image.position` table | `references/image-overlay.md` |
+| Screenshot treatment utility (`.swiss-frame-shot` + `.swiss-device-browser` + `.swiss-device-phone`) | CSS-only stages (paper / paper-2 / grey-1 / grid / dot / ink), corner / shadow / inset modifiers, two device chrome wrappers | `theme/base/swiss.css` + `references/screenshot-treatment.md` |
 | Optional ink-wash for covers / quotes | `.with-ink-wash` modifier detected by the page frame, soft localized gradient | `theme/base/typography.css` |
 | Recipe library (M01, M02, M03, M04, M07, M08, M10) | Semantic React components: `EditorialCover`, `FieldNotePhoto`, `EditorialNoteRows`, `PullQuote`, `ClosingLedger`, `TallLedger`, `EvidenceFeature` | `press/components/` |
 | Fixed page chrome | `PageChrome` wraps recipe content and pins issue-strip headers / footers outside the content flow | `press/components/PageChrome.tsx` |

@@ -255,6 +255,14 @@ Production-quality guidelines. Break them only when the user explicitly asks.
 - `references/swiss-primitives.md` — Swiss design primitive system (type roles, layout
   utilities, card fills, mats, chrome). Required reading before composing Swiss recipes or
   adding new Swiss components.
+- `references/image-overlay.md` — Image overlay + subject safety rules. Required reading for
+  any card that places text on or near a photo (EditorialCover with image, EvidenceFeature,
+  FieldNotePhoto, EvidenceWall, SwissImageHero). Covers no-mask selection-first stance,
+  localized image-toned tint fallback, subject-map documentation, safe-zone placement, crop
+  guards via `image.position`.
+- `references/screenshot-treatment.md` — `.swiss-frame-shot` parameters (ratio, corners,
+  shadow, bg, inset, fit), `.swiss-device-browser` and `.swiss-device-phone` wrappers, safe
+  cropping for full-screen captures. Use when the image is a UI screenshot, not a photograph.
 - `references/visual-grammar.md` — the magazine vocabulary the skill ports, what was deliberately
   not ported (WebGL, PNG runtime, validator runtime), and the M-series semantic name map.
 - `references/platform-specs.md` — per-platform pixel sizes, safe areas, density expectations.

@@ -1006,3 +1006,102 @@
   letter-spacing: -0.03em;
   margin: 0;
 }
+
+/* ============================================================
+   Screenshot treatment — .swiss-frame-shot + .swiss-device-phone
+   See references/screenshot-treatment.md for the design contract.
+   Pattern:
+     .swiss-frame-shot.r-{ratio}.corners-{sq|sm|md}.shadow-{none|soft|ed}
+                      .bg-{paper|paper-2|grey-1|grid|dot|ink}.inset-{none|sub|bal}
+   ============================================================ */
+
+.swiss-frame-shot {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  background: var(--openpress-grey-1, var(--openpress-color-paper-2));
+  border-radius: 0;
+}
+
+/* corners */
+.swiss-frame-shot.corners-sq { border-radius: 0; }
+.swiss-frame-shot.corners-sm { border-radius: 4px; }
+.swiss-frame-shot.corners-md { border-radius: 10px; }
+
+/* shadows — Swiss is flat by default; the soft variant is for shots
+   that genuinely float on a textured stage. */
+.swiss-frame-shot.shadow-none { box-shadow: none; }
+.swiss-frame-shot.shadow-soft { box-shadow: 0 12px 28px -16px rgba(0, 0, 0, 0.18); }
+.swiss-frame-shot.shadow-ed { box-shadow:
+  0 20px 40px -20px rgba(0, 0, 0, 0.22),
+  0 0 0 1px var(--openpress-grey-2, var(--openpress-color-line));
+}
+
+/* CSS-only backgrounds. Asset-pack (.bg-asset-*) WebP textures from
+   upstream are not shipped — see references/screenshot-treatment.md
+   § Asset backgrounds for the rationale. */
+.swiss-frame-shot.bg-paper { background: var(--openpress-color-document); }
+.swiss-frame-shot.bg-paper-2 { background: var(--openpress-color-paper-2); }
+.swiss-frame-shot.bg-grey-1 { background: var(--openpress-grey-1, var(--openpress-color-paper-2)); }
+.swiss-frame-shot.bg-ink { background: var(--openpress-color-ink); }
+
+.swiss-frame-shot.bg-grid {
+  background-color: var(--openpress-color-document);
+  background-image:
+    linear-gradient(to right, var(--openpress-grey-2, var(--openpress-color-line)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--openpress-grey-2, var(--openpress-color-line)) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.swiss-frame-shot.bg-dot {
+  background-color: var(--openpress-color-document);
+  background-image: radial-gradient(var(--openpress-grey-2, var(--openpress-color-line)) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* insets (padding between the shot and the stage edge) */
+.swiss-frame-shot.inset-none { padding: 0; }
+.swiss-frame-shot.inset-sub { padding: 20px; }
+.swiss-frame-shot.inset-bal { padding: 48px; }
+
+/* aspect-ratio slots */
+.swiss-frame-shot.r-1x1 { aspect-ratio: 1 / 1; }
+.swiss-frame-shot.r-3x4 { aspect-ratio: 3 / 4; }
+.swiss-frame-shot.r-4x3 { aspect-ratio: 4 / 3; }
+.swiss-frame-shot.r-3x2 { aspect-ratio: 3 / 2; }
+.swiss-frame-shot.r-16x10 { aspect-ratio: 16 / 10; }
+.swiss-frame-shot.r-16x9 { aspect-ratio: 16 / 9; }
+.swiss-frame-shot.r-21x9 { aspect-ratio: 21 / 9; }
+
+.swiss-frame-shot > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  border-radius: inherit;
+}
+
+.swiss-frame-shot.fit-cover > img { object-fit: cover; }
+
+/* ============================================================
+   Device phone bezel — wraps a .swiss-frame-shot for mobile captures.
+   .swiss-device-browser is defined earlier (used by S04 SwissBrowserMock).
+   ============================================================ */
+
+.swiss-device-phone {
+  position: relative;
+  background: var(--openpress-color-ink);
+  border-radius: 28px;
+  padding: 12px;
+  box-shadow: 0 16px 36px -18px rgba(0, 0, 0, 0.32);
+  display: inline-block;
+}
+
+.swiss-device-phone > .swiss-frame-shot,
+.swiss-device-phone > img {
+  border-radius: 18px;
+  display: block;
+  width: 100%;
+}
