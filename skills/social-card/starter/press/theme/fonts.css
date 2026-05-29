@@ -6,6 +6,8 @@
 :root {
   --openpress-font-serif: "Source Serif Pro", "Noto Serif TC",
     "Noto Serif SC", "Songti SC", "Songti TC", Georgia, serif;
+  --openpress-font-serif-cjk-first: "Noto Serif TC", "Noto Serif SC",
+    "Source Serif Pro", "Songti SC", "Songti TC", Georgia, serif;
   --openpress-font-body: Inter, "PingFang TC", "PingFang SC",
     "Noto Sans TC", "Noto Sans SC", sans-serif;
   --openpress-font-mono: "IBM Plex Mono", "JetBrains Mono",
@@ -13,6 +15,7 @@
 
   /* Editorial uses serif for display + body, mono for kicker / meta. */
   --social-card-font-display: var(--openpress-font-serif);
+  --social-card-font-display-cjk: var(--openpress-font-serif-cjk-first);
   --social-card-font-body: var(--openpress-font-serif);
   --social-card-font-meta: var(--openpress-font-mono);
 }
@@ -22,6 +25,7 @@
    without changing the global tokens. */
 [data-style="swiss"] {
   --social-card-font-display: var(--openpress-font-body);
+  --social-card-font-display-cjk: var(--openpress-font-body);
   --social-card-font-body: var(--openpress-font-body);
   --social-card-font-meta: var(--openpress-font-mono);
 }
