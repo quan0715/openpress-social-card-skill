@@ -1,26 +1,22 @@
-/* Editorial mode wants a real serif for display + body, and a mono for
-   kicker / metadata. Swiss mode wants Inter / Noto Sans family only.
-   Both modes share the CJK fallback chain — Traditional and Simplified
-   Chinese both render correctly. */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600&display=swap");
+
+/* Keep the starter on the Noto TC family so Latin and CJK glyphs share
+   one typographic voice. */
 
 :root {
-  --openpress-font-serif: "Source Serif Pro", "Noto Serif TC",
-    "Noto Serif SC", "Songti SC", "Songti TC", Georgia, serif;
-  --openpress-font-serif-cjk-first: "Noto Serif TC", "Noto Serif SC",
-    "Source Serif Pro", "Songti SC", "Songti TC", Georgia, serif;
-  --openpress-font-body: Inter, "PingFang TC", "PingFang SC",
-    "Noto Sans TC", "Noto Sans SC", sans-serif;
-  --openpress-font-mono: "IBM Plex Mono", "JetBrains Mono",
-    "SFMono-Regular", Menlo, Consolas, monospace;
+  --openpress-font-serif: "Noto Serif TC", "Noto Serif CJK TC", serif;
+  --openpress-font-body: "Noto Sans TC", "Noto Sans CJK TC", sans-serif;
+  --openpress-font-mono: "Noto Sans TC", "Noto Sans CJK TC", sans-serif;
 
-  /* Editorial uses serif for display + body, mono for kicker / meta. */
+  /* Editorial uses Noto Serif TC for reading surfaces, Noto Sans TC for metadata. */
   --social-card-font-display: var(--openpress-font-serif);
-  --social-card-font-display-cjk: var(--openpress-font-serif-cjk-first);
+  --social-card-font-display-cjk: var(--openpress-font-serif);
   --social-card-font-body: var(--openpress-font-serif);
   --social-card-font-meta: var(--openpress-font-mono);
 }
 
-/* Swiss mode swaps the serif body for sans, keeps mono for small labels.
+/* Swiss mode swaps the serif body for Noto Sans TC, keeps metadata in
+   the same family.
    Scope to a [data-style="swiss"] element so per-package switching works
    without changing the global tokens. */
 [data-style="swiss"] {

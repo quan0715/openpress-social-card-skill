@@ -30,7 +30,7 @@
      small text weight is medium (500) with much wider tracking.
      Body floors are readable at social-feed thumbnail size (≈200 px wide). */
 
-  --social-card-display: 104px;
+  --social-card-display: 98px;
   --social-card-display-weight: 500;
   --social-card-display-tracking: 0.035em;
   --social-card-display-lh: 1.08;
