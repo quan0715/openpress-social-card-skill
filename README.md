@@ -7,7 +7,7 @@
 
 ## Status
 
-**v0 — starter smoke-tested against current OpenPress 1.0 workspace contract.** The skill workflow, starter, and reference docs are in place; rendering, preview, export, and validation remain OpenPress's responsibility (not shipped from this skill — see § What this skill tests). PNG export is still waiting on the OpenPress side.
+**v0 — starter smoke-tested against current OpenPress 1.0 workspace contract.** The skill workflow, starter, and reference docs are in place; rendering, preview, image/PDF export, and validation remain OpenPress's responsibility (not shipped from this skill — see § What this skill tests).
 
 See the design spec (developed in the OpenPress framework repo) at `docs/superpowers/specs/2026-05-28-openpress-social-card-skill-design.md` for what this skill is meant to do.
 
@@ -16,7 +16,7 @@ See the design spec (developed in the OpenPress framework repo) at `docs/superpo
 An **external skill** that targets OpenPress's fixed-layout application layer.
 
 - **Skill (this repo)** brings the creative decisions: intake, story plan, visual stance, layout selection, image strategy, per-domain validation rules.
-- **OpenPress (separate repo)** brings the substrate: fixed page geometry, dev server, inline edit, comment markers, source-backed workspace, PDF / PNG export, validation primitives.
+- **OpenPress (separate repo)** brings the substrate: fixed page geometry, dev server, inline edit, comment markers, source-backed workspace, per-page PNG export, PDF export, validation primitives.
 
 This is the first external reference implementation of OpenPress's two-layer product model. See the OpenPress repo's `docs/product-boundary` for the model.
 
@@ -71,7 +71,7 @@ When invoked, the agent typically:
 2. **Ensures an OpenPress workspace is in place.** Runs `npx @open-press/cli@next init` if the working directory isn't one. No `--pack` — this skill provides the starter.
 3. **Uses this skill's installed starter as the starting point.** Reads from the installed skill directory (first check `./.agents/skills/social-card/starter/press/`, then `$HOME/.agents/skills/social-card/`, `${CODEX_HOME:-$HOME/.codex}/skills/social-card/`, and `$HOME/.claude/skills/social-card/`) and copies it into the workspace. If the starter doesn't match the installed OpenPress version, reads the latest OpenPress docs + `@open-press/core` types and does the smallest migration to land the same intent.
 4. **Edits source, not output.** Modifies MDX cards, theme tokens, and layout components in the workspace; renders flow from source.
-5. **Renders and validates via OpenPress commands.** `npm run dev` for preview, `npm run build` / `openpress:pdf` for output, `openpress validate` and `openpress export png` once they ship. If a needed command isn't present in the installed OpenPress version, the agent should stop and report the missing substrate capability — **not** implement a skill-local renderer or validator.
+5. **Renders and validates via OpenPress commands.** `npm run dev` for preview, `npm run build`, `npm run openpress:image`, `npm run openpress:pdf`, `node engine/cli.mjs validate .`, and `node engine/cli.mjs inspect . --json` for output and checks. If a needed command isn't present in the installed OpenPress version, the agent should stop and report the missing substrate capability — **not** implement a skill-local renderer or validator.
 6. **Logs web-sourced images.** Every image not supplied by the user gets an entry in `press/media/SOURCES.md` with URL + license + retrieval date before it can be referenced.
 
 The spirit of the skill: it's a guide and a starting point, not a rulebook. The agent owns the implementation; the skill owns the intent — 1080×1440 editorial social cards, MDX-driven, source-backed, OpenPress-as-substrate. If the agent finds a better way to land the intent, take it.
@@ -86,16 +86,18 @@ This skill tests whether an external creative / intake skill can guide an agent 
 - It **does not** ship renderer / export infrastructure.
 - It **may** include starter content as skill-local examples, but OpenPress owns runtime, preview, validation, and output.
 
-## Expected future OpenPress commands
+## OpenPress commands relied on
 
-The skill assumes OpenPress will ship (or already ships):
+The skill assumes the OpenPress workspace provides:
 
-- `openpress build`
-- `openpress preview`
-- `openpress validate`
-- `openpress export png --out output/png`
+- `npm run build`
+- `npm run dev`
+- `npm run openpress:image`
+- `npm run openpress:pdf`
+- `node engine/cli.mjs validate .`
+- `node engine/cli.mjs inspect . --json`
 
-If a needed command isn't present in the installed OpenPress version, the skill expects the agent to **stop and report the missing substrate capability**, not to implement a skill-local replacement. Shadow-implementing rendering or validation from a skill blurs the two-layer split and creates false confidence (e.g. a Playwright-based validator that returns 0 issues when it finds 0 cards is worse than no validator at all).
+If a needed command isn't present in the installed OpenPress version, the skill expects the agent to **stop and report the missing substrate capability**, not to implement a skill-local replacement. Shadow-implementing rendering or validation from a skill blurs the two-layer split and creates false confidence.
 
 ## License
 

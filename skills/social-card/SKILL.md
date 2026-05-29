@@ -199,7 +199,7 @@ Typical edit targets, roughly in order of impact:
 
 ### 6. Review
 
-Show the user the workbench (`npm run dev`) or rendered PNGs first. Never describe the cards in
+Show the user the workbench (`npm run dev`) or rendered PNGs (`npm run openpress:image`) first. Never describe the cards in
 words and call it done — render and screenshot.
 
 Comments use OpenPress's `@openpress-comment` markers. The user marks; the agent applies via the
@@ -207,13 +207,13 @@ OpenPress `apply-comment` skill. Do not invent a separate comment flow.
 
 ### 7. Validation
 
-Use OpenPress's own validation when the user asks for auto-check (e.g. `openpress validate` /
-`openpress inspect` once those ship, or `npm run build` for the basic compile / overflow check
-that's available today). Visual review remains essential regardless.
+Use OpenPress's own validation when the user asks for auto-check (e.g. `node engine/cli.mjs validate .`,
+`node engine/cli.mjs inspect . --json`, or `npm run build` for the compile/render gate). Visual
+review remains essential regardless.
 
 **If the installed OpenPress version doesn't have a validate command yet**, stop and report it
 as a missing substrate capability — don't build a skill-local validator to fill the gap.
-This is the same principle as PNG export: skills don't shadow-implement substrate. False-green
+This is the same principle as image export: skills don't shadow-implement substrate. False-green
 validators are worse than no validator.
 
 ### 8. Iteration
@@ -271,12 +271,12 @@ version, **stop and report a substrate gap**; don't ship a skill-local replaceme
 | `npx @open-press/cli@next init` | available | Create a blank runtime workspace. No `--pack`. |
 | `npm run dev` (= `openpress preview`) | available | Workbench preview |
 | `npm run build` (= `openpress build`) | available | Render to `dist-react/` |
+| `npm run openpress:image` | available | PNG export per page at real pixel dimensions |
 | `npm run openpress:pdf` | available | PDF output |
-| `openpress export png --out output/png` | **expected, not yet shipped** | PNG export per `.reader-page` at real pixel dimensions |
-| `openpress validate` / `openpress inspect` | **expected, not yet shipped** | Overflow / small-type / density / provenance checks |
+| `node engine/cli.mjs validate .` / `node engine/cli.mjs inspect . --json` | available | Overflow / small-type / density / provenance checks |
 | `apply-comment` skill | available | Apply user's `@openpress-comment` markers |
 
-When the agent finds an "expected" command isn't actually available, the correct response is to
+When the agent finds a listed command isn't actually available, the correct response is to
 **stop, tell the user what's missing, and treat it as a substrate gap to report back via
 `NOTES.md`**. Building a skill-local Playwright renderer or validator is explicitly the wrong
 answer.

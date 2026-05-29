@@ -27,8 +27,8 @@ The skill's job is to bring **a magazine-grade visual vocabulary** into an OpenP
 | --- | --- |
 | Seed HTML templates | The starter is an OpenPress workspace, not a template file. JSX + auto-discovered components do the same job. |
 | WebGL ink-flow background | Skill-local runtime — violates the two-layer split. Replaced by CSS dotted paper grain + soft wash overlays, which preserve the editorial paper feel without adding a JS runtime. |
-| Playwright PNG export | Owned by OpenPress (`openpress export png`, expected). Skill stops and reports a substrate gap if missing — never ships a stopgap. |
-| Density validator runtime | Owned by OpenPress (`openpress validate`, expected). Rule definitions are kept here as structured specs ready to register when the validator-hook contract lands. |
+| Playwright PNG export | Owned by OpenPress (`npm run openpress:image`). Skill stops and reports a substrate gap if missing — never ships a stopgap. |
+| Density validator runtime | Owned by OpenPress (`node engine/cli.mjs validate .` / `node engine/cli.mjs inspect . --json`). Rule definitions are kept here as structured specs ready to align with validator hooks as they mature. |
 
 ## Recipe naming map
 

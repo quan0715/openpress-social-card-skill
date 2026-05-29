@@ -79,8 +79,8 @@ If a card doesn't reach its floor: **expand the content or switch to a different
 ## Before delivery
 
 - [ ] Run `npm run build` — no warnings.
-- [ ] Run `openpress export png --out output/png` (when it ships) and visually inspect every output PNG. If the command is not yet available, stop and report it as a missing substrate capability — not ship a skill-local renderer.
-- [ ] Run `openpress validate` (when it ships) — exit code 0. Same principle if missing.
+- [ ] Run `npm run openpress:image` and visually inspect every output PNG. If the command is not available, stop and report it as a missing substrate capability — not ship a skill-local renderer.
+- [ ] Run `node engine/cli.mjs validate .` and `node engine/cli.mjs inspect . --json` — exit code 0 / no blocking issues. Same principle if missing.
 - [ ] Skim rendered output (PNG or PDF) at thumbnail size (≈ 200 px wide). Every card's primary message must still read.
 
 ## Anti-pattern checklist (quick scan)
