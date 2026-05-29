@@ -444,8 +444,9 @@
 /* ---- M07 ClosingLedger ---- */
 
 .editorial-closing-ledger {
-  grid-template-rows: auto auto 1fr auto;
-  row-gap: 32px;
+  grid-template-rows: auto auto auto auto;
+  align-content: start;
+  row-gap: 36px;
 }
 
 .editorial-closing-ledger__title {
@@ -459,10 +460,12 @@
 
 .editorial-closing-ledger__rows {
   display: grid;
-  gap: 24px;
+  grid-auto-rows: auto;
+  align-content: start;
+  gap: 34px;
   border-top: 1px solid var(--openpress-color-line);
   border-bottom: 1px solid var(--openpress-color-line);
-  padding: 24px 0;
+  padding: 30px 0;
 }
 
 .editorial-closing-ledger__row {
@@ -488,6 +491,7 @@
   grid-template-columns: 1fr auto;
   align-items: end;
   gap: 32px;
+  margin-top: 40px;
 }
 
 .editorial-closing-ledger__closing-quote {
@@ -511,8 +515,9 @@
 /* ---- M08 TallLedger ---- */
 
 .editorial-tall-ledger {
-  grid-template-rows: auto 1fr;
-  row-gap: 32px;
+  grid-template-rows: auto auto;
+  align-content: start;
+  row-gap: 36px;
 }
 
 .editorial-tall-ledger__title {
@@ -526,7 +531,8 @@
 
 .editorial-tall-ledger__rows {
   display: grid;
-  grid-auto-rows: minmax(118px, auto);
+  grid-auto-rows: auto;
+  align-content: start;
 }
 
 .editorial-tall-ledger__row {
@@ -534,7 +540,7 @@
   grid-template-columns: 96px 1fr;
   align-items: start;
   gap: 24px;
-  padding: 20px 0;
+  padding: 30px 0;
   border-top: 1px solid var(--openpress-color-line);
 }
 
