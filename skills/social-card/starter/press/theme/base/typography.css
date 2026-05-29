@@ -87,6 +87,10 @@
   height: 100%;
 }
 
+.reader-page--social-card .openpress-mdx-area > div:has(> .social-card-page-chrome) {
+  height: 100%;
+}
+
 /* ============================================================
    Utility primitives (shared across recipes)
    ============================================================ */
@@ -119,6 +123,7 @@
 }
 
 .social-card-page-chrome__content {
+  grid-row: 2;
   min-height: 0;     /* allow shrink inside grid row */
   overflow: hidden;  /* clip any overflow at the row boundary */
 }
@@ -143,9 +148,14 @@
   color: var(--openpress-color-muted);
 }
 
-.social-card-issue-strip--top {
+.social-card-page-chrome > .social-card-issue-strip--top {
+  grid-row: 1;
   border-top: none;
   border-bottom: 1px solid var(--openpress-color-line);
+}
+
+.social-card-page-chrome > .social-card-issue-strip--bottom {
+  grid-row: 3;
 }
 
 .social-card-issue-strip__middle {
@@ -319,7 +329,8 @@
 /* ---- M03 EditorialNoteRows ---- */
 
 .editorial-note-rows {
-  align-content: start;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  align-content: stretch;
   gap: 42px;
 }
 
@@ -340,6 +351,8 @@
 
 .editorial-note-rows__rows {
   display: grid;
+  min-height: 0;
+  grid-auto-rows: minmax(0, 1fr);
   gap: 0;
   border-top: 1px solid var(--openpress-color-line);
 }
@@ -348,8 +361,8 @@
   display: grid;
   grid-template-columns: 84px 1fr;
   gap: 24px;
-  align-items: baseline;
-  padding: 22px 0;
+  align-items: center;
+  padding: 20px 0;
   border-bottom: 1px solid var(--openpress-color-line);
   font-family: var(--social-card-font-body);
 }

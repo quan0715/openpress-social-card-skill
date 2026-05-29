@@ -55,9 +55,13 @@ test("starter fixes page chrome positions outside recipe flow", () => {
   const componentPath = path.join(starterRoot, "components/PageChrome.tsx");
 
   assert.equal(fs.existsSync(componentPath), true, "missing PageChrome component");
+  assert.match(css, /\.openpress-mdx-area\s*>\s*div:has\(\s*>\s*\.social-card-page-chrome\s*\)/);
   assert.match(css, /\.social-card-page-chrome\s*{/);
   assert.match(css, /grid-template-rows:\s*auto\s+1fr\s+auto/);
   assert.match(css, /\.social-card-page-chrome__content\s*{/);
+  assert.match(css, /\.social-card-page-chrome__content\s*{[\s\S]*grid-row:\s*2/);
+  assert.match(css, /\.social-card-page-chrome\s*>\s*\.social-card-issue-strip--top\s*{[\s\S]*grid-row:\s*1/);
+  assert.match(css, /\.social-card-page-chrome\s*>\s*\.social-card-issue-strip--bottom\s*{[\s\S]*grid-row:\s*3/);
   assert.match(css, /min-height:\s*0/);
   assert.match(css, /overflow:\s*hidden/);
 });
@@ -75,6 +79,8 @@ test("starter M03 uses horizontal note rows instead of crowded two-column split"
   assert.doesNotMatch(m03, /<EditorialEssaySplit\b/);
   assert.match(css, /\.editorial-note-rows__row\s*{/);
   assert.match(css, /grid-template-columns:\s*84px\s+1fr/);
+  assert.match(css, /\.editorial-note-rows\s*{[\s\S]*grid-template-rows:\s*auto\s+minmax\(0,\s*1fr\)\s+auto/);
+  assert.match(css, /\.editorial-note-rows__rows\s*{[\s\S]*grid-auto-rows:\s*minmax\(0,\s*1fr\)/);
 });
 
 test("section divider decoration fills the page axis instead of text width", () => {
